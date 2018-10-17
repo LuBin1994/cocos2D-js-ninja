@@ -1,0 +1,22 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "greenAddFx-export",
+    "texture": "7e206197-8a89-4d28-b25b-be8817c021cd",
+    "atlas": "",
+    "rect": [
+      0,
+      0,
+      230,
+      241
+    ],
+    "offset": [
+      -13,
+      7.5
+    ],
+    "originalSize": [
+      256,
+      256
+    ]
+  }
+}

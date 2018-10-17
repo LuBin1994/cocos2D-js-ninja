@@ -1,0 +1,22 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "fallPlayer",
+    "texture": "9d5fc722-7a29-4c33-a671-ee5db7dcedc0",
+    "atlas": "",
+    "rect": [
+      0,
+      0,
+      80,
+      108
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      80,
+      108
+    ]
+  }
+}

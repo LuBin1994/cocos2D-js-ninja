@@ -1,0 +1,22 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "yellowScore-export",
+    "texture": "87642ef6-317d-4498-adcb-ce80b8023d82",
+    "atlas": "",
+    "rect": [
+      0,
+      0,
+      267,
+      225
+    ],
+    "offset": [
+      -122.5,
+      15.5
+    ],
+    "originalSize": [
+      512,
+      256
+    ]
+  }
+}

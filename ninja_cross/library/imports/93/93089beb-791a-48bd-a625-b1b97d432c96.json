@@ -1,0 +1,22 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "yellowAdd-export",
+    "texture": "78797cc9-f877-496e-b454-65c65e670836",
+    "atlas": "",
+    "rect": [
+      0,
+      0,
+      230,
+      241
+    ],
+    "offset": [
+      -13,
+      7.5
+    ],
+    "originalSize": [
+      256,
+      256
+    ]
+  }
+}

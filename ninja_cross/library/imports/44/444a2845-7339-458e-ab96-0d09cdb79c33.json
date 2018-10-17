@@ -1,0 +1,22 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "scorePic",
+    "texture": "099ad32f-4c43-4ced-8e16-9e47efcb0876",
+    "atlas": "",
+    "rect": [
+      0,
+      0,
+      271,
+      54
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      271,
+      54
+    ]
+  }
+}

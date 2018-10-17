@@ -1,0 +1,22 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "showoffBtn",
+    "texture": "61b4e534-c850-4790-9f47-4000d6725294",
+    "atlas": "",
+    "rect": [
+      1,
+      0,
+      432,
+      141
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      434,
+      141
+    ]
+  }
+}

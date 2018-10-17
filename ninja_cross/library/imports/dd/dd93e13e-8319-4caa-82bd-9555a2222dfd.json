@@ -1,0 +1,85 @@
+{
+  "__type__": "cc.AnimationClip",
+  "_name": "sharkJump",
+  "_objFlags": 0,
+  "_native": "",
+  "_duration": 0.85,
+  "sample": 60,
+  "speed": 0.3,
+  "wrapMode": 1,
+  "curveData": {
+    "comps": {
+      "cc.Sprite": {
+        "spriteFrame": [
+          {
+            "frame": 0,
+            "value": {
+              "__uuid__": "3ff22a2e-8c24-49a3-82ef-b466fbe562b0"
+            }
+          },
+          {
+            "frame": 0.016666666666666666,
+            "value": {
+              "__uuid__": "0e3b0587-9f52-49e4-9543-c7e40cd11002"
+            }
+          },
+          {
+            "frame": 0.03333333333333333,
+            "value": {
+              "__uuid__": "4a28ca35-c3f3-4573-aaff-1c3870c90e60"
+            }
+          },
+          {
+            "frame": 0.25,
+            "value": {
+              "__uuid__": "4888e513-f1de-41f6-acda-c21e430292ad"
+            }
+          },
+          {
+            "frame": 0.3333333333333333,
+            "value": {
+              "__uuid__": "f32bce9a-70d8-449c-b464-b55e78833098"
+            }
+          },
+          {
+            "frame": 0.4166666666666667,
+            "value": {
+              "__uuid__": "7ae6a64c-96f1-4024-9f30-876c74613bb9"
+            }
+          },
+          {
+            "frame": 0.5,
+            "value": {
+              "__uuid__": "31896170-2290-49d7-a613-e97a4dcf8f0f"
+            }
+          },
+          {
+            "frame": 0.5833333333333334,
+            "value": {
+              "__uuid__": "e6633b7b-01c2-4d1c-b08e-a3c7ceb982d9"
+            }
+          },
+          {
+            "frame": 0.75,
+            "value": {
+              "__uuid__": "1baee4b8-4e57-45cc-bd3e-eb0698b5886b"
+            }
+          },
+          {
+            "frame": 0.8,
+            "value": {
+              "__uuid__": "7290b4d0-a5cc-4b0e-b1eb-25a4fa859271"
+            }
+          },
+          {
+            "frame": 0.8333333333333334,
+            "value": {
+              "__uuid__": "8e5a3aca-3b49-4672-9abc-921072aa7523"
+            }
+          }
+        ]
+      }
+    }
+  },
+  "events": []
+}

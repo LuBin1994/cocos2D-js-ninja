@@ -1,0 +1,30 @@
+"use strict";
+cc._RF.push(module, '4f8f5gTdfJOlIY0uP1DWkdf', 'gameDataManager');
+// script/gameDataManager.js
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+//游戏运行数据
+var GameDataManager = {
+    totalScore: 0, //总分数
+    nextScore: 0, //站台分值
+    addScoreGrade: 1, //加分等级
+    isMove: false, //画面是否移动
+    isSuccess: false, //当前是否成功
+    canDrop: false, //人数是否能掉落
+    move: 0, //当前回合移动
+    moveDistance: 0, //当前回合移动距离
+    isAnimate: false, //是否正在动画
+    isShowFog: false, //是否显示烟雾
+    isGameOver: false, //游戏是否结束
+    isLengthen: false, //道具是否变长
+    isStartLengthen: false, //道具是否开始变长
+    toolChoose: 0 //道具选择，0 ：木棍 ，1 ： 桥梁 ，2 ：跳跃
+};
+exports.default = GameDataManager;
+module.exports = exports["default"];
+
+cc._RF.pop();

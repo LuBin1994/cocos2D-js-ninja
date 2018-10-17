@@ -1,0 +1,22 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "avaterCircle",
+    "texture": "0efb7eab-56b5-49c9-bb95-d45a116b4ce2",
+    "atlas": "",
+    "rect": [
+      0,
+      0,
+      150,
+      150
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      150,
+      150
+    ]
+  }
+}

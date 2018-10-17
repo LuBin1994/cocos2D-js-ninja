@@ -1,0 +1,22 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "greenText-export",
+    "texture": "c752bbf7-0a64-4ccd-9872-84526aa0f0c4",
+    "atlas": "",
+    "rect": [
+      0,
+      0,
+      108,
+      239
+    ],
+    "offset": [
+      -10,
+      8.5
+    ],
+    "originalSize": [
+      128,
+      256
+    ]
+  }
+}

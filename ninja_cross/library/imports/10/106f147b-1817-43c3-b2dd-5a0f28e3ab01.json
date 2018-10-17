@@ -1,0 +1,22 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "advBtn",
+    "texture": "41cb12d6-0982-4695-ac35-aafcd795cd25",
+    "atlas": "",
+    "rect": [
+      1,
+      0,
+      432,
+      141
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      434,
+      141
+    ]
+  }
+}

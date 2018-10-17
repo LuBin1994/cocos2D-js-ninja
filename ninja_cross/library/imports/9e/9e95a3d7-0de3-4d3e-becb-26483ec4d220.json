@@ -1,0 +1,22 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "energyBox",
+    "texture": "5f0ba99e-b6b0-4fb3-b62d-33d498c49a68",
+    "atlas": "",
+    "rect": [
+      0,
+      0,
+      46,
+      314
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      46,
+      314
+    ]
+  }
+}

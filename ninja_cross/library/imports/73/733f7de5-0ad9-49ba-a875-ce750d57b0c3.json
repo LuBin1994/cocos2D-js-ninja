@@ -1,0 +1,22 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "rebAddFx-export",
+    "texture": "2fffdb96-0dbf-490d-bcab-f100ae80e119",
+    "atlas": "",
+    "rect": [
+      0,
+      0,
+      230,
+      241
+    ],
+    "offset": [
+      -13,
+      7.5
+    ],
+    "originalSize": [
+      256,
+      256
+    ]
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "redText-export",
+    "texture": "1f21a2e3-7df9-46e4-a261-813b53a95bba",
+    "atlas": "",
+    "rect": [
+      0,
+      0,
+      85,
+      255
+    ],
+    "offset": [
+      -21.5,
+      0.5
+    ],
+    "originalSize": [
+      128,
+      256
+    ]
+  }
+}

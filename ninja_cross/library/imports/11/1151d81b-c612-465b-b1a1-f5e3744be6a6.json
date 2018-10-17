@@ -1,0 +1,22 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "playerJump1",
+    "texture": "c1db9445-2507-4547-aa87-746fb5e72c8f",
+    "atlas": "",
+    "rect": [
+      0,
+      8,
+      101,
+      102
+    ],
+    "offset": [
+      -0.5,
+      -4
+    ],
+    "originalSize": [
+      102,
+      110
+    ]
+  }
+}
