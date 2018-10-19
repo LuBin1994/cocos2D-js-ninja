@@ -1,1 +1,5 @@
-{"__type__":"cc.AudioClip","_name":"btn","_native":".mp3"}
+{
+  "__type__": "cc.AudioClip",
+  "_name": "btn",
+  "_native": ".mp3"
+}

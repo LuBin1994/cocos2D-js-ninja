@@ -120,6 +120,27 @@ cc.Class({
     //重开游戏
     reStartGame: function reStartGame() {
         _GameUITools2.default.loadingScene("game");
+        if (GameConfig.IS_WX) {
+            wx.request({
+                url: GameConfig.INTER_URL + "/game/start",
+                method: "post",
+                datatype: 'json',
+                success: function success(res) {
+                    if (res.status == 1) {
+                        console.log(res);
+                        _gameDataManager2.default.gameId = res.data.gameId;
+                    } else {
+                        switch (res.code) {
+                            case 1006:
+                                console.log("操作失败");
+                        }
+                    }
+                },
+                error: function error() {
+                    console.log("连接错误");
+                }
+            });
+        }
     },
     /**
      * 游戏触摸开始数据处理
@@ -179,14 +200,14 @@ cc.Class({
                     _animation2.default.toolRotateAni(_gameDataManager2.default.isSuccess, this.stick.node);
                     setTimeout(function () {
                         _this.player.run();
-                    }, 800);
+                    }, 700);
                     break;
                 case 1:
                     //桥执行动画
                     _animation2.default.toolRotateAni(_gameDataManager2.default.isSuccess, this.bridge.node);
                     setTimeout(function () {
                         _this.player.run();
-                    }, 800);
+                    }, 700);
                     break;
                 case 2:
                     //跳跃执行动画

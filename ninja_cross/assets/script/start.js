@@ -1,6 +1,7 @@
 import GameConfig from './gameConfig';
 import Util from './utils/util';
 import GameUITools from './utils/GameUITools';
+import GameDataManager from './gameDataManager'
 cc.Class({
     extends: cc.Component,
     properties: {
@@ -31,6 +32,28 @@ cc.Class({
         //开始游戏
         Util.btnEvent(this.startBtn,this.btnSound,function(){
             GameUITools.loadingScene("game");
+            if(GameConfig.IS_WX){
+                /*wx.request({
+                    url:GameConfig.INTER_URL+"/game/start",
+                    method: "post",
+                    datatype:'json',
+                    success:function (res) {
+                        if(res.status == 1){
+                            console.log(res)
+                            GameDataManager.gameId = res.data.gameId;
+                        }
+                        else{
+                            switch(res.code){
+                                case 1006:
+                                    console.log("操作失败")
+                            }
+                        }
+                    },
+                    error:function () {
+                        console.log("连接错误")
+                    }
+                });*/
+            }
         });
         //弹出规则
         Util.btnEvent(this.ruleBtn,this.btnSound,function(){

@@ -92,6 +92,7 @@ cc.Class({
         this.game = game;
     },
     showScore: function showScore() {
+        //分数记录
         if (localStorage.getItem("score")) {
             var score = localStorage.getItem("score");
             this.nowScore.string = "本次分值: " + _GameDataManager2.default.totalScore;
@@ -110,9 +111,33 @@ cc.Class({
         var gameScore = _GameDataManager2.default.totalScore;
         if (_gameConfig2.default.IS_WX) {
             wx.postMessage({ messageType: 1, score: gameScore, MAIN_MENU_NUM: _gameConfig2.default.MAIN_MENU_NUM });
-        }
-        if (_gameConfig2.default.IS_WX) {
             wx.postMessage({ messageType: 3, MAIN_MENU_NUM: _gameConfig2.default.MAIN_MENU_NUM });
+            //记录游戏数据
+            /*wx.request({
+                method: "post",
+                url:GameConfig.INTER_URL+"/game/over",
+                data: {
+                    gameId: GameDataManager.gameId,
+                    score: GameDataManager.score
+                },
+                datatype:'json',
+                success:function (res) {
+                    if(res.status == 1){
+                        console.log("游戏数据记录成功")
+                    }
+                    else{
+                        switch(res.code){
+                            case 1004:
+                                console.log("游戏不存在")
+                            case 1005:
+                                console.log("参数错误")
+                        }
+                    }
+                },
+                error:function () {
+                    console.log("连接错误")
+                }
+            });*/
         }
     }
 });

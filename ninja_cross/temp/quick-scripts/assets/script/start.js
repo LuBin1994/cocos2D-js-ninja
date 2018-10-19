@@ -16,6 +16,10 @@ var _GameUITools = require('./utils/GameUITools');
 
 var _GameUITools2 = _interopRequireDefault(_GameUITools);
 
+var _gameDataManager = require('./gameDataManager');
+
+var _gameDataManager2 = _interopRequireDefault(_gameDataManager);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 cc.Class({
@@ -49,6 +53,28 @@ cc.Class({
         //开始游戏
         _util2.default.btnEvent(this.startBtn, this.btnSound, function () {
             _GameUITools2.default.loadingScene("game");
+            if (_gameConfig2.default.IS_WX) {
+                /*wx.request({
+                    url:GameConfig.INTER_URL+"/game/start",
+                    method: "post",
+                    datatype:'json',
+                    success:function (res) {
+                        if(res.status == 1){
+                            console.log(res)
+                            GameDataManager.gameId = res.data.gameId;
+                        }
+                        else{
+                            switch(res.code){
+                                case 1006:
+                                    console.log("操作失败")
+                            }
+                        }
+                    },
+                    error:function () {
+                        console.log("连接错误")
+                    }
+                });*/
+            }
         });
         //弹出规则
         _util2.default.btnEvent(this.ruleBtn, this.btnSound, function () {

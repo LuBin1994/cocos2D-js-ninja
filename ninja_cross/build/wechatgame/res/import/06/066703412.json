@@ -1,1 +1,69 @@
-[{"__type__":"cc.SpriteFrame","content":{"name":"fallPlayer","texture":"9dX8cieilMM6Zx7l233O3A","rect":[0,0,80,108],"offset":[0,0],"originalSize":[80,108]}},[{"__type__":"cc.Prefab","_name":"fallPlayer","data":{"__id__":1}},{"__type__":"cc.Node","_name":"fallPlayer","_level":2,"_components":[{"__type__":"cc.Sprite","node":{"__id__":1},"_spriteFrame":{"__uuid__":"d7QBE4zzZCS4qqy5SXWUgh"}}],"_prefab":{"__type__":"cc.PrefabInfo","root":{"__id__":1},"asset":{"__id__":0},"fileId":"b6oVXCT9FPArYuZua97nqc"},"_contentSize":{"__type__":"cc.Size","width":80,"height":108},"_scale":{"__type__":"cc.Vec3","x":1,"y":1,"z":1}}]]
+[
+  {
+    "__type__": "cc.SpriteFrame",
+    "content": {
+      "name": "fallPlayer",
+      "texture": "9dX8cieilMM6Zx7l233O3A",
+      "rect": [
+        0,
+        0,
+        80,
+        108
+      ],
+      "offset": [
+        0,
+        0
+      ],
+      "originalSize": [
+        80,
+        108
+      ]
+    }
+  },
+  [
+    {
+      "__type__": "cc.Prefab",
+      "_name": "fallPlayer",
+      "data": {
+        "__id__": 1
+      }
+    },
+    {
+      "__type__": "cc.Node",
+      "_name": "fallPlayer",
+      "_level": 2,
+      "_components": [
+        {
+          "__type__": "cc.Sprite",
+          "node": {
+            "__id__": 1
+          },
+          "_spriteFrame": {
+            "__uuid__": "d7QBE4zzZCS4qqy5SXWUgh"
+          }
+        }
+      ],
+      "_prefab": {
+        "__type__": "cc.PrefabInfo",
+        "root": {
+          "__id__": 1
+        },
+        "asset": {
+          "__id__": 0
+        },
+        "fileId": "b6oVXCT9FPArYuZua97nqc"
+      },
+      "_contentSize": {
+        "__type__": "cc.Size",
+        "width": 80,
+        "height": 108
+      },
+      "_scale": {
+        "__type__": "cc.Vec3",
+        "x": 1,
+        "y": 1,
+        "z": 1
+      }
+    }
+  ]
+]
