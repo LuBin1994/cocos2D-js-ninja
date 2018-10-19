@@ -1,0 +1,355 @@
+2018-10-19T01:53:31.375Z - normal: Load ~/.CocosCreator/settings.json
+2018-10-19T01:53:31.379Z - normal: checking language setting...
+2018-10-19T01:53:31.379Z - normal: Language: zh
+2018-10-19T01:53:32.902Z - success: protocol editor-framework registered
+2018-10-19T01:53:32.902Z - success: protocol app registered
+2018-10-19T01:53:32.902Z - success: protocol theme registered
+2018-10-19T01:53:32.902Z - success: protocol packages registered
+2018-10-19T01:53:32.902Z - success: protocol unpack registerred
+2018-10-19T01:53:32.902Z - success: protocol disable-commonjs registerred
+2018-10-19T01:53:35.902Z - normal: failed to connect login server due to request timeout
+2018-10-19T01:53:35.905Z - normal: Check project D:\workspace\cocosGame\ninja_crossing\subGame
+2018-10-19T01:53:35.914Z - normal: Initializing project D:\workspace\cocosGame\ninja_crossing\subGame
+2018-10-19T01:53:35.926Z - normal: Initializing Cocos2d
+2018-10-19T01:53:36.555Z - normal: Initializing Asset Database
+2018-10-19T01:53:36.595Z - success: protocol uuid registerred
+2018-10-19T01:53:36.595Z - success: protocol db registerred
+2018-10-19T01:53:36.595Z - success: protocol thumbnail registerred
+2018-10-19T01:53:36.595Z - normal: Loading editor/builtin packages
+2018-10-19T01:53:36.724Z - success: assets loaded
+2018-10-19T01:53:36.726Z - success: builder loaded
+2018-10-19T01:53:36.729Z - success: cocos-analytics loaded
+2018-10-19T01:53:36.732Z - success: console loaded
+2018-10-19T01:53:36.762Z - success: fb-instant-games loaded
+2018-10-19T01:53:36.766Z - success: hierarchy loaded
+2018-10-19T01:53:36.769Z - success: inspector loaded
+2018-10-19T01:53:36.770Z - success: keystore loaded
+2018-10-19T01:53:36.774Z - success: node-library loaded
+2018-10-19T01:53:36.776Z - success: package-asset loaded
+2018-10-19T01:53:36.778Z - success: preferences loaded
+2018-10-19T01:53:36.779Z - success: project-exporter loaded
+2018-10-19T01:53:36.793Z - success: project-importer loaded
+2018-10-19T01:53:36.795Z - success: project-settings loaded
+2018-10-19T01:53:36.797Z - success: ui-kit loaded
+2018-10-19T01:53:36.800Z - success: scene loaded
+2018-10-19T01:53:36.801Z - success: sprite-editor loaded
+2018-10-19T01:53:36.807Z - success: store loaded
+2018-10-19T01:53:36.810Z - success: timeline loaded
+2018-10-19T01:53:36.810Z - normal: Loading builtin packages
+2018-10-19T01:53:36.813Z - success: asset-db-debugger loaded
+2018-10-19T01:53:36.814Z - success: code-editor loaded
+2018-10-19T01:53:36.815Z - success: color-picker loaded
+2018-10-19T01:53:36.815Z - success: jsb-adapter loaded
+2018-10-19T01:53:36.817Z - success: package-manager loaded
+2018-10-19T01:53:36.902Z - success: qqplay-adapter loaded
+2018-10-19T01:53:36.905Z - success: sdkbox loaded
+2018-10-19T01:53:36.907Z - success: tester loaded
+2018-10-19T01:53:36.909Z - success: ui-grid loaded
+2018-10-19T01:53:36.910Z - success: ui-kit-preview-extra loaded
+2018-10-19T01:53:36.911Z - success: ui-kit-preview loaded
+2018-10-19T01:53:36.913Z - success: ui-tree loaded
+2018-10-19T01:53:36.913Z - success: weapp-adapter loaded
+2018-10-19T01:53:37.828Z - normal: Loading packages
+2018-10-19T01:53:37.834Z - normal: Watching packages
+2018-10-19T01:53:38.102Z - normal: Run Application
+2018-10-19T01:53:38.716Z - success: preview server running at http://localhost:7457
+2018-10-19T02:18:11.639Z - normal: Start building with options : {
+  "actualPlatform": "wechatgame-subcontext",
+  "apiLevel": "",
+  "appABIs": [],
+  "appKey": "",
+  "appSecret": "",
+  "buildPath": "D:\\workspace\\cocosGame\\ninja_crossing\\ninja_cross\\build\\wechatgame",
+  "debug": false,
+  "dest": "D:\\workspace\\cocosGame\\ninja_crossing\\ninja_cross\\build\\wechatgame\\wechatgame-subcontext",
+  "embedWebDebugger": false,
+  "encryptJs": true,
+  "excludeScenes": [],
+  "excludedModules": [],
+  "fb-instant-games": {},
+  "includeAnySDK": false,
+  "includeSDKBox": false,
+  "inlineSpriteFrames": true,
+  "inlineSpriteFrames_native": true,
+  "jailbreakPlatform": false,
+  "md5Cache": false,
+  "mergeStartScene": false,
+  "oauthLoginServer": "",
+  "optimizeHotUpdate": false,
+  "orientation": {
+    "landscapeLeft": true,
+    "landscapeRight": true,
+    "portrait": false,
+    "upsideDown": false
+  },
+  "packageName": "org.cocos2d.subGame",
+  "platform": "wechatgame-subcontext",
+  "previewHeight": "720",
+  "previewWidth": "1280",
+  "privateKey": "",
+  "qqplay": {
+    "REMOTE_SERVER_ROOT": "",
+    "orientation": "portrait"
+  },
+  "scenes": [
+    "f1d3c7c2-efa5-4050-a96e-349b9442ba57"
+  ],
+  "sourceMaps": false,
+  "startScene": "f1d3c7c2-efa5-4050-a96e-349b9442ba57",
+  "template": "link",
+  "title": "wechatgame-subcontext",
+  "useDebugKeystore": true,
+  "vsVersion": "auto",
+  "webOrientation": "auto",
+  "wechatgame": {
+    "REMOTE_SERVER_ROOT": "",
+    "appid": "wx6ac3f5090a6b99c5",
+    "isSubdomain": false,
+    "orientation": "portrait",
+    "subContext": ""
+  },
+  "xxteaKey": "69ab9833-e943-4d",
+  "zipCompressJs": true,
+  "project": "D:\\workspace\\cocosGame\\ninja_crossing\\subGame",
+  "projectName": "wechatgame-subcontext",
+  "debugBuildWorker": false
+}
+2018-10-19T02:18:11.642Z - normal: Building D:\workspace\cocosGame\ninja_crossing\subGame
+2018-10-19T02:18:11.642Z - normal: Destination D:\workspace\cocosGame\ninja_crossing\ninja_cross\build\wechatgame\wechatgame-subcontext
+2018-10-19T02:18:11.886Z - normal: Delete D:\workspace\cocosGame\ninja_crossing\ninja_cross\build\wechatgame\wechatgame-subcontext\**\*
+2018-10-19T02:18:13.787Z - normal: Start building assets
+2018-10-19T02:18:13.787Z - normal: Start spawn build-worker
+2018-10-19T02:18:14.455Z - normal: Finish spawn build-worker
+2018-10-19T02:18:14.455Z - normal: Start init build-worker
+2018-10-19T02:18:17.292Z - normal: Finish init build-worker
+2018-10-19T02:18:17.292Z - normal: Start build-assets in worker
+2018-10-19T02:18:17.438Z - normal: Finish build-assets in worker
+2018-10-19T02:18:17.445Z - normal: Finish building assets
+2018-10-19T02:18:17.451Z - normal: Start building plugin scripts
+2018-10-19T02:18:17.457Z - normal: Generating main.js from D:\software\cocos\CocosCreator\resources\static\build-templates\shares\main.js
+2018-10-19T02:18:18.618Z - normal: Built to "D:\workspace\cocosGame\ninja_crossing\ninja_cross\build\wechatgame\wechatgame-subcontext" successfully
+2018-10-19T02:20:47.070Z - normal: Start building with options : {
+  "actualPlatform": "wechatgame-subcontext",
+  "apiLevel": "",
+  "appABIs": [],
+  "appKey": "",
+  "appSecret": "",
+  "buildPath": "D:\\workspace\\cocosGame\\ninja_crossing\\ninja_cross\\build\\wechatgame",
+  "debug": false,
+  "dest": "D:\\workspace\\cocosGame\\ninja_crossing\\ninja_cross\\build\\wechatgame\\wechatgame-subcontext",
+  "embedWebDebugger": false,
+  "encryptJs": true,
+  "excludeScenes": [],
+  "excludedModules": [],
+  "fb-instant-games": {},
+  "includeAnySDK": false,
+  "includeSDKBox": false,
+  "inlineSpriteFrames": true,
+  "inlineSpriteFrames_native": true,
+  "jailbreakPlatform": false,
+  "md5Cache": false,
+  "mergeStartScene": false,
+  "oauthLoginServer": "",
+  "optimizeHotUpdate": false,
+  "orientation": {
+    "landscapeLeft": true,
+    "landscapeRight": true,
+    "portrait": false,
+    "upsideDown": false
+  },
+  "packageName": "org.cocos2d.subGame",
+  "platform": "wechatgame-subcontext",
+  "previewHeight": "720",
+  "previewWidth": "1280",
+  "privateKey": "",
+  "qqplay": {
+    "REMOTE_SERVER_ROOT": "",
+    "orientation": "portrait"
+  },
+  "scenes": [
+    "f1d3c7c2-efa5-4050-a96e-349b9442ba57"
+  ],
+  "sourceMaps": false,
+  "startScene": "f1d3c7c2-efa5-4050-a96e-349b9442ba57",
+  "template": "link",
+  "title": "wechatgame-subcontext",
+  "useDebugKeystore": true,
+  "vsVersion": "auto",
+  "webOrientation": "auto",
+  "wechatgame": {
+    "REMOTE_SERVER_ROOT": "",
+    "appid": "wx6ac3f5090a6b99c5",
+    "isSubdomain": false,
+    "orientation": "portrait",
+    "subContext": ""
+  },
+  "xxteaKey": "69ab9833-e943-4d",
+  "zipCompressJs": true,
+  "project": "D:\\workspace\\cocosGame\\ninja_crossing\\subGame",
+  "projectName": "wechatgame-subcontext",
+  "debugBuildWorker": false
+}
+2018-10-19T02:20:47.073Z - normal: Building D:\workspace\cocosGame\ninja_crossing\subGame
+2018-10-19T02:20:47.073Z - normal: Destination D:\workspace\cocosGame\ninja_crossing\ninja_cross\build\wechatgame\wechatgame-subcontext
+2018-10-19T02:20:47.077Z - normal: Delete D:\workspace\cocosGame\ninja_crossing\ninja_cross\build\wechatgame\wechatgame-subcontext\**\*
+2018-10-19T02:20:49.189Z - normal: Start building assets
+2018-10-19T02:20:49.189Z - normal: Start spawn build-worker
+2018-10-19T02:20:49.892Z - normal: Finish spawn build-worker
+2018-10-19T02:20:49.892Z - normal: Start init build-worker
+2018-10-19T02:20:52.794Z - normal: Finish init build-worker
+2018-10-19T02:20:52.795Z - normal: Start build-assets in worker
+2018-10-19T02:20:52.951Z - normal: Finish build-assets in worker
+2018-10-19T02:20:52.959Z - normal: Finish building assets
+2018-10-19T02:20:52.968Z - normal: Start building plugin scripts
+2018-10-19T02:20:52.979Z - normal: Generating main.js from D:\software\cocos\CocosCreator\resources\static\build-templates\shares\main.js
+2018-10-19T02:20:54.009Z - normal: Built to "D:\workspace\cocosGame\ninja_crossing\ninja_cross\build\wechatgame\wechatgame-subcontext" successfully
+2018-10-19T02:34:54.887Z - normal: Start building with options : {
+  "actualPlatform": "wechatgame-subcontext",
+  "apiLevel": "",
+  "appABIs": [],
+  "appKey": "",
+  "appSecret": "",
+  "buildPath": "D:\\workspace\\cocosGame\\ninja_crossing\\ninja_cross\\build\\wechatgame",
+  "debug": false,
+  "dest": "D:\\workspace\\cocosGame\\ninja_crossing\\ninja_cross\\build\\wechatgame\\wechatgame-subcontext",
+  "embedWebDebugger": false,
+  "encryptJs": true,
+  "excludeScenes": [],
+  "excludedModules": [],
+  "fb-instant-games": {},
+  "includeAnySDK": false,
+  "includeSDKBox": false,
+  "inlineSpriteFrames": true,
+  "inlineSpriteFrames_native": true,
+  "jailbreakPlatform": false,
+  "md5Cache": false,
+  "mergeStartScene": false,
+  "oauthLoginServer": "",
+  "optimizeHotUpdate": false,
+  "orientation": {
+    "landscapeLeft": true,
+    "landscapeRight": true,
+    "portrait": false,
+    "upsideDown": false
+  },
+  "packageName": "org.cocos2d.subGame",
+  "platform": "wechatgame-subcontext",
+  "previewHeight": "720",
+  "previewWidth": "1280",
+  "privateKey": "",
+  "qqplay": {
+    "REMOTE_SERVER_ROOT": "",
+    "orientation": "portrait"
+  },
+  "scenes": [
+    "f1d3c7c2-efa5-4050-a96e-349b9442ba57"
+  ],
+  "sourceMaps": false,
+  "startScene": "f1d3c7c2-efa5-4050-a96e-349b9442ba57",
+  "template": "link",
+  "title": "wechatgame-subcontext",
+  "useDebugKeystore": true,
+  "vsVersion": "auto",
+  "webOrientation": "auto",
+  "wechatgame": {
+    "REMOTE_SERVER_ROOT": "",
+    "appid": "wx6ac3f5090a6b99c5",
+    "isSubdomain": false,
+    "orientation": "portrait",
+    "subContext": ""
+  },
+  "xxteaKey": "69ab9833-e943-4d",
+  "zipCompressJs": true,
+  "project": "D:\\workspace\\cocosGame\\ninja_crossing\\subGame",
+  "projectName": "wechatgame-subcontext",
+  "debugBuildWorker": false
+}
+2018-10-19T02:34:54.889Z - normal: Building D:\workspace\cocosGame\ninja_crossing\subGame
+2018-10-19T02:34:54.890Z - normal: Destination D:\workspace\cocosGame\ninja_crossing\ninja_cross\build\wechatgame\wechatgame-subcontext
+2018-10-19T02:34:54.892Z - normal: Delete D:\workspace\cocosGame\ninja_crossing\ninja_cross\build\wechatgame\wechatgame-subcontext\**\*
+2018-10-19T02:34:56.808Z - normal: Start building assets
+2018-10-19T02:34:56.808Z - normal: Start spawn build-worker
+2018-10-19T02:34:57.495Z - normal: Finish spawn build-worker
+2018-10-19T02:34:57.495Z - normal: Start init build-worker
+2018-10-19T02:35:00.439Z - normal: Finish init build-worker
+2018-10-19T02:35:00.439Z - normal: Start build-assets in worker
+2018-10-19T02:35:00.604Z - normal: Finish build-assets in worker
+2018-10-19T02:35:00.613Z - normal: Finish building assets
+2018-10-19T02:35:00.619Z - normal: Start building plugin scripts
+2018-10-19T02:35:00.623Z - normal: Generating main.js from D:\software\cocos\CocosCreator\resources\static\build-templates\shares\main.js
+2018-10-19T02:35:01.632Z - normal: Built to "D:\workspace\cocosGame\ninja_crossing\ninja_cross\build\wechatgame\wechatgame-subcontext" successfully
+2018-10-19T02:46:33.352Z - normal: Start building with options : {
+  "actualPlatform": "wechatgame-subcontext",
+  "apiLevel": "",
+  "appABIs": [],
+  "appKey": "",
+  "appSecret": "",
+  "buildPath": "D:\\workspace\\cocosGame\\ninja_crossing\\ninja_cross\\build\\wechatgame",
+  "debug": false,
+  "dest": "D:\\workspace\\cocosGame\\ninja_crossing\\ninja_cross\\build\\wechatgame\\wechatgame-subcontext",
+  "embedWebDebugger": false,
+  "encryptJs": true,
+  "excludeScenes": [],
+  "excludedModules": [],
+  "fb-instant-games": {},
+  "includeAnySDK": false,
+  "includeSDKBox": false,
+  "inlineSpriteFrames": true,
+  "inlineSpriteFrames_native": true,
+  "jailbreakPlatform": false,
+  "md5Cache": false,
+  "mergeStartScene": false,
+  "oauthLoginServer": "",
+  "optimizeHotUpdate": false,
+  "orientation": {
+    "landscapeLeft": true,
+    "landscapeRight": true,
+    "portrait": false,
+    "upsideDown": false
+  },
+  "packageName": "org.cocos2d.subGame",
+  "platform": "wechatgame-subcontext",
+  "previewHeight": "720",
+  "previewWidth": "1280",
+  "privateKey": "",
+  "qqplay": {
+    "REMOTE_SERVER_ROOT": "",
+    "orientation": "portrait"
+  },
+  "scenes": [
+    "f1d3c7c2-efa5-4050-a96e-349b9442ba57"
+  ],
+  "sourceMaps": false,
+  "startScene": "f1d3c7c2-efa5-4050-a96e-349b9442ba57",
+  "template": "link",
+  "title": "wechatgame-subcontext",
+  "useDebugKeystore": true,
+  "vsVersion": "auto",
+  "webOrientation": "auto",
+  "wechatgame": {
+    "REMOTE_SERVER_ROOT": "",
+    "appid": "wx6ac3f5090a6b99c5",
+    "isSubdomain": false,
+    "orientation": "portrait",
+    "subContext": ""
+  },
+  "xxteaKey": "69ab9833-e943-4d",
+  "zipCompressJs": true,
+  "project": "D:\\workspace\\cocosGame\\ninja_crossing\\subGame",
+  "projectName": "wechatgame-subcontext",
+  "debugBuildWorker": false
+}
+2018-10-19T02:46:33.355Z - normal: Building D:\workspace\cocosGame\ninja_crossing\subGame
+2018-10-19T02:46:33.355Z - normal: Destination D:\workspace\cocosGame\ninja_crossing\ninja_cross\build\wechatgame\wechatgame-subcontext
+2018-10-19T02:46:33.357Z - normal: Delete D:\workspace\cocosGame\ninja_crossing\ninja_cross\build\wechatgame\wechatgame-subcontext\**\*
+2018-10-19T02:46:35.404Z - normal: Start building assets
+2018-10-19T02:46:35.404Z - normal: Start spawn build-worker
+2018-10-19T02:46:36.117Z - normal: Finish spawn build-worker
+2018-10-19T02:46:36.117Z - normal: Start init build-worker
+2018-10-19T02:46:39.120Z - normal: Finish init build-worker
+2018-10-19T02:46:39.120Z - normal: Start build-assets in worker
+2018-10-19T02:46:39.258Z - normal: Finish build-assets in worker
+2018-10-19T02:46:39.266Z - normal: Finish building assets
+2018-10-19T02:46:39.272Z - normal: Start building plugin scripts
+2018-10-19T02:46:39.276Z - normal: Generating main.js from D:\software\cocos\CocosCreator\resources\static\build-templates\shares\main.js
+2018-10-19T02:46:40.339Z - normal: Built to "D:\workspace\cocosGame\ninja_crossing\ninja_cross\build\wechatgame\wechatgame-subcontext" successfully

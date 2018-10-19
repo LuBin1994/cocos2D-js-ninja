@@ -725,8 +725,8 @@
     "relativePath": "pic\\static\\showOffText.png"
   },
   "2d2f792f-a40c-49bb-a189-ed176a246e49": {
-    "asset": 1539834823962,
-    "meta": 1539834823971,
+    "asset": 1539930999707,
+    "meta": 1539930999717,
     "relativePath": "sence\\start.fire"
   },
   "c256a1c1-734a-4463-be4d-ae07149a3414": {
@@ -999,14 +999,14 @@
     "meta": 1539916829041,
     "relativePath": "script\\GameOver.js"
   },
-  "cbf0b081-af86-4a37-bfa9-4751b1e4f328": {
-    "asset": 1539916720029,
-    "meta": 1539916829061,
-    "relativePath": "script\\panel\\userInfo.js"
-  },
   "4a781151-9279-4b3f-ab76-b9199af273b2": {
     "asset": 1539916720044,
     "meta": 1539916829064,
     "relativePath": "script\\start.js"
+  },
+  "cbf0b081-af86-4a37-bfa9-4751b1e4f328": {
+    "asset": 1539931813243,
+    "meta": 1539931830145,
+    "relativePath": "script\\panel\\userInfo.js"
   }
 }

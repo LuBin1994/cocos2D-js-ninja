@@ -71,20 +71,15 @@ cc.Class({
                                 success(res){
                                     var width = res.screenWidth;
                                     var height = res.screenHeight;
+                                    console.log(width,height)
                                     GameConfig.auths_Btn = wx.createUserInfoButton({
-                                        type: 'text',
-                                        text: '微信授权',
+                                        type: 'image',
+                                        image: 'https://st.gwold.com/wfclb/ninja/pic/authorBtn.png',
                                         style: {
-                                            left: (width-200)/2,
-                                            top: (height-100)/2-40,
-                                            width:200,
-                                            height: 100,
-                                            lineHeight: 100,
-                                            backgroundColor: '#05920a',
-                                            color: '#ffffff',
-                                            textAlign: 'center',
-                                            fontSize: 30,
-                                            borderRadius: 20
+                                            left: width/2-40-Math.floor(250*width/750),
+                                            top: height/2-40-Math.floor(500*height/1206),
+                                            width:80,
+                                            height:80
                                         }
                                     })
                                     GameConfig.auths_Btn.onTap((res1) => {
