@@ -12,6 +12,10 @@ var _gameDataManager = require('../gameDataManager');
 
 var _gameDataManager2 = _interopRequireDefault(_gameDataManager);
 
+var _gameConfig = require('../gameConfig');
+
+var _gameConfig2 = _interopRequireDefault(_gameConfig);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Util = {
@@ -64,6 +68,7 @@ var Util = {
         _gameDataManager2.default.isLengthen = false;
         _gameDataManager2.default.isStartLengthen = false;
         _gameDataManager2.default.isGameOver = false;
+        _gameDataManager2.default.isHideSub = false;
     },
 
     /**
@@ -78,6 +83,7 @@ var Util = {
         _gameDataManager2.default.isLengthen = false;
         _gameDataManager2.default.isStartLengthen = false;
         _gameDataManager2.default.isGameOver = false;
+        _gameDataManager2.default.isHideSub = false;
     },
 
     /**
@@ -89,13 +95,84 @@ var Util = {
     },
 
     /**
-     * 计算道具所转角度
-     * @param multiple 随机数上限
+     * 游戏难度设置
+     * @param num 游戏难度等级
      */
-    getAngle: function getAngle(start, end) {
-        var diff_x = end.x - start.x,
-            diff_y = end.y - start.y;
-        return 90 - 360 * Math.atan(diff_y / diff_x) / (2 * Math.PI);
+    setGameDifficulty: function setGameDifficulty(num) {
+        switch (num) {
+            case 1:
+                _gameConfig2.default.MaxMultiProbability = 0.2;
+                _gameConfig2.default.sharkJumpDurTime = 40;
+                break;
+            case 2:
+                _gameConfig2.default.MaxMultiProbability = 0.25;
+                _gameConfig2.default.sharkJumpDurTime = 37;
+                break;
+            case 3:
+                _gameConfig2.default.MaxMultiProbability = 0.3;
+                _gameConfig2.default.sharkJumpDurTime = 34;
+                break;
+            case 4:
+                _gameConfig2.default.MaxMultiProbability = 0.35;
+                _gameConfig2.default.sharkJumpDurTime = 31;
+                break;
+            case 5:
+                _gameConfig2.default.MaxMultiProbability = 0.4;
+                _gameConfig2.default.sharkJumpDurTime = 28;
+                break;
+            case 6:
+                _gameConfig2.default.MaxMultiProbability = 0.5;
+                _gameConfig2.default.sharkJumpDurTime = 25;
+                break;
+            case 7:
+                _gameConfig2.default.MaxMultiProbability = 0.6;
+                _gameConfig2.default.sharkJumpDurTime = 22;
+                break;
+            case 8:
+                _gameConfig2.default.MaxMultiProbability = 0.7;
+                _gameConfig2.default.sharkJumpDurTime = 19;
+                break;
+            case 9:
+                _gameConfig2.default.MaxMultiProbability = 0.8;
+                _gameConfig2.default.sharkJumpDurTime = 16;
+                break;
+            case 10:
+                _gameConfig2.default.MaxMultiProbability = 0.9;
+                _gameConfig2.default.sharkJumpDurTime = 13;
+                break;
+        }
+    },
+
+    /**
+     * 游戏日志
+     * @param logLevel 日志等级
+     * @param logRemark 日志备注
+     */
+    gameLog: function gameLog(logLevel, logRemark) {
+        wx.request({
+            url: _gameConfig2.default.LOG_URL + 'submit',
+            data: {
+                'code': 2,
+                'env': 2,
+                'content': _gameConfig2.default.config,
+                'level': logLevel,
+                'remark': logRemark
+            },
+            header: {
+                'content-type': 'application/x-www-form-urlencoded',
+                'sessionId': 'SESSION=' + wx.getStorageSync('sessionId')
+            },
+            method: "POST",
+            seccuss: function seccuss(res) {
+                console.log('日志接口访问成功');
+                console.log(res.data);
+                if (res.data.status) {
+                    console.log('日志提交成功');
+                } else {
+                    console.log(res.data.info);
+                }
+            }
+        });
     }
 };
 exports.default = Util;

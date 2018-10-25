@@ -14,17 +14,35 @@ var GameConfig = {
     sharkJumpDurTime: 30,          //鲨鱼跳跃间隔时间(秒)
     MAIN_MENU_NUM: "ninja_crossing",           // 主选择菜单
     IS_WX:true,                    //当前是否是微信环境(游戏发布时改为true)
-    INTER_URL:"http://192.168.1.156:30000/",   //接口
-    LOG_URL:"http://log-ninja.iwckj.com/",     //日志接口
-
+    difficulty:1,                  //游戏难度  {1-10}
     /**
      * 数据存储
      */
     IS_AUTHORIZE:false,            //是否授权
     auths_Btn:null,                //授权按钮
-    IS_AUTHS_OPE:false,            //是否做过授权操作
     nickName:null,                 //用户昵称
     avatarUrl:null,                //用户头像
-    code:null                      //用户登录凭证
+    country:null,                  //用户国籍
+    province:null,                 //用户所在省份
+    city:null,                     //用户所在城市
+    sex:null,                      //用户性别
+    code:null,                     //用户登录凭证
+    INTER_URL:"https://wg.iwckj.com/risk/",   //接口
+    LOG_URL:"https://log-ninja.iwckj.com/",     //日志接口
+    //用户系统信息
+    systemInfo:{
+        system:null,
+        brand:null,
+        model:null,
+        pixelRatio:null,
+        screenWidth:null,
+        screenHeight:null,
+        version:null,
+        platform:null,
+        sdkVersion:null,
+        benchmarkLevel:null
+    },
+    //配置信息
+    config:{}
 };
 export default GameConfig

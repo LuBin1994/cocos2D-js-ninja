@@ -120,19 +120,23 @@ cc.Class({
     //重开游戏
     reStartGame: function reStartGame() {
         _GameUITools2.default.loadingScene("game");
-        if (GameConfig.IS_WX) {
+        if (_gameConfig2.default.IS_WX) {
+            //游戏开始获取gameId
             wx.request({
-                url: GameConfig.INTER_URL + "/game/start",
-                method: "post",
-                datatype: 'json',
+                url: _gameConfig2.default.INTER_URL + "game/start",
+                header: {
+                    'Cookie': "SESSION=" + wx.getStorageSync('sessionId')
+                },
+                method: "POST",
                 success: function success(res) {
-                    if (res.status == 1) {
-                        console.log(res);
-                        _gameDataManager2.default.gameId = res.data.gameId;
+                    console.log(res.data);
+                    if (res.data.status == 1) {
+                        _gameDataManager2.default.gameId = res.data.data;
                     } else {
-                        switch (res.code) {
+                        switch (res.data.code) {
                             case 1006:
-                                console.log("操作失败");
+                                console.log("游戏开始操作失败");
+                                break;
                         }
                     }
                 },
@@ -356,9 +360,13 @@ cc.Class({
             }, 1.5);
             this.fog.hideFog();
             if (_gameConfig2.default.canResurrectTime == 0) {
-                this.gameOver.btnGroup.y = -270;
+                this.gameOver.advBtn.active = false;
+                this.gameOver.navigateBtn.active = true;
+                //this.gameOver.btnGroup.y = -270;
             } else {
-                this.gameOver.btnGroup.y = -390;
+                this.gameOver.advBtn.active = true;
+                this.gameOver.navigateBtn.active = false;
+                //this.gameOver.btnGroup.y = -390;
             }
         }
         this.canShowGameOver = false;

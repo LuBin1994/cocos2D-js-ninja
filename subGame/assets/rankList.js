@@ -1,6 +1,6 @@
+import GameConfig from './gameConfig';
 cc.Class({
     extends: cc.Component,
-
     properties: {
         display:cc.Node,
         content: cc.Node,
@@ -12,7 +12,6 @@ cc.Class({
     start () {
         let _self = this;
         wx.onMessage(data => {
-            console.log(data);
             let messageType = data.messageType;
             switch(messageType) {
                 case 1: // 提交分数
@@ -24,6 +23,9 @@ cc.Class({
                 case 3://结束文字
                     _self._getScoreText(data.MAIN_MENU_NUM);
                     break;
+                case 5://隐藏子域
+                    _self._hideSub();
+                    break;
             }
         });
     },
@@ -31,15 +33,12 @@ cc.Class({
         this.content.removeAllChildren();
         this._showMessage("玩命加载中...");
     },
-
     // 提交分数
     _submitScore(MAIN_MENU_NUM, score) {
-        console.log("提交分数开始");
         wx.getUserCloudStorage({
             // 以key/value形式存储
-            keyList: ["x" + MAIN_MENU_NUM],
+            keyList: ["x2" + MAIN_MENU_NUM],
             success: function(getres) {
-                console.log("getUserCloudStorage", 'success', getres);
                 if (getres.KVDataList.length > 0) {
                     if (MAIN_MENU_NUM == 1) { // TODO
                         wx.setUserCloudStorage({
@@ -56,7 +55,7 @@ cc.Class({
                 // 对用户托管数据进行写数据操作
                 wx.setUserCloudStorage({
                     KVDataList: [{
-                        key: "x" + MAIN_MENU_NUM,
+                        key: "x2" + MAIN_MENU_NUM,
                         value: "" + score,
                     }],
                     success: function(res) {
@@ -78,11 +77,10 @@ cc.Class({
             },
         });
     },
-
     //结束文字
     _getScoreText(MAIN_MENU_NUM){
         this._removeChild();
-        this.hideRnakList();
+        this.hideRankList();
         let _self = this;
         let userRank,topperUserRank,lowerUserRank;
         wx.getUserInfo({
@@ -93,7 +91,7 @@ cc.Class({
                 let userData = userRes.data[0]; // 如果需要自己的
                 // 取出所有好友数据
                 wx.getFriendCloudStorage({
-                    keyList: ["x" + MAIN_MENU_NUM],
+                    keyList: ["x2" + MAIN_MENU_NUM],
                     success: res => {
                         console.log("wx.getFriendCloudStorage success", res);
                         let data = res.data;
@@ -114,23 +112,25 @@ cc.Class({
                             let isSelf = false;
                             if (data[i].avatarUrl == userData.avatarUrl) {
                                 isSelf = true;
-
                                 userRank = index;
                                 topperUserRank = index-1;
                                 lowerUserRank = index+1;
                             }
                         }
                         if(userRank == 0){
-                            _self.scoreTextLabel.string = "你在好友中排名第一，炫耀一下吧"
+                            _self.scoreTextLabel.string = "你在好友中占据第一!";
                         }
-                        else if(userRank == data.length){
-                            _self.scoreTextLabel.string = "你在好友中垫底了，快快奋起直追吧"
+                        else if(userRank == data.length-1){
+                            _self.scoreTextLabel.string = "你在好友中垫底了，快快奋起直追吧!";
                         }
                         else{
                             let grade1 = data[userRank].KVDataList.length != 0 ? data[userRank].KVDataList[0].value : 0;
                             let grade2 = data[topperUserRank].KVDataList.length != 0 ? data[topperUserRank].KVDataList[0].value : 0;
                             let score = grade2 - grade1//距排名前一位好友分差
-                            _self.scoreTextLabel.string = "你已超过"+data[lowerUserRank].nickname+",\n距离下一位好友"+data[topperUserRank].nickname+"还差"+score+"分"
+                            console.log(data[lowerUserRank],data[topperUserRank])
+                            _self.scoreTextLabel.string = "你已超过"+data[lowerUserRank].nickname+",\n距离下一位好友"+data[topperUserRank].nickname+"还差"+score+"分";
+                            GameConfig.passNickName = data[lowerUserRank].nickname;
+                            GameConfig.shareKind = 1;
                         }
                     },
                     fail: res=>{
@@ -157,7 +157,7 @@ cc.Class({
                 let userData = userRes.data[0]; // 如果需要自己的
                 // 取出所有好友数据
                 wx.getFriendCloudStorage({
-                    keyList: ["x" + MAIN_MENU_NUM],
+                    keyList: ["x2" + MAIN_MENU_NUM],
                     success: res => {
                         console.log("wx.getFriendCloudStorage success", res);
                         let data = res.data;
@@ -192,11 +192,11 @@ cc.Class({
             }
         });
     },
+    //显示加载信息
     _showMessage(message) {
         this.loadingLabel.getComponent(cc.Label).string = message;
         this.loadingLabel.active = true;
     },
-
     /**
      * 显示排行榜，绘制好友信息
      * TODO: 对当前玩家的记录做特殊标识
@@ -226,15 +226,18 @@ cc.Class({
             userIcon.spriteFrame = new cc.SpriteFrame(texture);
         });
     },
-    hideRnakList(){
+    //隐藏玩家数据
+    hideRankList(){
         this.display.active = false;
         this.loadingLabel.active = false;
         this.scoreText.active = true;
     },
+    //显示玩家数据
     showRankList(){
         this.display.active = true;
         this.scoreText.active = false;
     },
+    //显示用户数据
     _showUserData(nickName, avatarUrl) {
         let node = cc.instantiate(this.rankItem);
         node.parent = this.content;
@@ -251,5 +254,11 @@ cc.Class({
             console.log(texture);
             userIcon.spriteFrame = new cc.SpriteFrame(texture);
         });
+    },
+    //隐藏子域
+    _hideSub(){
+        this.display.active = false;
+        this.loadingLabel.active = false;
+        this.scoreText.active = false;
     },
 });

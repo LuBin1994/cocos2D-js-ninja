@@ -7,7 +7,7 @@
       "windowType": "dockable",
       "x": -8,
       "y": -8,
-      "width": 1932,
+      "width": 1936,
       "height": 1056,
       "layout": {
         "children": [
@@ -20,7 +20,7 @@
                 ],
                 "height": 471,
                 "type": "panel",
-                "width": 204
+                "width": 204.421875
               },
               {
                 "active": 0,
@@ -29,12 +29,12 @@
                 ],
                 "height": 454,
                 "type": "panel",
-                "width": 204
+                "width": 204.421875
               }
             ],
             "height": 928,
             "type": "dock-v",
-            "width": 204
+            "width": 204.421875
           },
           {
             "children": [
@@ -47,7 +47,7 @@
                     ],
                     "height": 646.984375,
                     "type": "panel",
-                    "width": 1128.984375
+                    "width": 1131.375
                   },
                   {
                     "active": 0,
@@ -56,12 +56,12 @@
                     ],
                     "height": 646.984375,
                     "type": "panel",
-                    "width": 264
+                    "width": 264.546875
                   }
                 ],
                 "height": 646.984375,
                 "type": "dock-h",
-                "width": 1396
+                "width": 1398.9375
               },
               {
                 "active": 0,
@@ -71,12 +71,12 @@
                 ],
                 "height": 278,
                 "type": "panel",
-                "width": 1396
+                "width": 1398.9375
               }
             ],
             "height": 928,
             "type": "dock-v",
-            "width": 1396
+            "width": 1398.9375
           },
           {
             "active": 0,
@@ -85,7 +85,7 @@
             ],
             "height": 928,
             "type": "panel",
-            "width": 304
+            "width": 304.640625
           }
         ],
         "type": "dock-h"
@@ -100,7 +100,7 @@
         "scene"
       ]
     },
-    "window-1539932020441": {},
+    "window-1540436418419": {},
     "worker": {}
   },
   "panels": {
@@ -111,10 +111,10 @@
       "height": 539
     },
     "builder": {
-      "x": 442,
-      "y": 299,
-      "width": 516,
-      "height": 589
+      "x": 961,
+      "y": 36,
+      "width": 345,
+      "height": 468
     },
     "preferences": {
       "x": 530,

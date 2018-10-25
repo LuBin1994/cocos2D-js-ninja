@@ -35,8 +35,6 @@ cc.Class({
     },
     musicInit: function musicInit() {
         var _this = this;
-        this.musicOn = this.node.getChildByName('musicOn');
-        this.musicOff = this.node.getChildByName('musicOff');
         if (_gameConfig2.default.isBgmPlay) {
             this.musicOff.active = false;
             cc.audioEngine.playMusic(this.bgm, true, 1);

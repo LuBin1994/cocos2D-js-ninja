@@ -1,0 +1,22 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "navigate",
+    "texture": "bd5b198d-4170-48fc-b77e-008812df70f2",
+    "atlas": "",
+    "rect": [
+      0,
+      0,
+      434,
+      141
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      434,
+      141
+    ]
+  }
+}

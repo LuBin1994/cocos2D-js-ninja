@@ -41,14 +41,31 @@ cc.Class({
     //对象池，预制初始化
     stagePrefabInit: function (callbacks) {
         var _this = this;
-        for (var i = 0; i < 6; i++) {
-            cc.loader.loadRes("stage/stage" + (i + 1), function (err, prefab) {
+        try {
+            cc.loader.loadRes("stage/stage" + 1, function (err, prefab) {
                 _this.stagePrefabs.push(prefab);
-                if (_this.stagePrefabs.length == 6) {
-                    callbacks && callbacks();
-                }
-            });
+                cc.loader.loadRes("stage/stage" + 2, function (err, prefab) {
+                    _this.stagePrefabs.push(prefab);
+                    cc.loader.loadRes("stage/stage" + 3, function (err, prefab) {
+                        _this.stagePrefabs.push(prefab);
+                        cc.loader.loadRes("stage/stage" + 4, function (err, prefab) {
+                            _this.stagePrefabs.push(prefab);
+                            cc.loader.loadRes("stage/stage" + 5, function (err, prefab) {
+                                _this.stagePrefabs.push(prefab);
+                                cc.loader.loadRes("stage/stage" + 6, function (err, prefab) {
+                                    _this.stagePrefabs.push(prefab);
+                                    callbacks && callbacks();
+                                })
+                            })
+                        })
+                    })
+                })
+            })
         }
+        catch (e) {
+            Util.gameLog(1,"站桩预制加载出错")
+        }
+
     },
     //站桩初始化
     stageInit: function () {
@@ -57,7 +74,6 @@ cc.Class({
         this.currentPlat = cc.instantiate(this.stagePrefabs[Util.randomNum(3)]);
         this.currentPlat.setPosition(cc.v2(-230, -295));
         this.currentPlat.parent = this.node;
-
         //第二个站桩
         this.nextPlat = cc.instantiate(this.stagePrefabs[Util.randomNum(3)]);
         distance = Util.randomNum(250)+100;//随机距离
@@ -66,6 +82,15 @@ cc.Class({
         nextX = this.currentPlat.x+centerDistance;
         this.nextPlat.setPosition(cc.v2(nextX, -295));
         this.nextPlat.parent = this.node;
+
+        //第三个站桩
+        this.nextTwoPlat = cc.instantiate(this.stagePrefabs[Util.randomNum(3)]);
+        distance = Util.randomNum(250)+100;//随机距离
+        centerDistance = distance + (this.nextPlat.width/2 + this.nextTwoPlat.width/2);
+        centerDistance = centerDistance - centerDistance%gameConfig.gameMoveSpeed;//两站装中心距离设置为移动速度的整数倍，防止移动过程中出现的偏差
+        nextX = this.nextPlat.x+centerDistance;
+        this.nextTwoPlat.setPosition(cc.v2(nextX, -295));
+        this.nextTwoPlat.parent = this.node;
 
         //初始化设置道具
         switch(GameDataManager.toolChoose){
@@ -82,14 +107,6 @@ cc.Class({
                 this.game.energy.setCali();
                 break;
         }
-        //第三个站桩
-        this.nextTwoPlat = cc.instantiate(this.stagePrefabs[Util.randomNum(3)]);
-        distance = Util.randomNum(250)+100;//随机距离
-        centerDistance = distance + (this.nextPlat.width/2 + this.nextTwoPlat.width/2);
-        centerDistance = centerDistance - centerDistance%gameConfig.gameMoveSpeed;//两站装中心距离设置为移动速度的整数倍，防止移动过程中出现的偏差
-        nextX = this.nextPlat.x+centerDistance;
-        this.nextTwoPlat.setPosition(cc.v2(nextX, -295));
-        this.nextTwoPlat.parent = this.node;
     },
     createStage: function () {
         this.doneStage += 1;
@@ -134,7 +151,7 @@ cc.Class({
         //选择下个道具
         if(GameDataManager.toolChoose !== 2){
             if(this.doneStage%5 == 0){
-                this.game.fog.showFog(this.nextPlat.x,-295)
+                this.game.fog.showFog(this.nextPlat.x,-305)
             }
         }
         if(GameDataManager.toolChoose == 2){

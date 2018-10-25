@@ -1,6 +1,7 @@
 import Util from '../utils/util';
 import GameUITools from '../utils/GameUITools';
 import GameConfig from '../gameConfig';
+import GameDataManager from '../gameDataManager';
 cc.Class({
     extends: cc.Component,
     properties: {
@@ -36,9 +37,14 @@ cc.Class({
         this.node.on('touchstart',function(e){
             e.stopPropagation();
         });
-        Util.btnEvent(this.closeBtn,this.btnSound,function () {
+        Util.btnEvent(this.closeBtn,this.btnSound,function(){
             if(GameConfig.IS_WX){
                 wx.postMessage({messageType: 3, MAIN_MENU_NUM: GameConfig.MAIN_MENU_NUM,});
+                console.log(GameDataManager.isHideSub)
+                if(GameDataManager.isHideSub){
+                    console.log('关闭排行榜隐藏子域')
+                    wx.postMessage({messageType: 5});
+                }
             }
             GameUITools.unLoadingLayer(_this.node);
         })

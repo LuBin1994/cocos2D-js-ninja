@@ -51,8 +51,10 @@ cc.Class({
     },
     //奔跑
     run: function run() {
-        var animState = this.anim.play('playerRun');
-        animState.repeatCount = Infinity;
+        if (!_GameDataManager2.default.isGameOver) {
+            var animState = this.anim.play('playerRun');
+            animState.repeatCount = Infinity;
+        }
     },
     //停下
     stop: function stop() {

@@ -24,7 +24,7 @@
       }
     ],
     "_active": true,
-    "_level": 1,
+    "_level": 2,
     "_components": [
       {
         "__id__": 8
@@ -107,7 +107,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 582,
-      "height": 758
+      "height": 1000
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -117,7 +117,7 @@
     "_position": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": 0,
+      "y": -50,
       "z": 0
     },
     "_scale": {
@@ -154,8 +154,8 @@
     "_spriteFrame": {
       "__uuid__": "79a2a6a3-bf1c-49e2-9979-bd824606b685"
     },
-    "_type": 0,
-    "_sizeMode": 1,
+    "_type": 1,
+    "_sizeMode": 0,
     "_fillType": 0,
     "_fillCenter": {
       "__type__": "cc.Vec2",
@@ -167,7 +167,7 @@
     "_isTrimmedMode": true,
     "_state": 0,
     "_atlas": null,
-    "_id": "432aMI90RPB7VTYhCd4AFU"
+    "_id": "8de51+VE9EyKgfcVvbUW4c"
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -177,7 +177,7 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "32xVA5yYlAF4AL9KJhg3K4",
+    "fileId": "c6CUg7qNVKeZLWuXoR/pTd",
     "sync": false
   },
   {
@@ -219,7 +219,7 @@
     "_position": {
       "__type__": "cc.Vec3",
       "x": 260,
-      "y": 350,
+      "y": 430,
       "z": 0
     },
     "_scale": {
@@ -269,7 +269,7 @@
     "_isTrimmedMode": true,
     "_state": 0,
     "_atlas": null,
-    "_id": "39iWNyOGFOfJ/z5c2tOMk9"
+    "_id": "0cvzOrRa5J3raCAdwZCa0F"
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -279,7 +279,7 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "bcQTNnt+pAm548sQeZdWZn",
+    "fileId": "fbPyz3Yd1OzpdgVVg05YQt",
     "sync": false
   },
   {
@@ -297,7 +297,7 @@
     "btnSound": {
       "__uuid__": "abe01fa9-5a9f-4ee6-adf7-32cf5caf286b"
     },
-    "_id": "57Z7jG5GlCj61C9tw5Tv8F"
+    "_id": "5eRjFfxjRIh41HnJmjt6N4"
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -307,7 +307,7 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "1bdbHmO6pOfrxLKGZC8OqL",
+    "fileId": "aaS/E2pbBLoZTYBX3Nj1HJ",
     "sync": false
   }
 ]

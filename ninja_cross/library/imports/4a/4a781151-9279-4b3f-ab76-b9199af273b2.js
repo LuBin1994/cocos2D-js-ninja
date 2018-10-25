@@ -4,10 +4,6 @@ cc._RF.push(module, '4a781FRknlLP6t2uRma8nOy', 'start');
 
 'use strict';
 
-var _gameConfig = require('./gameConfig');
-
-var _gameConfig2 = _interopRequireDefault(_gameConfig);
-
 var _util = require('./utils/util');
 
 var _util2 = _interopRequireDefault(_util);
@@ -19,6 +15,10 @@ var _GameUITools2 = _interopRequireDefault(_GameUITools);
 var _gameDataManager = require('./gameDataManager');
 
 var _gameDataManager2 = _interopRequireDefault(_gameDataManager);
+
+var _gameConfig = require('./gameConfig');
+
+var _gameConfig2 = _interopRequireDefault(_gameConfig);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -36,12 +36,36 @@ cc.Class({
     },
     onLoad: function onLoad() {
         this.init();
+        wx.showShareMenu(); //显示转发按钮
+        this.getShareConfig();
+    },
+    getShareConfig: function getShareConfig() {
+        var _this = this;
+        //获取分享信息
+        wx.request({
+            url: _gameConfig2.default.INTER_URL + "game/getConfig",
+            method: "GET",
+            success: function success(res) {
+                console.log(res.data);
+                if (res.data.status == 1) {
+                    _gameConfig2.default.config = res.data.data;
+                    console.log(_gameConfig2.default);
+                    var gameDifficultyNum = parseInt(_gameConfig2.default.config.difficulty);
+                    //设置游戏难度
+                    _util2.default.setGameDifficulty(gameDifficultyNum);
+                } else {
+                    console.log("获取游戏配置信息失败");
+                    console.log(res.data.info);
+                }
+            }
+        });
     },
     start: function start() {
         cc.director.preloadScene("game", function () {
             console.log("游戏场景已加载");
         });
         this.tex = new cc.Texture2D();
+        _util2.default.gameLog(5, '测试日志接口');
     },
 
     init: function init() {
@@ -54,27 +78,28 @@ cc.Class({
         _util2.default.btnEvent(this.startBtn, this.btnSound, function () {
             _GameUITools2.default.loadingScene("game");
             if (_gameConfig2.default.IS_WX) {
-                /*wx.request({
-                    url:GameConfig.INTER_URL+"/game/start",
-                    method: "post",
-                    datatype:'json',
-                    success:function (res) {
-                        if(res.status == 1){
-                            console.log(res)
-                            GameDataManager.gameId = res.data.gameId;
-                        }
-                        else{
-                            switch(res.code){
-                                case 1006:
-                                    console.log("操作失败")
-                            }
+                //游戏开始获取gameId
+                wx.request({
+                    url: _gameConfig2.default.INTER_URL + "game/start",
+                    header: {
+                        'Cookie': "SESSION=" + wx.getStorageSync('sessionId')
+                    },
+                    method: "POST",
+                    success: function success(res) {
+                        console.log(res.data);
+                        if (res.data.status == 1) {
+                            _gameDataManager2.default.gameId = res.data.data;
+                        } else {
+                            console.log(res.data.info);
                         }
                     },
-                    error:function () {
-                        console.log("连接错误")
+                    error: function error() {
+                        console.log("请求无响应");
                     }
-                });*/
+                });
+                _util2.default.gameLog();
             }
+            _util2.default.gameLog();
         });
         //弹出规则
         _util2.default.btnEvent(this.ruleBtn, this.btnSound, function () {

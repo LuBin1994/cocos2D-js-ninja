@@ -1,7 +1,7 @@
-import GameConfig from './gameConfig';
 import Util from './utils/util';
 import GameUITools from './utils/GameUITools';
-import GameDataManager from './gameDataManager'
+import GameDataManager from './gameDataManager';
+import GameConfig from './gameConfig';
 cc.Class({
     extends: cc.Component,
     properties: {
@@ -16,12 +16,37 @@ cc.Class({
     },
     onLoad () {
         this.init();
+        wx.showShareMenu()//显示转发按钮
+        this.getShareConfig();
+    },
+    getShareConfig() {
+        var _this = this
+        //获取分享信息
+        wx.request({
+                url: GameConfig.INTER_URL + "game/getConfig",
+                method: "GET",
+                success: function (res) {
+                    console.log(res.data)
+                    if (res.data.status == 1){
+                        GameConfig.config = res.data.data;
+                        console.log(GameConfig)
+                        var gameDifficultyNum = parseInt(GameConfig.config.difficulty)
+                        //设置游戏难度
+                        Util.setGameDifficulty(gameDifficultyNum)
+                    }
+                    else {
+                        console.log("获取游戏配置信息失败")
+                        console.log(res.data.info)
+                    }
+                }
+        })
     },
     start (){
         cc.director.preloadScene("game", () => {
            console.log("游戏场景已加载")
         });
         this.tex = new cc.Texture2D();
+        Util.gameLog(5,'测试日志接口')
     },
     init:function(){
         var _this = this;
@@ -33,27 +58,29 @@ cc.Class({
         Util.btnEvent(this.startBtn,this.btnSound,function(){
             GameUITools.loadingScene("game");
             if(GameConfig.IS_WX){
-                /*wx.request({
-                    url:GameConfig.INTER_URL+"/game/start",
-                    method: "post",
-                    datatype:'json',
+                //游戏开始获取gameId
+                wx.request({
+                    url:GameConfig.INTER_URL+"game/start",
+                    header: {
+                        'Cookie':"SESSION="+wx.getStorageSync('sessionId')
+                    },
+                    method: "POST",
                     success:function (res) {
-                        if(res.status == 1){
-                            console.log(res)
-                            GameDataManager.gameId = res.data.gameId;
+                        console.log(res.data)
+                        if(res.data.status == 1){
+                            GameDataManager.gameId = res.data.data;
                         }
                         else{
-                            switch(res.code){
-                                case 1006:
-                                    console.log("操作失败")
-                            }
+                           console.log(res.data.info);
                         }
                     },
                     error:function () {
-                        console.log("连接错误")
+                        console.log("请求无响应")
                     }
-                });*/
+                });
+                Util.gameLog();
             }
+            Util.gameLog()
         });
         //弹出规则
         Util.btnEvent(this.ruleBtn,this.btnSound,function(){
@@ -67,5 +94,5 @@ cc.Class({
         Util.btnEvent(this.modeChooseBtn,this.btnSound,function(){
             GameUITools.loadingLayer("panel/modeChoose")
         });
-    }
+    },
 });

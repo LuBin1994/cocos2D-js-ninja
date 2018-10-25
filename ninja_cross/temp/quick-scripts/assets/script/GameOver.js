@@ -27,13 +27,15 @@ cc.Class({
     properties: {
         playAgainBtn: cc.Node,
         advBtn: cc.Node,
+        navigateBtn: cc.Node,
         goBackHomeBtn: cc.Node,
         rankBtn: cc.Node,
         btnSound: cc.AudioClip,
         bestScore: cc.Label,
         nowScore: cc.Label,
         btnGroup: cc.Node,
-        showOffbtn: cc.Node
+        showOffbtn: cc.Node,
+        showOffText: cc.Node
     },
     onLoad: function onLoad() {
         var _this = this;
@@ -62,27 +64,104 @@ cc.Class({
             _this.game.continueGame();
             _this.node.active = false;
         });
+        _util2.default.btnEvent(this.navigateBtn, this.btnSound, function () {
+            if (_gameConfig2.default.IS_WX) {
+                wx.navigateToMiniProgram({
+                    appId: 'wx60dc6bacf553bdfc',
+                    success: function success(res) {
+                        console.log("跳转成功");
+                    }
+                });
+            }
+        });
         _util2.default.btnEvent(this.showOffbtn, this.btnSound, function () {
             if (_gameConfig2.default.IS_WX) {
-                switch (_GameDataManager2.default.toolChoose) {
-                    case 0:
-                        wx.shareAppMessage({
-                            title: '@你,快来超越我吧',
-                            imageUrl: "https://st.gwold.com/wfclb/ninja/pic/stickmode.png"
-                        });
-                        break;
-                    case 1:
-                        wx.shareAppMessage({
-                            title: '@你,快来超越我吧',
-                            imageUrl: "https://st.gwold.com/wfclb/ninja/pic/bridgemode.png"
-                        });
-                        break;
-                    case 2:
-                        wx.shareAppMessage({
-                            title: '@你,快来超越我吧',
-                            imageUrl: "https://st.gwold.com/wfclb/ninja/pic/jumpmode.jpg"
-                        });
-                        break;
+                if (_GameDataManager2.default.isBreakRecord) {
+                    wx.shareAppMessage({
+                        title: _gameConfig2.default.config.recordShareTitle,
+                        imageUrl: _gameConfig2.default.config.recordShareImg,
+                        query: "SHARECODE=" + wx.getStorageSync('shareCode')
+                    });
+                    //用户点击了“转发”按钮
+                    wx.onShareAppMessage(function (res) {
+                        return {
+                            title: _gameConfig2.default.config.recordShareTitle,
+                            imageUrl: _gameConfig2.default.config.recordShareImg,
+                            query: "SHARECODE=" + wx.getStorageSync('shareCode')
+                        };
+                    });
+                    wx.request({
+                        url: _gameConfig2.default.INTER_URL + "game/share",
+                        data: {
+                            'title': _gameConfig2.default.config.recordShareTitle,
+                            'image': _gameConfig2.default.config.recordShareImg,
+                            'query': "SHARECODE=" + wx.getStorageSync('shareCode')
+                        },
+                        header: {
+                            'content-type': 'application/x-www-form-urlencoded',
+                            'Cookie': "SESSION=" + wx.getStorageSync('sessionId')
+                        },
+                        method: "POST",
+                        success: function success(res) {
+                            console.log(res.data);
+                            if (res.data.status == 1) {
+                                console.log("游戏分享保存成功");
+                            } else {
+                                switch (res.data.code) {
+                                    case 1005:
+                                        console.log("游戏分享保存参数错误");
+                                        break;
+                                }
+                            }
+                        },
+                        error: function error() {
+                            console.log("连接错误");
+                        }
+
+                    });
+                } else {
+                    wx.shareAppMessage({
+                        title: _gameConfig2.default.config.shareTitle,
+                        imageUrl: _gameConfig2.default.config.shareImg,
+                        query: "SHARECODE=" + wx.getStorageSync('shareCode')
+                    });
+                    wx.request({
+                        url: _gameConfig2.default.INTER_URL + "game/share",
+                        data: {
+                            'title': _gameConfig2.default.config.shareTitle,
+                            'image': _gameConfig2.default.config.shareImg,
+                            'query': "SHARECODE=" + wx.getStorageSync('shareCode')
+                        },
+                        header: {
+                            'content-type': 'application/x-www-form-urlencoded',
+                            'Cookie': "SESSION=" + wx.getStorageSync('sessionId')
+                        },
+                        method: "POST",
+                        success: function success(res) {
+                            console.log(res.data);
+                            if (res.data.status == 1) {
+                                console.log("游戏分享保存成功");
+                            } else {
+                                switch (res.data.code) {
+                                    case 1005:
+                                        console.log("游戏分享保存参数错误");
+                                        break;
+                                }
+                            }
+                        },
+                        error: function error() {
+                            console.log("连接错误");
+                        }
+
+                    });
+                    //用户点击了“转发”按钮
+                    wx.onShareAppMessage(function (res) {
+                        return {
+                            title: _gameConfig2.default.config.shareTitle,
+                            imageUrl: _gameConfig2.default.config.shareImg,
+                            query: "SHARECODE=" + wx.getStorageSync('shareCode')
+                        };
+                    });
                 }
             }
         });
@@ -92,52 +171,71 @@ cc.Class({
         this.game = game;
     },
     showScore: function showScore() {
-        //分数记录
-        if (localStorage.getItem("score")) {
-            var score = localStorage.getItem("score");
-            this.nowScore.string = "本次分值: " + _GameDataManager2.default.totalScore;
-            if (_GameDataManager2.default.totalScore > score) {
-                this.bestScore.string = "历史最佳: " + score;
-                localStorage.setItem("score", _GameDataManager2.default.totalScore);
-            } else {
-                this.bestScore.string = "历史最佳: " + score;
-            }
-        } else {
-            this.nowScore.string = "本次分值: " + _GameDataManager2.default.totalScore;
-            this.bestScore.string = "历史最佳: " + _GameDataManager2.default.totalScore;
-            localStorage.setItem("score", _GameDataManager2.default.totalScore);
-        }
-        //微信存储分数
-        var gameScore = _GameDataManager2.default.totalScore;
-        if (_gameConfig2.default.IS_WX) {
-            wx.postMessage({ messageType: 1, score: gameScore, MAIN_MENU_NUM: _gameConfig2.default.MAIN_MENU_NUM });
-            wx.postMessage({ messageType: 3, MAIN_MENU_NUM: _gameConfig2.default.MAIN_MENU_NUM });
-            //记录游戏数据
-            /*wx.request({
-                method: "post",
-                url:GameConfig.INTER_URL+"/game/over",
-                data: {
-                    gameId: GameDataManager.gameId,
-                    score: GameDataManager.score
-                },
-                datatype:'json',
-                success:function (res) {
-                    if(res.status == 1){
-                        console.log("游戏数据记录成功")
+        try {
+            if (_gameConfig2.default.IS_WX) {
+                //分数记录
+                if (wx.getStorageSync('gameScore')) {
+                    var score = wx.getStorageSync('gameScore');
+                    this.nowScore.string = "本次分值: " + _GameDataManager2.default.totalScore;
+                    if (_GameDataManager2.default.totalScore > score) {
+                        this.bestScore.string = "历史最佳: " + score;
+                        wx.setStorageSync('gameScore', _GameDataManager2.default.totalScore);
+                        this.showOffText.active = true;
+                        _GameDataManager2.default.isHideSub = true;
+                        _GameDataManager2.default.isBreakRecord = true;
+                    } else {
+                        this.showOffText.active = false;
+                        _GameDataManager2.default.isBreakRecord = false;
+                        this.bestScore.string = "历史最佳: " + score;
+                        _GameDataManager2.default.isHideSub = false;
                     }
-                    else{
-                        switch(res.code){
-                            case 1004:
-                                console.log("游戏不存在")
-                            case 1005:
-                                console.log("参数错误")
-                        }
-                    }
-                },
-                error:function () {
-                    console.log("连接错误")
+                } else {
+                    this.nowScore.string = "本次分值: " + _GameDataManager2.default.totalScore;
+                    this.bestScore.string = "历史最佳: " + _GameDataManager2.default.totalScore;
+                    wx.setStorageSync('gameScore', _GameDataManager2.default.totalScore);
+                    _GameDataManager2.default.isHideSub = true;
                 }
-            });*/
+                //微信存储分数
+                var gameScore = _GameDataManager2.default.totalScore;
+                wx.postMessage({ messageType: 1, score: gameScore, MAIN_MENU_NUM: _gameConfig2.default.MAIN_MENU_NUM });
+                wx.postMessage({ messageType: 3, MAIN_MENU_NUM: _gameConfig2.default.MAIN_MENU_NUM });
+                if (_GameDataManager2.default.isHideSub) {
+                    wx.postMessage({ messageType: 5 });
+                }
+                //记录游戏数据
+                wx.request({
+                    url: _gameConfig2.default.INTER_URL + "game/over",
+                    data: {
+                        'gameId': _GameDataManager2.default.gameId,
+                        'score': _GameDataManager2.default.totalScore
+                    },
+                    header: {
+                        'content-type': 'application/x-www-form-urlencoded',
+                        'Cookie': "SESSION=" + wx.getStorageSync('sessionId')
+                    },
+                    method: "POST",
+                    success: function success(res) {
+                        console.log(res.data);
+                        if (res.data.status == 1) {
+                            console.log("游戏数据记录成功");
+                        } else {
+                            switch (res.data.code) {
+                                case 1004:
+                                    console.log("游戏不存在");
+                                    break;
+                                case 1005:
+                                    console.log("游戏数据记录参数错误");
+                                    break;
+                            }
+                        }
+                    },
+                    error: function error() {
+                        console.log("连接错误");
+                    }
+                });
+            }
+        } catch (e) {
+            _util2.default.gameLog(1, '游戏结果显示模块错误');
         }
     }
 });

@@ -16,6 +16,10 @@ var _gameConfig = require('../gameConfig');
 
 var _gameConfig2 = _interopRequireDefault(_gameConfig);
 
+var _gameDataManager = require('../gameDataManager');
+
+var _gameDataManager2 = _interopRequireDefault(_gameDataManager);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 cc.Class({
@@ -56,6 +60,11 @@ cc.Class({
         _util2.default.btnEvent(this.closeBtn, this.btnSound, function () {
             if (_gameConfig2.default.IS_WX) {
                 wx.postMessage({ messageType: 3, MAIN_MENU_NUM: _gameConfig2.default.MAIN_MENU_NUM });
+                console.log(_gameDataManager2.default.isHideSub);
+                if (_gameDataManager2.default.isHideSub) {
+                    console.log('关闭排行榜隐藏子域');
+                    wx.postMessage({ messageType: 5 });
+                }
             }
             _GameUITools2.default.unLoadingLayer(_this.node);
         });

@@ -35,8 +35,10 @@ cc.Class({
     },
     //奔跑
     run:function(){
-        var animState = this.anim.play('playerRun');
-        animState.repeatCount = Infinity;
+        if(!GameDataManager.isGameOver){
+            var animState = this.anim.play('playerRun');
+            animState.repeatCount = Infinity;
+        }
     },
     //停下
     stop:function(){
