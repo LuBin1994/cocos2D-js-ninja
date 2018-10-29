@@ -91,6 +91,7 @@ cc.Class({
     },
     //游戏复活
     continueGame: function continueGame() {
+        this.stage.setStagePosX();
         this.stage.showStage();
         switch (_gameDataManager2.default.toolChoose) {
             case 0:
@@ -153,10 +154,13 @@ cc.Class({
         if (!_gameDataManager2.default.isAnimate) {
             _gameDataManager2.default.isLengthen = true;
             _gameDataManager2.default.isStartLengthen = true;
-            if (_gameDataManager2.default.toolChoose == 1) {
-                this.bridge.buildBridge();
-            } else if (_gameDataManager2.default.toolChoose == 2) {
-                this.player.readyToJump();
+            switch (_gameDataManager2.default.toolChoose) {
+                case 1:
+                    this.bridge.buildBridge();
+                    break;
+                case 2:
+                    this.player.readyToJump();
+                    break;
             }
         }
     },
@@ -308,24 +312,32 @@ cc.Class({
      * 获取道具长度
      */
     getToolLength: function getToolLength() {
-        if (_gameDataManager2.default.toolChoose == 0) {
-            return this.stick.node.height;
-        } else if (_gameDataManager2.default.toolChoose == 1) {
-            return this.bridge.bridgeY;
-        } else if (_gameDataManager2.default.toolChoose == 2) {
-            return Math.floor(this.energy.energy.height / 300 * 600);
+        switch (_gameDataManager2.default.toolChoose) {
+            case 0:
+                return this.stick.node.height;
+                break;
+            case 1:
+                return this.bridge.bridgeY;
+                break;
+            case 2:
+                return Math.floor(this.energy.energy.height / 300 * 600);
+                break;
         }
     },
     /**
      * 设置道具
      */
     setTool: function setTool() {
-        if (_gameDataManager2.default.toolChoose == 0) {
-            this.stick.setStick(this.stage.currentPlat.x + this.stage.currentPlat.width / 2);
-        } else if (_gameDataManager2.default.toolChoose == 1) {
-            this.bridge.setBridge(this.stage.currentPlat.x + this.stage.currentPlat.width / 2);
-        } else if (_gameDataManager2.default.toolChoose == 2) {
-            this.player.stop();
+        switch (_gameDataManager2.default.toolChoose) {
+            case 0:
+                this.stick.setStick(this.stage.currentPlat.x + this.stage.currentPlat.width / 2);
+                break;
+            case 1:
+                this.bridge.setBridge(this.stage.currentPlat.x + this.stage.currentPlat.width / 2);
+                break;
+            case 2:
+                this.player.stop();
+                break;
         }
     },
     //得分

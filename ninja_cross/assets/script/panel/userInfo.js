@@ -8,7 +8,7 @@ cc.Class({
     },
     onLoad () {
         this.node.active = false;
-        try{ this.getUserInfo()}
+        try{this.getUserInfo()}
         catch (e) {
             Util.gameLog(1,'用户授权模块错误')
         }

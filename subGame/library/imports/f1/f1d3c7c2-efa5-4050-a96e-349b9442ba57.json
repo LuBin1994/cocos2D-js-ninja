@@ -42,8 +42,8 @@
     },
     "_scale": {
       "__type__": "cc.Vec3",
-      "x": 0.21033667771012635,
-      "y": 0.21033667771012635,
+      "x": 0.3009820688225539,
+      "y": 0.3009820688225539,
       "z": 1
     },
     "_quat": {
@@ -394,7 +394,7 @@
     "_position": {
       "__type__": "cc.Vec3",
       "x": 0,
-      "y": 255,
+      "y": 410,
       "z": 0
     },
     "_scale": {
@@ -432,8 +432,8 @@
     "_left": 0,
     "_right": 0,
     "_top": 0,
-    "_bottom": 0,
-    "_verticalCenter": 0,
+    "_bottom": 750,
+    "_verticalCenter": 375,
     "_horizontalCenter": 0,
     "_isAbsLeft": true,
     "_isAbsRight": true,
@@ -442,7 +442,7 @@
     "_isAbsHorizontalCenter": true,
     "_isAbsVerticalCenter": true,
     "_originalWidth": 0,
-    "_originalHeight": 0,
+    "_originalHeight": 70,
     "_id": "0fzEZmhMFJ4Kquuqs/1rM8"
   },
   {
@@ -532,7 +532,7 @@
     "content": {
       "__id__": 7
     },
-    "horizontal": true,
+    "horizontal": false,
     "vertical": true,
     "inertia": true,
     "brake": 0.5,
@@ -594,8 +594,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 175,
-      "height": 30
+      "width": 204.17,
+      "height": 35
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -642,8 +642,8 @@
     "_useOriginalSize": true,
     "_string": "玩命加载中...",
     "_N$string": "玩命加载中...",
-    "_fontSize": 30,
-    "_lineHeight": 30,
+    "_fontSize": 35,
+    "_lineHeight": 35,
     "_enableWrapText": true,
     "_N$file": null,
     "_isSystemFontUsed": true,
@@ -772,7 +772,7 @@
       "__id__": 7
     },
     "rankItem": {
-      "__uuid__": "59ef06df-42c7-4a70-9e0b-e80fee2fd171"
+      "__uuid__": "c515f46c-3ebf-4fd6-98a3-b6e403d38147"
     },
     "loadingLabel": {
       "__id__": 14

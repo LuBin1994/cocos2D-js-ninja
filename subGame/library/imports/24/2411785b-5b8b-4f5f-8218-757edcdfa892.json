@@ -1,22 +1,22 @@
 {
   "__type__": "cc.SpriteFrame",
   "content": {
-    "name": "rankBg",
-    "texture": "6a590d8e-1ef9-4efb-a6ab-82bd674b5e58",
+    "name": "playerRun1",
+    "texture": "392fee4e-a9a7-470b-b42d-5a02c9a77aa4",
     "atlas": "",
     "rect": [
       0,
       0,
-      582,
-      758
+      98,
+      103
     ],
     "offset": [
       0,
       0
     ],
     "originalSize": [
-      582,
-      758
+      98,
+      103
     ]
   }
 }

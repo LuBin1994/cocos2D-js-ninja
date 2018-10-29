@@ -926,6 +926,9 @@
     "currentPlat": null,
     "nextPlat": null,
     "nextTwoPlat": null,
+    "currentPosX": 0,
+    "nextPosX": 0,
+    "nextTwoPosX": 0,
     "_id": "a3Zdy3dRlCi6QqKlf8vIRv"
   },
   {

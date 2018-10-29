@@ -209,13 +209,15 @@ cc.Class({
         num.string = (rank + 1).toString();
         // 昵称
         let userName = node.getChildByName('nickName').getComponent(cc.Label);
-        userName.string = playerInfo.nickname;
+        let nickNameStr = this._cutstr(playerInfo.nickname,6)
+        console.log(nickNameStr)
+        userName.string = nickNameStr;
         // 得分
         let score = node.getChildByName('score').getComponent(cc.Label);
         let grade = playerInfo.KVDataList.length != 0 ? playerInfo.KVDataList[0].value : 0;
         score.string = grade.toString();
 
-        let userIcon = node.getChildByName('mask').children[0].getComponent(cc.Sprite);
+        let userIcon = node.getChildByName('userIcon').getComponent(cc.Sprite);
 
         cc.loader.load({
             url: playerInfo.avatarUrl,
@@ -243,8 +245,7 @@ cc.Class({
         node.parent = this.content;
         let userName = node.getChildByName('nickName').getComponent(cc.Label);
         let userIcon = node.getChildByName('mask').children[0].getComponent(cc.Sprite);
-
-        userName.string = nickName;
+        userName.string = nickNameStr;
         console.log(nickName + '\'s info has been getten');
         cc.loader.load({
             url: avatarUrl,
@@ -261,4 +262,26 @@ cc.Class({
         this.loadingLabel.active = false;
         this.scoreText.active = false;
     },
+    //截取玩家名字
+    _cutstr(str,len)
+    {
+        //如果给定字符串小于指定长度，则返回源字符串；
+        if(str.length <= len){
+            return str
+        }
+        var str_length = 0;
+        var str_len = 0;
+        var str_cut = new String();
+        var str_len = str.length;
+        for(var i = 0;i<str_len;i++)
+        {
+            var a = str.charAt(i);
+            str_length++;
+            str_cut = str_cut.concat(a);
+            if(str_length >= len){
+                str_cut = str_cut.concat("...");
+                return str_cut;
+            }
+        }
+    }
 });

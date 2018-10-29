@@ -35,7 +35,10 @@ cc.Class({
         nextTwoPlat: {
             default: null,
             type: cc.node
-        }
+        },
+        currentPosX: 0,
+        nextPosX: 0,
+        nextTwoPosX: 0
     },
     onLoad: function onLoad() {
         var _this = this;
@@ -92,6 +95,7 @@ cc.Class({
         this.currentPlat = cc.instantiate(this.stagePrefabs[_util2.default.randomNum(3)]);
         this.currentPlat.setPosition(cc.v2(-230, -295));
         this.currentPlat.parent = this.node;
+        this.currentPosX = -230;
         //第二个站桩
         this.nextPlat = cc.instantiate(this.stagePrefabs[_util2.default.randomNum(3)]);
         distance = _util2.default.randomNum(250) + 100; //随机距离
@@ -100,6 +104,7 @@ cc.Class({
         nextX = this.currentPlat.x + centerDistance;
         this.nextPlat.setPosition(cc.v2(nextX, -295));
         this.nextPlat.parent = this.node;
+        this.nextPosX = nextX;
 
         //第三个站桩
         this.nextTwoPlat = cc.instantiate(this.stagePrefabs[_util2.default.randomNum(3)]);
@@ -109,6 +114,7 @@ cc.Class({
         nextX = this.nextPlat.x + centerDistance;
         this.nextTwoPlat.setPosition(cc.v2(nextX, -295));
         this.nextTwoPlat.parent = this.node;
+        this.nextTwoPosX = nextX;
 
         //初始化设置道具
         switch (_gameDataManager2.default.toolChoose) {
@@ -160,6 +166,12 @@ cc.Class({
         centerDistance = centerDistance - centerDistance % _gameConfig2.default.gameMoveSpeed; //两站装中心距离设置为移动速度的整数倍，防止移动过程中出现的偏差
         nextX = this.nextPlat.x + centerDistance;
         this.nextTwoPlat.setPosition(cc.v2(nextX, -605));
+
+        //记录站桩位置，游戏继续可用
+        this.currentPosX = this.currentPlat.x;
+        this.nextPosX = this.nextPlat.x;
+        this.nextTwoPosX = this.nextTwoPlat.x;
+
         //新生成的站台动画
         var moveY = cc.moveTo(1, cc.v2(nextX, -295));
         var fadeIn = cc.fadeIn(1);
@@ -201,6 +213,13 @@ cc.Class({
     },
     showStage: function showStage() {
         this.node.opacity = 255;
+    },
+
+    //设置游戏复活站桩位置
+    setStagePosX: function setStagePosX() {
+        this.currentPlat.setPosition(cc.v2(this.currentPosX, -295));
+        this.nextPlat.setPosition(cc.v2(this.nextPosX, -295));
+        this.nextTwoPlat.setPosition(cc.v2(this.nextTwoPosX, -295));
     },
     update: function update(dt) {
         if (_gameDataManager2.default.isMove) {

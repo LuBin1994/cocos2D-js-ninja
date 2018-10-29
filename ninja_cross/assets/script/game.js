@@ -67,6 +67,7 @@ cc.Class({
     },
     //游戏复活
     continueGame: function () {
+        this.stage.setStagePosX();
         this.stage.showStage();
         switch(GameDataManager.toolChoose){
             case 0:
@@ -130,11 +131,13 @@ cc.Class({
         if(!GameDataManager.isAnimate){
             GameDataManager.isLengthen = true;
             GameDataManager.isStartLengthen = true;
-            if(GameDataManager.toolChoose == 1){
-                this.bridge.buildBridge();
-            }
-            else if(GameDataManager.toolChoose == 2){
-                this.player.readyToJump();
+            switch(GameDataManager.toolChoose){
+                case 1:
+                    this.bridge.buildBridge();
+                    break;
+                case 2:
+                    this.player.readyToJump();
+                    break;
             }
         }
     },
@@ -294,28 +297,32 @@ cc.Class({
      * 获取道具长度
      */
     getToolLength:function(){
-        if(GameDataManager.toolChoose == 0){
-            return this.stick.node.height
-        }
-        else if(GameDataManager.toolChoose == 1){
-            return this.bridge.bridgeY
-        }
-        else if(GameDataManager.toolChoose == 2){
-            return Math.floor(this.energy.energy.height/300*600)
+        switch(GameDataManager.toolChoose){
+            case 0:
+                return this.stick.node.height;
+                break;
+            case 1:
+                return this.bridge.bridgeY;
+                break;
+            case 2:
+                return Math.floor(this.energy.energy.height/300*600);
+                break;
         }
     },
     /**
      * 设置道具
      */
     setTool:function(){
-        if(GameDataManager.toolChoose == 0){
-            this.stick.setStick(this.stage.currentPlat.x + this.stage.currentPlat.width / 2)
-        }
-        else if(GameDataManager.toolChoose == 1){
-            this.bridge.setBridge(this.stage.currentPlat.x + this.stage.currentPlat.width / 2);
-        }
-        else if(GameDataManager.toolChoose == 2){
-            this.player.stop();
+        switch(GameDataManager.toolChoose){
+            case 0:
+                this.stick.setStick(this.stage.currentPlat.x + this.stage.currentPlat.width / 2)
+                break;
+            case 1:
+                this.bridge.setBridge(this.stage.currentPlat.x + this.stage.currentPlat.width / 2);
+                break;
+            case 2:
+                this.player.stop();
+                break;
         }
     },
     //得分
