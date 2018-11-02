@@ -8,6 +8,10 @@ var _gameConfig = require('../gameConfig');
 
 var _gameConfig2 = _interopRequireDefault(_gameConfig);
 
+var _gameDataManager = require('../gameDataManager');
+
+var _gameDataManager2 = _interopRequireDefault(_gameDataManager);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 cc.Class({
@@ -35,7 +39,7 @@ cc.Class({
     },
     musicInit: function musicInit() {
         var _this = this;
-        if (_gameConfig2.default.isBgmPlay) {
+        if (_gameDataManager2.default.canSoundPlay) {
             this.musicOff.active = false;
             cc.audioEngine.playMusic(this.bgm, true, 1);
         } else {
@@ -43,7 +47,7 @@ cc.Class({
         }
         this.musicOn.on('touchstart', function () {
             _this.musicBtnDispaly();
-            _gameConfig2.default.isBgmPlay = false;
+            _gameDataManager2.default.canSoundPlay = !_gameDataManager2.default.canSoundPlay;
             cc.audioEngine.pauseMusic(_this.bgm, true, 1);
             _gameConfig2.default.isScreemCanTouch = false;
             setTimeout(function () {
@@ -52,7 +56,7 @@ cc.Class({
         });
         this.musicOff.on('touchstart', function () {
             _this.musicBtnDispaly();
-            _gameConfig2.default.isBgmPlay = true;
+            _gameDataManager2.default.canSoundPlay = !_gameDataManager2.default.canSoundPlay;
             cc.audioEngine.resumeMusic(_this.bgm, true, 1);
             _gameConfig2.default.isScreemCanTouch = false;
             setTimeout(function () {

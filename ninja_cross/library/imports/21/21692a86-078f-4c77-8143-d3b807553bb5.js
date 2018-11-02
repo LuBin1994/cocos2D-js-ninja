@@ -28,7 +28,9 @@ var Util = {
     btnEvent: function btnEvent(NODE, btnSound, CALLBACKS) {
         NODE.on('touchstart', function () {
             NODE.setScale(0.8);
-            cc.audioEngine.playEffect(btnSound, false, 1);
+            if (_gameDataManager2.default.canSoundPlay) {
+                cc.audioEngine.playEffect(btnSound, false, 1);
+            }
         });
         NODE.on('touchend', function () {
             NODE.setScale(1);
@@ -48,7 +50,9 @@ var Util = {
      */
     modeBtnEvent: function modeBtnEvent(NODE, btnSound, CALLBACKS) {
         NODE.on('touchstart', function () {
-            cc.audioEngine.playEffect(btnSound, false, 1);
+            if (_gameDataManager2.default.canSoundPlay) {
+                cc.audioEngine.playEffect(btnSound, false, 1);
+            }
         });
         NODE.on('touchend', function () {
             CALLBACKS && CALLBACKS();
@@ -99,64 +103,32 @@ var Util = {
      * @param num 游戏难度等级
      */
     setGameDifficulty: function setGameDifficulty(num) {
-        switch (num) {
-            case 1:
-                _gameConfig2.default.MaxMultiProbability = 0.2;
-                _gameConfig2.default.sharkJumpDurTime = 40;
-                break;
-            case 2:
-                _gameConfig2.default.MaxMultiProbability = 0.25;
-                _gameConfig2.default.sharkJumpDurTime = 37;
-                break;
-            case 3:
-                _gameConfig2.default.MaxMultiProbability = 0.3;
-                _gameConfig2.default.sharkJumpDurTime = 34;
-                break;
-            case 4:
-                _gameConfig2.default.MaxMultiProbability = 0.35;
-                _gameConfig2.default.sharkJumpDurTime = 31;
-                break;
-            case 5:
-                _gameConfig2.default.MaxMultiProbability = 0.4;
-                _gameConfig2.default.sharkJumpDurTime = 28;
-                break;
-            case 6:
-                _gameConfig2.default.MaxMultiProbability = 0.5;
-                _gameConfig2.default.sharkJumpDurTime = 25;
-                break;
-            case 7:
-                _gameConfig2.default.MaxMultiProbability = 0.6;
-                _gameConfig2.default.sharkJumpDurTime = 22;
-                break;
-            case 8:
-                _gameConfig2.default.MaxMultiProbability = 0.7;
-                _gameConfig2.default.sharkJumpDurTime = 19;
-                break;
-            case 9:
-                _gameConfig2.default.MaxMultiProbability = 0.8;
-                _gameConfig2.default.sharkJumpDurTime = 16;
-                break;
-            case 10:
-                _gameConfig2.default.MaxMultiProbability = 0.9;
-                _gameConfig2.default.sharkJumpDurTime = 13;
-                break;
-        }
+        _gameConfig2.default.MaxMultiProbability = 0.13 + 0.7 * num;
+        _gameConfig2.default.sharkJumpDurTime = 40 - 3 * num;
     },
 
     /**
      * 游戏日志
-     * @param logLevel 日志等级
-     * @param logRemark 日志备注
+     * @param error 内容
      */
-    gameLog: function gameLog(logLevel, logRemark) {
+    gameLog: function gameLog(error) {
+        var str = error;
         wx.request({
             url: _gameConfig2.default.LOG_URL + 'submit',
             data: {
                 'code': 2,
-                'env': 2,
-                'content': _gameConfig2.default.config,
-                'level': logLevel,
-                'remark': logRemark
+                'env': _gameConfig2.default.env,
+                'content': str,
+                'system': _gameConfig2.default.systemInfo.system,
+                'brand': _gameConfig2.default.systemInfo.brand,
+                'model': _gameConfig2.default.systemInfo.model,
+                'pixelRatio': _gameConfig2.default.systemInfo.pixelRatio,
+                'screenWidth': _gameConfig2.default.systemInfo.screenWidth,
+                'screenHeight': _gameConfig2.default.systemInfo.screenHeight,
+                'version': _gameConfig2.default.systemInfo.version,
+                'platform': _gameConfig2.default.systemInfo.platform,
+                'sdkVersion': _gameConfig2.default.systemInfo.sdkVersion,
+                'benchmarkLevel': _gameConfig2.default.systemInfo.benchmarkLevel
             },
             header: {
                 'content-type': 'application/x-www-form-urlencoded',
@@ -164,8 +136,6 @@ var Util = {
             },
             method: "POST",
             seccuss: function seccuss(res) {
-                console.log('日志接口访问成功');
-                console.log(res.data);
                 if (res.data.status) {
                     console.log('日志提交成功');
                 } else {

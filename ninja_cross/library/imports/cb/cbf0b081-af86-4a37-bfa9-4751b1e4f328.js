@@ -21,82 +21,60 @@ cc.Class({
         avatar: cc.Sprite
     },
     onLoad: function onLoad() {
+        var _this = this;
         this.node.active = false;
         try {
-            this.getUserInfo();
+            _this.login();
         } catch (e) {
-            _util2.default.gameLog(1, '用户授权模块错误');
+            _util2.default.gameLog("用户授权模块错误");
         }
     },
-    start: function start() {},
 
-    //授权
-    getUserInfo: function getUserInfo() {
+    //未登陆处理
+    unLoginedSetting: function unLoginedSetting() {
         var _this = this;
-        if (_gameConfig2.default.IS_WX) {
-            //获取用户系统信息
-            wx.getSystemInfo({
+        if (_gameConfig2.default.IS_AUTHORIZE == false) {
+            wx.getSetting({
                 success: function success(res) {
-                    _gameConfig2.default.systemInfo.system = res.system;
-                    _gameConfig2.default.systemInfo.brand = res.brand;
-                    _gameConfig2.default.systemInfo.model = res.model;
-                    _gameConfig2.default.systemInfo.pixelRatio = res.pixelRatio;
-                    _gameConfig2.default.systemInfo.screenWidth = res.screenWidth;
-                    _gameConfig2.default.systemInfo.screenHeight = res.screenHeight;
-                    _gameConfig2.default.systemInfo.version = res.version;
-                    _gameConfig2.default.systemInfo.platform = res.platform;
-                    _gameConfig2.default.systemInfo.SDKVersion = res.SDKVersion;
-                    _gameConfig2.default.systemInfo.screenWidth = res.screenWidth;
-                    _gameConfig2.default.systemInfo.benchmarkLevel = res.benchmarkLevel;
-                }
-            });
-            if (_gameConfig2.default.IS_AUTHORIZE == false) {
-                wx.getSetting({
-                    success: function success(res) {
-                        //已经授权
-                        if (res.authSetting['scope.userInfo']) {
-                            _this.node.active = true;
-                            _gameConfig2.default.IS_AUTHORIZE = true;
-                            wx.login({
+                    //已经授权
+                    if (res.authSetting['scope.userInfo']) {
+                        console.log('==已获得登录权限==');
+                        _this.node.active = true;
+                        _gameConfig2.default.IS_AUTHORIZE = true;
+                        _this.loginWithWxAuthorize();
+                        //获取用户信息,显示头像
+                        wx.getUserInfo({
+                            success: function success(res) {
+                                _gameConfig2.default.userInfo.nickName = res.userInfo.nickName;
+                                _gameConfig2.default.userInfo.avatarUrl = res.userInfo.avatarUrl + '?aaa=aa.jpg';
+                                _this.nickName.string = res.userInfo.nickName;
+                                cc.loader.load(_gameConfig2.default.userInfo.avatarUrl, function (err, texture) {
+                                    var sprite = new cc.SpriteFrame(texture);
+                                    _this.avatar.spriteFrame = sprite;
+                                });
+                            }
+                        });
+                    }
+                    //未授权
+                    else {
+                            _this.loginWithoutWxAuthorize();
+                            //获取手机信息
+                            wx.getSystemInfo({
                                 success: function success(res) {
-                                    _gameConfig2.default.code = res.code;
-                                    //登陆服务器
-                                    _this.login();
-                                }
-                            });
-                            //获取用户信息
-                            wx.getUserInfo({
-                                success: function success(res) {
-                                    _gameConfig2.default.nickName = res.userInfo.nickName;
-                                    _gameConfig2.default.avatarUrl = res.userInfo.avatarUrl + '?aaa=aa.jpg';
-                                    _this.nickName.string = res.userInfo.nickName;
-                                    cc.loader.load(_gameConfig2.default.avatarUrl, function (err, texture) {
-                                        var sprite = new cc.SpriteFrame(texture);
-                                        _this.avatar.spriteFrame = sprite;
-                                    });
-                                }
-                            });
-                        }
-                        //未授权
-                        else {
-                                //获取手机信息
-                                wx.getSystemInfo({
-                                    success: function success(res) {
-                                        var width = res.screenWidth;
-                                        var height = res.screenHeight;
-                                        console.log(width, height);
-                                        if (_gameConfig2.default.auths_Btn == null) {
-                                            _gameConfig2.default.auths_Btn = wx.createUserInfoButton({
-                                                type: 'image',
-                                                image: 'https://st.gwold.com/wfclb/ninja/pic/authorBtn.png',
-                                                style: {
-                                                    left: width / 2 - 40 - Math.floor(250 * width / 750),
-                                                    top: height / 2 - 40 - Math.floor(500 * height / 1206),
-                                                    width: 80,
-                                                    height: 80
-                                                }
-                                            });
-                                        }
+                                    var width = res.screenWidth;
+                                    var height = res.screenHeight;
+                                    console.log(width, height);
+                                    if (_gameConfig2.default.auths_Btn == null) {
+                                        _gameConfig2.default.auths_Btn = wx.createUserInfoButton({
+                                            type: 'image',
+                                            image: 'https://st.gwold.com/wfclb/ninja/pic/authorBtn.png',
+                                            style: {
+                                                left: width / 2 - 30 - Math.floor(250 * width / 750),
+                                                top: height / 2 - 30 - Math.floor(500 * height / 1206),
+                                                width: 60,
+                                                height: 60
+                                            }
+                                        });
                                         _gameConfig2.default.auths_Btn.onTap(function (res1) {
                                             wx.getSetting({
                                                 success: function success(auths) {
@@ -104,45 +82,10 @@ cc.Class({
                                                         console.log("==已经授权===");
                                                         _gameConfig2.default.IS_AUTHORIZE = true;
                                                         _gameConfig2.default.auths_Btn.hide();
-                                                        _this.node.active = true;
-                                                        wx.login({
-                                                            success: function success(res2) {
-                                                                _gameConfig2.default.code = res2.code;
-                                                                //登陆服务器
-                                                                wx.request({
-                                                                    url: _gameConfig2.default.INTER_URL + "login",
-                                                                    data: {
-                                                                        'code': _gameConfig2.default.code
-                                                                    },
-                                                                    method: "POST",
-                                                                    header: {
-                                                                        'content-type': 'application/x-www-form-urlencoded'
-                                                                    },
-                                                                    success: function success(res) {
-                                                                        console.log(res.data);
-                                                                        if (res.data.status == 1) {
-                                                                            console.log("登陆成功");
-                                                                            wx.setStorageSync('sessionId', res.data.data.sessionId);
-                                                                            wx.setStorageSync('shareCode', res.data.data.shareCode);
-                                                                            //将用户信息传至开发者服务器
-                                                                            _this.sendUserInfo();
-                                                                        } else {
-                                                                            switch (res.data.code) {
-                                                                                case 1006:
-                                                                                    console.log("登录操作失败");
-                                                                                    break;
-                                                                                case 1005:
-                                                                                    console.log("登录参数错误");
-                                                                                    break;
-                                                                            }
-                                                                        }
-                                                                    },
-                                                                    error: function error() {
-                                                                        console.log("连接错误");
-                                                                    }
-                                                                });
-                                                            }
-                                                        });
+                                                        var userInfo = cc.director.getScene().children[0].getChildByName("userInfo");
+                                                        userInfo.active = true;
+                                                        //将用户信息传至开发者服务器
+                                                        _this.sendUserInfo();
                                                     } else {
                                                         console.log("==拒绝授权===");
                                                     }
@@ -151,117 +94,335 @@ cc.Class({
                                         });
                                         _gameConfig2.default.auths_Btn.show();
                                     }
-                                });
-                            }
-                    },
-                    fail: function fail() {
-                        console.log("调用接口失败");
-                    }
-                });
-            } else {
-                this.node.active = true;
-                if (_gameConfig2.default.auths_Btn) {
-                    _gameConfig2.default.auths_Btn.hide();
+                                }
+                            });
+                        }
+                },
+                fail: function fail() {
+                    _util2.default.gameLog("wx.getSetting调用失败");
                 }
-                this.nickName.string = _gameConfig2.default.nickName;
-                cc.loader.load(_gameConfig2.default.avatarUrl, function (err, texture) {
-                    var sprite = new cc.SpriteFrame(texture);
-                    _this.avatar.spriteFrame = sprite;
-                });
+            });
+        } else {
+            console.log("当前已手动授权");
+            this.node.active = true;
+            if (_gameConfig2.default.auths_Btn) {
+                _gameConfig2.default.auths_Btn.hide();
             }
+            this.nickName.string = _gameConfig2.default.userInfo.nickName;
+            cc.loader.load(_gameConfig2.default.userInfo.avatarUrl, function (err, texture) {
+                var sprite = new cc.SpriteFrame(texture);
+                _this.avatar.spriteFrame = sprite;
+            });
         }
     },
 
-    //开发者服务器登录
-    login: function login() {
+    //已登陆处理
+    loginedSetting: function loginedSetting() {
+        var _this = this;
+        if (_gameConfig2.default.IS_AUTHORIZE == false) {
+            wx.getSetting({
+                success: function success(res) {
+                    //已经授权
+                    if (res.authSetting['scope.userInfo']) {
+                        console.log('==已获得登录权限==');
+                        _this.node.active = true;
+                        _gameConfig2.default.IS_AUTHORIZE = true;
+                        //获取用户信息,显示头像
+                        wx.getUserInfo({
+                            success: function success(res) {
+                                _gameConfig2.default.userInfo.nickName = res.userInfo.nickName;
+                                _gameConfig2.default.userInfo.avatarUrl = res.userInfo.avatarUrl + '?aaa=aa.jpg';
+                                _this.nickName.string = res.userInfo.nickName;
+                                cc.loader.load(_gameConfig2.default.userInfo.avatarUrl, function (err, texture) {
+                                    var sprite = new cc.SpriteFrame(texture);
+                                    _this.avatar.spriteFrame = sprite;
+                                });
+                            }
+                        });
+                    }
+                    //未授权
+                    else {
+                            //获取手机信息
+                            wx.getSystemInfo({
+                                success: function success(res) {
+                                    var width = res.screenWidth;
+                                    var height = res.screenHeight;
+                                    console.log(width, height);
+                                    if (_gameConfig2.default.auths_Btn == null) {
+                                        _gameConfig2.default.auths_Btn = wx.createUserInfoButton({
+                                            type: 'image',
+                                            image: 'https://st.gwold.com/wfclb/ninja/pic/authorBtn.png',
+                                            style: {
+                                                left: width / 2 - 30 - Math.floor(250 * width / 750),
+                                                top: height / 2 - 30 - Math.floor(500 * height / 1206),
+                                                width: 60,
+                                                height: 60
+                                            }
+                                        });
+                                        _gameConfig2.default.auths_Btn.onTap(function (res1) {
+                                            wx.getSetting({
+                                                success: function success(auths) {
+                                                    if (auths.authSetting["scope.userInfo"]) {
+                                                        console.log("==已经授权===");
+                                                        _gameConfig2.default.IS_AUTHORIZE = true;
+                                                        _gameConfig2.default.auths_Btn.hide();
+                                                        var userInfo = cc.director.getScene().children[0].getChildByName("userInfo");
+                                                        userInfo.active = true;
+                                                        //将用户信息传至开发者服务器
+                                                        _this.sendUserInfo();
+                                                    } else {
+                                                        console.log("==拒绝授权===");
+                                                    }
+                                                }
+                                            });
+                                        });
+                                        _gameConfig2.default.auths_Btn.show();
+                                    }
+                                }
+                            });
+                        }
+                },
+                fail: function fail() {
+                    _util2.default.gameLog("wx.getSetting调用失败");
+                }
+            });
+        } else {
+            console.log("当前已手动授权");
+            this.node.active = true;
+            if (_gameConfig2.default.auths_Btn) {
+                _gameConfig2.default.auths_Btn.hide();
+            }
+            this.nickName.string = _gameConfig2.default.userInfo.nickName;
+            cc.loader.load(_gameConfig2.default.userInfo.avatarUrl, function (err, texture) {
+                var sprite = new cc.SpriteFrame(texture);
+                _this.avatar.spriteFrame = sprite;
+            });
+        }
+    },
+
+    //微信已授权开发者服务器登录
+    loginWithWxAuthorize: function loginWithWxAuthorize() {
+        console.log("已授权登陆开始");
+        var _this = this;
+        this.getUserInfo(function () {
+            wx.request({
+                url: _gameConfig2.default.INTER_URL + "login",
+                data: {
+                    'code': _gameConfig2.default.userInfo.code,
+                    'nickName': _gameConfig2.default.userInfo.nickName,
+                    'headImg': _gameConfig2.default.userInfo.avatarUrl,
+                    'country': _gameConfig2.default.userInfo.country,
+                    'province': _gameConfig2.default.userInfo.province,
+                    'city': _gameConfig2.default.userInfo.city,
+                    'sex': _gameConfig2.default.userInfo.sex,
+                    'shareCode': _gameConfig2.default.enterShareConfig.enterShareCode
+                },
+                method: "POST",
+                header: {
+                    'content-type': 'application/x-www-form-urlencoded'
+                },
+                success: function success(res) {
+                    console.log('登陆完成后返回值：', res.data);
+                    if (res.data.status == 1) {
+                        wx.setStorageSync('sessionId', res.data.data.sessionId);
+                        wx.setStorageSync('shareCode', res.data.data.shareCode);
+                    } else {
+                        switch (res.data.code) {
+                            case 1006:
+                                _util2.default.gameLog("登录操作失败");
+                                break;
+                            case 1005:
+                                _util2.default.gameLog("登录参数错误");
+                                break;
+                        }
+                    }
+                },
+                error: function error() {
+                    _util2.default.gameLog("/login接口调用失败");
+                }
+            });
+        });
+    },
+
+    //微信未授权开发者服务器登录
+    loginWithoutWxAuthorize: function loginWithoutWxAuthorize() {
+        console.log("未授权登陆开始");
         var _this = this;
         wx.request({
             url: _gameConfig2.default.INTER_URL + "login",
             data: {
-                'code': _gameConfig2.default.code
+                'code': _gameConfig2.default.userInfo.code,
+                'shareCode': _gameConfig2.default.enterShareConfig.enterShareCode
             },
             method: "POST",
             header: {
                 'content-type': 'application/x-www-form-urlencoded'
             },
             success: function success(res) {
-                console.log(res.data);
+                console.log('微信未授权登陆完成后返回值：', res.data);
                 if (res.data.status == 1) {
-                    console.log("登陆成功");
                     wx.setStorageSync('sessionId', res.data.data.sessionId);
                     wx.setStorageSync('shareCode', res.data.data.shareCode);
                 } else {
                     switch (res.data.code) {
                         case 1006:
-                            console.log("登录操作失败");
+                            _util2.default.gameLog("登录操作失败");
                             break;
                         case 1005:
-                            console.log("登录参数错误");
+                            _util2.default.gameLog("登录参数错误");
                             break;
                     }
                 }
             },
             error: function error() {
-                console.log("连接错误");
+                _util2.default.gameLog("/login接口调用失败");
             }
+
         });
     },
 
     //发送用户信息
     sendUserInfo: function sendUserInfo() {
+        console.log("将用户信息传送至开发者服务器开始");
         var _this = this;
-        //获取用户信息
+        var userInfo = cc.director.getScene().children[0].getChildByName("userInfo");
+        var nickName = userInfo.getChildByName("nickName").getComponent(cc.Label);
+        var avatar = userInfo.getChildByName("mask").getChildByName("avatar").getComponent(cc.Sprite);
+        this.getUserInfo(function () {
+            nickName.string = _gameConfig2.default.userInfo.nickName;
+            cc.loader.load(_gameConfig2.default.userInfo.avatarUrl, function (err, texture) {
+                var sprite = new cc.SpriteFrame(texture);
+                avatar.spriteFrame = sprite;
+            });
+            //将用户信息传至开发者服务器
+            wx.request({
+                url: _gameConfig2.default.INTER_URL + "info",
+                data: {
+                    'nickName': _gameConfig2.default.userInfo.nickName,
+                    'headImg': _gameConfig2.default.userInfo.avatarUrl,
+                    'country': _gameConfig2.default.userInfo.country,
+                    'province': _gameConfig2.default.userInfo.province,
+                    'city': _gameConfig2.default.userInfo.city,
+                    'sex': _gameConfig2.default.userInfo.sex
+                },
+                method: "POST",
+                header: {
+                    'content-type': 'application/x-www-form-urlencoded',
+                    'Cookie': "SESSION=" + wx.getStorageSync('sessionId')
+                },
+                success: function success(res) {
+                    console.log("用户信息传至开发者服务器返回值", res.data);
+                    if (res.data.status == 1) {} else {
+                        switch (res.data.code) {
+                            case 1006:
+                                _util2.default.gameLog("用户信息传送操作失败");
+                            case 1005:
+                                _util2.default.gameLog("用户信息传送参数错误");
+                        }
+                    }
+                },
+                error: function error() {
+                    _util2.default.gameLog("/info接口调用失败");
+                }
+            });
+        });
+    },
+
+    //获取用户信息
+    getUserInfo: function getUserInfo(callBacks) {
+        console.log("获取个人信息开始");
+        var callback = callBacks;
         wx.getUserInfo({
             success: function success(res) {
-                _gameConfig2.default.nickName = res.userInfo.nickName;
-                _gameConfig2.default.avatarUrl = res.userInfo.avatarUrl + '?aaa=aa.jpg';
-                _gameConfig2.default.country = res.userInfo.country;
-                _gameConfig2.default.province = res.userInfo.province;
-                _gameConfig2.default.city = res.userInfo.city;
-                _gameConfig2.default.sex = res.userInfo.gender;
-                _this.nickName.string = res.userInfo.nickName;
-                cc.loader.load(_gameConfig2.default.avatarUrl, function (err, texture) {
-                    var sprite = new cc.SpriteFrame(texture);
-                    _this.avatar.spriteFrame = sprite;
-                });
-                //将用户信息传至开发者服务器
-                wx.request({
-                    url: _gameConfig2.default.INTER_URL + "info",
-                    data: {
-                        'nickName': _gameConfig2.default.nickName,
-                        'headImg': _gameConfig2.default.avatarUrl,
-                        'country': _gameConfig2.default.country,
-                        'province': _gameConfig2.default.province,
-                        'city': _gameConfig2.default.city,
-                        'sex': _gameConfig2.default.sex
-                    },
-                    method: "POST",
-                    header: {
-                        'content-type': 'application/x-www-form-urlencoded',
-                        'Cookie': "SESSION=" + wx.getStorageSync('sessionId')
-                    },
-                    success: function success(res) {
-                        console.log(res.data);
-                        if (res.data.status == 1) {
-                            console.log("用户信息传送成功");
-                        } else {
-                            switch (res.data.code) {
-                                case 1006:
-                                    console.log("用户信息传送操作失败");
-                                case 1005:
-                                    console.log("用户信息传送参数错误");
-                            }
-                        }
-                    },
-                    error: function error() {
-                        console.log("连接出现错误");
-                    }
-                });
+                console.log("获取用户信息返回值", res);
+                _gameConfig2.default.userInfo.nickName = res.userInfo.nickName;
+                _gameConfig2.default.userInfo.avatarUrl = res.userInfo.avatarUrl + '?aaa=aa.jpg';
+                _gameConfig2.default.userInfo.country = res.userInfo.country;
+                _gameConfig2.default.userInfo.province = res.userInfo.province;
+                _gameConfig2.default.userInfo.city = res.userInfo.city;
+                _gameConfig2.default.userInfo.sex = res.userInfo.gender;
+                if (res.userInfo.gender = '') {
+                    _gameConfig2.default.userInfo.sex = -1;
+                }
+                console.log(_gameConfig2.default);
+                callback && callback();
             }
         });
+    },
+    checkLogin: function checkLogin(callbacks) {
+        wx.request({
+            url: _gameConfig2.default.INTER_URL + "checkLogin",
+            method: "POST",
+            header: {
+                'content-type': 'application/x-www-form-urlencoded'
+            },
+            success: function success(res) {
+                console.log('检查登陆返回值：', res.data.data);
+                if (res.data.data == 1) {
+                    console.log("您已登陆，无须再登陆");
+                } else if (res.data.data == 0) {
+                    callbacks && callbacks();
+                }
+            },
+            fail: function fail() {
+                _util2.default.gameLog("checkLogin接口调用失败");
+            }
+        });
+    },
+    login: function login() {
+        var _this = this;
+        if (!_gameConfig2.default.haveCheckLogin) {
+            wx.checkSession({
+                //session_key 未过期
+                success: function success() {
+                    console.log("session_key未过期");
+                    wx.request({
+                        url: _gameConfig2.default.INTER_URL + "checkLogin",
+                        method: "POST",
+                        header: {
+                            'content-type': 'application/x-www-form-urlencoded'
+                        },
+                        success: function success(res) {
+                            console.log(res.data);
+                            _gameConfig2.default.haveCheckLogin = true;
+                            //已登录
+                            if (res.data.status == 1 && res.data.data == 1) {
+                                console.log("已登陆");
+                                _this.loginedSetting();
+                            }
+                            //未登录
+                            else if (res.data.status == 1 && res.data.data == 0) {
+                                    console.log("未登陆");
+                                    wx.login({
+                                        success: function success(res) {
+                                            _gameConfig2.default.userInfo.code = res.code;
+                                            _this.unLoginedSetting();
+                                        }
+                                    });
+                                }
+                        },
+                        fail: function fail() {
+                            _util2.default.gameLog("checkLogin接口调用失败");
+                        }
+                    });
+                },
+
+                //session_key 已过期
+                fail: function fail() {
+                    console.log("session_key已过期");
+                    wx.login({
+                        success: function success(res) {
+                            _gameConfig2.default.userInfo.code = res.code;
+                            _gameConfig2.default.haveCheckLogin = true;
+                            _this.unLoginedSetting();
+                        }
+                    });
+                }
+            });
+        } else {
+            this.loginedSetting();
+        }
     }
-}
-//获取分享信息
-);
+});
 
 cc._RF.pop();

@@ -57,6 +57,7 @@ cc.Class({
                 }
             }
             if(GameDataManager.isMove){
+                this.timer = 0;
                 this.node.x -= gameConfig.gameMoveSpeed
             }
         }

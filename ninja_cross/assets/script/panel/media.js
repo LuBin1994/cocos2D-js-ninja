@@ -1,4 +1,5 @@
 import gameConfig from '../gameConfig';
+import GameDataManager from '../gameDataManager';
 cc.Class({
     extends: cc.Component,
     properties: {
@@ -15,9 +16,7 @@ cc.Class({
             _this.musicInit();
         });
     },
-    start() {
-
-    },
+    start() {},
     //音乐播放按钮切换
     musicBtnDispaly: function () {
         this.musicOff.active = !this.musicOff.active;
@@ -25,7 +24,7 @@ cc.Class({
     },
     musicInit: function () {
         var _this = this;
-        if (gameConfig.isBgmPlay) {
+        if (GameDataManager.canSoundPlay) {
             this.musicOff.active = false;
             cc.audioEngine.playMusic(this.bgm, true, 1);
         }
@@ -34,7 +33,7 @@ cc.Class({
         }
         this.musicOn.on('touchstart', function () {
             _this.musicBtnDispaly();
-            gameConfig.isBgmPlay = false;
+            GameDataManager.canSoundPlay = !GameDataManager.canSoundPlay
             cc.audioEngine.pauseMusic(_this.bgm, true, 1);
             gameConfig.isScreemCanTouch = false;
             setTimeout(function () {
@@ -43,7 +42,7 @@ cc.Class({
         });
         this.musicOff.on('touchstart', function () {
             _this.musicBtnDispaly();
-            gameConfig.isBgmPlay = true;
+            GameDataManager.canSoundPlay = !GameDataManager.canSoundPlay
             cc.audioEngine.resumeMusic(_this.bgm, true, 1);
             gameConfig.isScreemCanTouch = false;
             setTimeout(function () {

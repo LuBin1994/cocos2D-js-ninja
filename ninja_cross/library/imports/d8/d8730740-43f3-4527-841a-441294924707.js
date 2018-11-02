@@ -85,7 +85,7 @@ cc.Class({
                 });
             });
         } catch (e) {
-            _util2.default.gameLog(1, "站桩预制加载出错");
+            _util2.default.gameLog("站桩预制加载出错");
         }
     },
     //站桩初始化

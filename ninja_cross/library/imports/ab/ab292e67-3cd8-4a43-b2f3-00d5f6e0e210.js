@@ -71,6 +71,7 @@ cc.Class({
                 }
             }
             if (_gameDataManager2.default.isMove) {
+                this.timer = 0;
                 this.node.x -= _gameConfig2.default.gameMoveSpeed;
             }
         }

@@ -66,9 +66,8 @@ cc.Class({
             })
         }
         catch (e) {
-            Util.gameLog(1,"站桩预制加载出错")
+            Util.gameLog("站桩预制加载出错")
         }
-
     },
     //站桩初始化
     stageInit: function () {

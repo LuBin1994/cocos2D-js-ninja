@@ -27,14 +27,11 @@ cc.Class({
             }
         });
         Util.btnEvent(this.playAgainBtn,this.btnSound,function () {
-            GameConfig.canResurrectTime = 1;
-            _this.advBtn.active = true;
             _this.game.reStartGame();
             _this.node.active = false
         });
         Util.btnEvent(this.goBackHomeBtn,this.btnSound,function () {
             GameUITools.loadingScene('start');
-            GameConfig.canResurrectTime = 1;
         });
         Util.btnEvent(this.rankBtn,this.btnSound,function () {
             GameUITools.loadingLayer("panel/rank")
@@ -49,35 +46,59 @@ cc.Class({
                 wx.navigateToMiniProgram({
                     appId:'wx60dc6bacf553bdfc',
                     success(res) {
-                        console.log("跳转成功")
+                        wx.request({
+                            url:GameConfig.INTER_URL+"game/navigate",
+                            data:{
+                                'appId': 'wx60dc6bacf553bdfc',
+                                'name': '忍者对对碰',
+                                'path':'',
+                                'extraData':'',
+                                'env':GameConfig.env,
+                            },
+                            header:{
+                                'content-type': 'application/x-www-form-urlencoded',
+                                'Cookie':"SESSION="+wx.getStorageSync('sessionId')
+                            },
+                            method: "POST",
+                            success:function (res){
+                                console.log("跳转到其他小程序返回值",res.data)
+                                if(res.data.status == 1){
+                                    console.log("提交跳转信息成功")
+                                }
+                                else{
+                                    switch(res.data.code){
+                                        case 1005:
+                                            console.log("提交跳转信息参数错误")
+                                            break;
+                                    }
+                                }
+                            },
+                            error:function () {
+                                console.log("连接错误")
+                            }
+                        })
                     }
                 })
             }
         });
         Util.btnEvent(this.showOffbtn,this.btnSound,function (){
-            if(GameConfig.IS_WX){
-                if(GameDataManager.isBreakRecord){
-                    wx.shareAppMessage({
+            var shareCode = "shareCode="+wx.getStorageSync('shareCode')
+            console.log(shareCode)
+            if(GameDataManager.isBreakRecord){
+                console.log("破纪录的分享")
+                wx.shareAppMessage({
                         title:GameConfig.config.recordShareTitle,
                         imageUrl:GameConfig.config.recordShareImg,
-                        query:"SHARECODE="+wx.getStorageSync('shareCode')
+                        query:shareCode
                     });
-                    //用户点击了“转发”按钮
-                    wx.onShareAppMessage(function (res) {
-                        return {
-                            title: GameConfig.config.recordShareTitle,
-                            imageUrl:GameConfig.config.recordShareImg,
-                            query:"SHARECODE="+wx.getStorageSync('shareCode')
-                        }
-                    })
-                    wx.request({
+                wx.request({
                         url:GameConfig.INTER_URL+"game/share",
                         data:{
                             'title': GameConfig.config.recordShareTitle,
                             'image': GameConfig.config.recordShareImg,
-                            'query':"SHARECODE="+wx.getStorageSync('shareCode')
+                            'query': wx.getStorageSync('shareCode')
                         },
-                        header: {
+                        header:{
                             'content-type': 'application/x-www-form-urlencoded',
                             'Cookie':"SESSION="+wx.getStorageSync('sessionId')
                         },
@@ -95,24 +116,25 @@ cc.Class({
                                 }
                             }
                         },
-                        error:function () {
+                        error:function (){
                             console.log("连接错误")
                         }
 
                     })
-                }
-                else{
-                    wx.shareAppMessage({
-                        title:GameConfig.config.shareTitle,
-                        imageUrl:GameConfig.config.shareImg,
-                        query:"SHARECODE="+wx.getStorageSync('shareCode')
+            }
+            else{
+                console.log("未破纪录的分享")
+                wx.shareAppMessage({
+                        title:GameConfig.config.passShareTitle,
+                        imageUrl:GameConfig.config.passShareImg,
+                        query:shareCode
                     });
-                    wx.request({
+                wx.request({
                         url:GameConfig.INTER_URL+"game/share",
                         data:{
-                            'title': GameConfig.config.shareTitle,
-                            'image': GameConfig.config.shareImg,
-                            'query':"SHARECODE="+wx.getStorageSync('shareCode')
+                            'title': GameConfig.config.passShareTitle,
+                            'image': GameConfig.config.passShareImg,
+                            'query': wx.getStorageSync('shareCode')
                         },
                         header: {
                             'content-type': 'application/x-www-form-urlencoded',
@@ -122,12 +144,11 @@ cc.Class({
                         success:function (res){
                             console.log(res.data)
                             if(res.data.status == 1){
-                                console.log("游戏分享保存成功")
                             }
                             else{
                                 switch(res.data.code){
                                     case 1005:
-                                        console.log("游戏分享保存参数错误")
+                                        Util.gameLog("游戏分享保存参数错误")
                                         break;
                                 }
                             }
@@ -137,15 +158,6 @@ cc.Class({
                         }
 
                     });
-                    //用户点击了“转发”按钮
-                    wx.onShareAppMessage(function (res) {
-                        return {
-                            title: GameConfig.config.shareTitle,
-                            imageUrl:GameConfig.config.shareImg,
-                            query:"SHARECODE="+wx.getStorageSync('shareCode')
-                        }
-                    })
-                }
             }
         });
     },
@@ -177,6 +189,7 @@ cc.Class({
                 this.bestScore.string = "历史最佳: " + GameDataManager.totalScore;
                 wx.setStorageSync('gameScore',GameDataManager.totalScore);
                 GameDataManager.isHideSub = true;
+                GameDataManager.isBreakRecord = true;
             }
             //微信存储分数
             var gameScore = GameDataManager.totalScore;
@@ -186,6 +199,7 @@ cc.Class({
                 wx.postMessage({messageType: 5});
             }
             //记录游戏数据
+            console.log("将要传回的gameID",GameDataManager.gameId)
             wx.request({
                 url:GameConfig.INTER_URL+"game/over",
                 data:{
@@ -198,29 +212,27 @@ cc.Class({
                 },
                 method: "POST",
                 success:function (res) {
-                    console.log(res.data)
+                    console.log('游戏数据记录接口返回值：',res.data)
                     if(res.data.status == 1){
-                        console.log("游戏数据记录成功")
                     }
                     else{
                         switch(res.data.code){
                             case 1004:
-                                console.log("游戏不存在")
+                                Util.gameLog("游戏不存在")
                                 break;
                             case 1005:
-                                console.log("游戏数据记录参数错误")
+                                Util.gameLog("游戏数据记录参数错误")
                                 break;
                         }
                     }
                 },
                 error:function () {
-                    console.log("连接错误")
+                    Util.gameLog("/game/over接口调用失败")
                 }
             })
         }}
         catch (e) {
-            Util.gameLog(1,'游戏结果显示模块错误')
+            Util.gameLog('游戏结果显示模块错误')
         }
-
     }
 });

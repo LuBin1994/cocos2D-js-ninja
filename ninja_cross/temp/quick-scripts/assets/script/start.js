@@ -38,68 +38,25 @@ cc.Class({
         this.init();
         wx.showShareMenu(); //显示转发按钮
         this.getShareConfig();
-    },
-    getShareConfig: function getShareConfig() {
-        var _this = this;
-        //获取分享信息
-        wx.request({
-            url: _gameConfig2.default.INTER_URL + "game/getConfig",
-            method: "GET",
-            success: function success(res) {
-                console.log(res.data);
-                if (res.data.status == 1) {
-                    _gameConfig2.default.config = res.data.data;
-                    console.log(_gameConfig2.default);
-                    var gameDifficultyNum = parseInt(_gameConfig2.default.config.difficulty);
-                    //设置游戏难度
-                    _util2.default.setGameDifficulty(gameDifficultyNum);
-                } else {
-                    console.log("获取游戏配置信息失败");
-                    console.log(res.data.info);
-                }
-            }
-        });
+        this.getUserSystemInfo();
+        this.getOtherShareCode();
     },
     start: function start() {
         cc.director.preloadScene("game", function () {
             console.log("游戏场景已加载");
         });
         this.tex = new cc.Texture2D();
-        _util2.default.gameLog(5, '测试日志接口');
     },
 
     init: function init() {
         var _this = this;
-        _GameUITools2.default.loadingLayer("panel/music");
         if (_gameConfig2.default.IS_WX) {
             _GameUITools2.default.loadingLayer("panel/userInfo");
         }
+        _GameUITools2.default.loadingLayer("panel/music");
         //开始游戏
         _util2.default.btnEvent(this.startBtn, this.btnSound, function () {
             _GameUITools2.default.loadingScene("game");
-            if (_gameConfig2.default.IS_WX) {
-                //游戏开始获取gameId
-                wx.request({
-                    url: _gameConfig2.default.INTER_URL + "game/start",
-                    header: {
-                        'Cookie': "SESSION=" + wx.getStorageSync('sessionId')
-                    },
-                    method: "POST",
-                    success: function success(res) {
-                        console.log(res.data);
-                        if (res.data.status == 1) {
-                            _gameDataManager2.default.gameId = res.data.data;
-                        } else {
-                            console.log(res.data.info);
-                        }
-                    },
-                    error: function error() {
-                        console.log("请求无响应");
-                    }
-                });
-                _util2.default.gameLog();
-            }
-            _util2.default.gameLog();
         });
         //弹出规则
         _util2.default.btnEvent(this.ruleBtn, this.btnSound, function () {
@@ -113,6 +70,66 @@ cc.Class({
         _util2.default.btnEvent(this.modeChooseBtn, this.btnSound, function () {
             _GameUITools2.default.loadingLayer("panel/modeChoose");
         });
+    },
+    //获取分享信息
+    getShareConfig: function getShareConfig() {
+        var _this = this;
+        wx.request({
+            url: _gameConfig2.default.INTER_URL + "game/getConfig",
+            method: "GET",
+            success: function success(res) {
+                console.log("获取分享信息返回值：", res.data);
+                if (res.data.status == 1) {
+                    _gameConfig2.default.config = res.data.data;
+                    if (!_gameConfig2.default.haveSetMode) {
+                        _gameDataManager2.default.toolChoose = parseInt(res.data.data.defaultModel) - 1;
+                        _gameConfig2.default.haveSetMode = true;
+                    }
+                    var gameDifficultyNum = parseInt(_gameConfig2.default.config.difficulty);
+                    //设置游戏难度
+                    _util2.default.setGameDifficulty(gameDifficultyNum);
+                    //用户点击了右上角“转发”按钮
+                    wx.onShareAppMessage(function (res) {
+                        return {
+                            title: _gameConfig2.default.config.shareTitle,
+                            imageUrl: _gameConfig2.default.config.shareImg,
+                            query: "shareCode=" + wx.getStorageSync('shareCode')
+                        };
+                    });
+                } else {
+                    _util2.default.gameLog(res.data.info);
+                }
+            }
+        });
+    },
+
+    //获取用户系统信息
+    getUserSystemInfo: function getUserSystemInfo() {
+        wx.getSystemInfo({
+            success: function success(res) {
+                _gameConfig2.default.systemInfo.system = res.system;
+                _gameConfig2.default.systemInfo.brand = res.brand;
+                _gameConfig2.default.systemInfo.model = res.model;
+                _gameConfig2.default.systemInfo.pixelRatio = res.pixelRatio;
+                _gameConfig2.default.systemInfo.screenWidth = res.screenWidth;
+                _gameConfig2.default.systemInfo.screenHeight = res.screenHeight;
+                _gameConfig2.default.systemInfo.version = res.version;
+                _gameConfig2.default.systemInfo.platform = res.platform;
+                _gameConfig2.default.systemInfo.SDKVersion = res.SDKVersion;
+                _gameConfig2.default.systemInfo.screenWidth = res.screenWidth;
+                _gameConfig2.default.systemInfo.benchmarkLevel = res.benchmarkLevel;
+            }
+        });
+    },
+
+    //获取由他人分享的shareCode
+    getOtherShareCode: function getOtherShareCode() {
+        var res = wx.getLaunchOptionsSync();
+        console.log("返回小程序启动参数", res);
+        if (res.query.shareCode) {
+            _gameConfig2.default.enterShareConfig.enterShareCode = res.query.shareCode;
+            _gameConfig2.default.enterShareConfig.path = res.path;
+        }
     }
 });
 

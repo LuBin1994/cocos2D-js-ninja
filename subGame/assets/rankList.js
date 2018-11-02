@@ -1,8 +1,7 @@
-import GameConfig from './gameConfig';
 cc.Class({
     extends: cc.Component,
     properties: {
-        display:cc.Node,
+        display:cc.ScrollView,
         content: cc.Node,
         rankItem: cc.Prefab,
         loadingLabel: cc.Node,
@@ -11,6 +10,8 @@ cc.Class({
     },
     start () {
         let _self = this;
+        //默认排行榜置顶
+        this.display.scrollToTop(0)
         wx.onMessage(data => {
             let messageType = data.messageType;
             switch(messageType) {
@@ -39,7 +40,7 @@ cc.Class({
             // 以key/value形式存储
             keyList: ["x2" + MAIN_MENU_NUM],
             success: function(getres) {
-                if (getres.KVDataList.length > 0) {
+                if (getres.KVDataList.length > 0){
                     if (MAIN_MENU_NUM == 1) { // TODO
                         wx.setUserCloudStorage({
                             KVDataList: [{
@@ -127,10 +128,9 @@ cc.Class({
                             let grade1 = data[userRank].KVDataList.length != 0 ? data[userRank].KVDataList[0].value : 0;
                             let grade2 = data[topperUserRank].KVDataList.length != 0 ? data[topperUserRank].KVDataList[0].value : 0;
                             let score = grade2 - grade1//距排名前一位好友分差
-                            console.log(data[lowerUserRank],data[topperUserRank])
-                            _self.scoreTextLabel.string = "你已超过"+data[lowerUserRank].nickname+",\n距离下一位好友"+data[topperUserRank].nickname+"还差"+score+"分";
-                            GameConfig.passNickName = data[lowerUserRank].nickname;
-                            GameConfig.shareKind = 1;
+                            let upperName = _self._cutstr(data[topperUserRank].nickname,4);
+                            let lowerName = _self._cutstr(data[lowerUserRank].nickname,10);
+                            _self.scoreTextLabel.string = "你已超过"+lowerName+",\n距离下一位好友"+upperName+"还差"+score+"分";
                         }
                     },
                     fail: res=>{
@@ -179,6 +179,7 @@ cc.Class({
                                 isSelf = true;
                             }
                             _self._showPlayerData(i, data[i], isSelf);
+
                         }
                     },
                     fail: res=>{
@@ -218,15 +219,16 @@ cc.Class({
         score.string = grade.toString();
 
         let userIcon = node.getChildByName('userIcon').getComponent(cc.Sprite);
-
-        cc.loader.load({
-            url: playerInfo.avatarUrl,
-            type: 'png'
-        }, (err, texture) => {
-            if (err) console.error(err);
-            console.log(texture);
-            userIcon.spriteFrame = new cc.SpriteFrame(texture);
-        });
+        if(playerInfo.avatarUrl!=''){
+            cc.loader.load({
+                url: playerInfo.avatarUrl,
+                type: 'png'
+            }, (err, texture) => {
+                if (err) console.error(err);
+                console.log(texture);
+                userIcon.spriteFrame = new cc.SpriteFrame(texture);
+            });
+        }
     },
     //隐藏玩家数据
     hideRankList(){
@@ -247,14 +249,17 @@ cc.Class({
         let userIcon = node.getChildByName('mask').children[0].getComponent(cc.Sprite);
         userName.string = nickNameStr;
         console.log(nickName + '\'s info has been getten');
-        cc.loader.load({
-            url: avatarUrl,
-            type: 'png'
-        }, (err, texture) => {
-            if (err) console.error(err);
-            console.log(texture);
-            userIcon.spriteFrame = new cc.SpriteFrame(texture);
-        });
+        //用户头像不为空的情况下
+        if(avatarUrl!=''){
+            cc.loader.load({
+                url: avatarUrl,
+                type: 'png'
+            }, (err, texture) => {
+                if (err) console.error(err);
+                console.log(texture);
+                userIcon.spriteFrame = new cc.SpriteFrame(texture);
+            });
+        }
     },
     //隐藏子域
     _hideSub(){
@@ -263,8 +268,7 @@ cc.Class({
         this.scoreText.active = false;
     },
     //截取玩家名字
-    _cutstr(str,len)
-    {
+    _cutstr(str,len){
         //如果给定字符串小于指定长度，则返回源字符串；
         if(str.length <= len){
             return str

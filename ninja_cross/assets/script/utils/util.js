@@ -10,7 +10,9 @@ var Util = {
     btnEvent(NODE,btnSound,CALLBACKS){
         NODE.on('touchstart',function(){
             NODE.setScale(0.8);
-            cc.audioEngine.playEffect(btnSound,false,1);
+            if(GameDataManager.canSoundPlay){
+                cc.audioEngine.playEffect(btnSound,false,1);
+            }
         });
         NODE.on('touchend',function(){
             NODE.setScale(1);
@@ -29,7 +31,9 @@ var Util = {
      */
     modeBtnEvent(NODE,btnSound,CALLBACKS){
         NODE.on('touchstart',function(){
-            cc.audioEngine.playEffect(btnSound,false,1);
+            if(GameDataManager.canSoundPlay){
+                cc.audioEngine.playEffect(btnSound,false,1);
+            }
         });
         NODE.on('touchend',function(){
             CALLBACKS && CALLBACKS();
@@ -76,63 +80,31 @@ var Util = {
      * @param num 游戏难度等级
      */
     setGameDifficulty(num){
-        switch(num){
-            case 1:
-                GameConfig.MaxMultiProbability = 0.2;
-                GameConfig.sharkJumpDurTime = 40;
-                break;
-            case 2:
-                GameConfig.MaxMultiProbability = 0.25;
-                GameConfig.sharkJumpDurTime = 37;
-                break;
-            case 3:
-                GameConfig.MaxMultiProbability = 0.3;
-                GameConfig.sharkJumpDurTime = 34;
-                break;
-            case 4:
-                GameConfig.MaxMultiProbability = 0.35;
-                GameConfig.sharkJumpDurTime = 31;
-                break;
-            case 5:
-                GameConfig.MaxMultiProbability = 0.4;
-                GameConfig.sharkJumpDurTime = 28;
-                break;
-            case 6:
-                GameConfig.MaxMultiProbability = 0.5;
-                GameConfig.sharkJumpDurTime = 25;
-                break;
-            case 7:
-                GameConfig.MaxMultiProbability = 0.6;
-                GameConfig.sharkJumpDurTime = 22;
-                break;
-            case 8:
-                GameConfig.MaxMultiProbability = 0.7;
-                GameConfig.sharkJumpDurTime = 19;
-                break;
-            case 9:
-                GameConfig.MaxMultiProbability = 0.8;
-                GameConfig.sharkJumpDurTime = 16;
-                break;
-            case 10:
-                GameConfig.MaxMultiProbability = 0.9;
-                GameConfig.sharkJumpDurTime = 13;
-                break;
-        }
+        GameConfig.MaxMultiProbability = 0.13+0.7*num;
+        GameConfig.sharkJumpDurTime = 40-3*num;
     },
     /**
      * 游戏日志
-     * @param logLevel 日志等级
-     * @param logRemark 日志备注
+     * @param error 内容
      */
-    gameLog(logLevel,logRemark){
+    gameLog(error){
+        var str = error
         wx.request({
             url:GameConfig.LOG_URL+'submit',
             data:{
                 'code':2,
-                'env':2,
-                'content':GameConfig.config,
-                'level':logLevel,
-                'remark':logRemark
+                'env':GameConfig.env,
+                'content':str,
+                'system':GameConfig.systemInfo.system,
+                'brand':GameConfig.systemInfo.brand,
+                'model':GameConfig.systemInfo.model,
+                'pixelRatio':GameConfig.systemInfo.pixelRatio,
+                'screenWidth':GameConfig.systemInfo.screenWidth,
+                'screenHeight':GameConfig.systemInfo.screenHeight,
+                'version':GameConfig.systemInfo.version,
+                'platform':GameConfig.systemInfo.platform,
+                'sdkVersion':GameConfig.systemInfo.sdkVersion,
+                'benchmarkLevel':GameConfig.systemInfo.benchmarkLevel,
             },
             header: {
                 'content-type': 'application/x-www-form-urlencoded',
@@ -140,8 +112,6 @@ var Util = {
             },
             method:"POST",
             seccuss(res){
-                console.log('日志接口访问成功')
-                console.log(res.data)
                 if(res.data.status){
                     console.log('日志提交成功')
                 }

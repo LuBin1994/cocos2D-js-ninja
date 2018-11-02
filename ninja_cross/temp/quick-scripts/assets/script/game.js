@@ -16,9 +16,9 @@ var _GameUITools = require('./utils/GameUITools');
 
 var _GameUITools2 = _interopRequireDefault(_GameUITools);
 
-var _gameConfig = require('./gameConfig');
+var _GameConfig = require('./GameConfig');
 
-var _gameConfig2 = _interopRequireDefault(_gameConfig);
+var _GameConfig2 = _interopRequireDefault(_GameConfig);
 
 var _gameDataManager = require('./gameDataManager');
 
@@ -70,21 +70,48 @@ cc.Class({
     init: function init() {
         var _this = this;
         _GameUITools2.default.loadingLayer("panel/music");
-        if (_gameConfig2.default.IS_WX) {
+        if (_GameConfig2.default.IS_WX) {
             _GameUITools2.default.loadingLayer("panel/userInfo");
         }
         this.node.on('touchstart', function () {
-            if (_gameConfig2.default.isScreemCanTouch && !_gameDataManager2.default.isAnimate) {
+            if (_GameConfig2.default.isScreemCanTouch && !_gameDataManager2.default.isAnimate) {
                 _this.gameTouchStartProcessing();
             }
         });
         this.node.on('touchend', function () {
-            if (_gameConfig2.default.isScreemCanTouch) {
+            if (_GameConfig2.default.isScreemCanTouch) {
                 if (_gameDataManager2.default.isStartLengthen) {
                     _this.gameTouchEndProcessing();
                 }
             }
         });
+        //游戏开始获取id
+        if (_GameConfig2.default.IS_WX) {
+            var modelChoose = parseInt(_gameDataManager2.default.toolChoose) + 1;
+            //游戏开始获取gameId
+            wx.request({
+                url: _GameConfig2.default.INTER_URL + "game/start",
+                data: {
+                    'model': modelChoose
+                },
+                header: {
+                    'content-type': 'application/x-www-form-urlencoded',
+                    'Cookie': "SESSION=" + wx.getStorageSync('sessionId')
+                },
+                method: "POST",
+                success: function success(res) {
+                    console.log('游戏开始获取gameId返回值：', res.data);
+                    if (res.data.status == 1) {
+                        _gameDataManager2.default.gameId = res.data.data;
+                    } else {
+                        _util2.default.gameLog(res.data.info);
+                    }
+                },
+                error: function error() {
+                    _util2.default.gameLog("game/start接口调用失败");
+                }
+            });
+        }
     },
     configInit: function configInit() {
         this.canShowGameOver = true;
@@ -110,7 +137,7 @@ cc.Class({
         _util2.default.gameContinueDataInit();
         this.configInit();
         this.scoreDisplay.string = _gameDataManager2.default.totalScore;
-        if (_gameConfig2.default.canResurrectTime == 0) {
+        if (_GameConfig2.default.canResurrectTime == 0) {
             this.gameOver.advBtn.active = false;
         }
         if (_gameDataManager2.default.toolChoose == 2) {
@@ -121,31 +148,6 @@ cc.Class({
     //重开游戏
     reStartGame: function reStartGame() {
         _GameUITools2.default.loadingScene("game");
-        if (_gameConfig2.default.IS_WX) {
-            //游戏开始获取gameId
-            wx.request({
-                url: _gameConfig2.default.INTER_URL + "game/start",
-                header: {
-                    'Cookie': "SESSION=" + wx.getStorageSync('sessionId')
-                },
-                method: "POST",
-                success: function success(res) {
-                    console.log(res.data);
-                    if (res.data.status == 1) {
-                        _gameDataManager2.default.gameId = res.data.data;
-                    } else {
-                        switch (res.data.code) {
-                            case 1006:
-                                console.log("游戏开始操作失败");
-                                break;
-                        }
-                    }
-                },
-                error: function error() {
-                    console.log("连接错误");
-                }
-            });
-        }
     },
     /**
      * 游戏触摸开始数据处理
@@ -303,7 +305,7 @@ cc.Class({
      * 控制所有节点的移动
      */
     allMove: function allMove(callbacks) {
-        _gameDataManager2.default.move += _gameConfig2.default.gameMoveSpeed;
+        _gameDataManager2.default.move += _GameConfig2.default.gameMoveSpeed;
         if (_gameDataManager2.default.move > _gameDataManager2.default.moveDistance) {
             callbacks && callbacks(); //移动完执行
         }
@@ -353,7 +355,9 @@ cc.Class({
         if (this.canShowGameOver) {
             _gameDataManager2.default.isGameOver = true;
             this.gameOver.showScore();
-            cc.audioEngine.playEffect(_this.gameOverSound, false, 1);
+            if (_gameDataManager2.default.canSoundPlay) {
+                cc.audioEngine.playEffect(_this.gameOverSound, false, 1);
+            }
             this.scheduleOnce(function () {
                 switch (_gameDataManager2.default.toolChoose) {
                     case 0:
@@ -371,7 +375,7 @@ cc.Class({
                 this.stage.hideStage();
             }, 1.5);
             this.fog.hideFog();
-            if (_gameConfig2.default.canResurrectTime == 0) {
+            if (_GameConfig2.default.canResurrectTime == 0) {
                 this.gameOver.advBtn.active = false;
                 this.gameOver.navigateBtn.active = true;
                 //this.gameOver.btnGroup.y = -270;

@@ -1,7 +1,7 @@
 import Util from './utils/util' ;
 import Animation from './utils/animation';
 import GameUITools from './utils/GameUITools';
-import gameConfig from './gameConfig' ;
+import GameConfig from './GameConfig' ;
 import GameDataManager from './gameDataManager';
 var Player = require('player');
 var Stage = require('stage');
@@ -46,21 +46,50 @@ cc.Class({
     init: function () {
         var _this = this;
         GameUITools.loadingLayer("panel/music");
-        if(gameConfig.IS_WX){
+        if(GameConfig.IS_WX){
             GameUITools.loadingLayer("panel/userInfo");
         }
         this.node.on('touchstart', function () {
-            if(gameConfig.isScreemCanTouch && !GameDataManager.isAnimate){
+            if(GameConfig.isScreemCanTouch && !GameDataManager.isAnimate){
                 _this.gameTouchStartProcessing();
             }
         });
         this.node.on('touchend', function () {
-            if(gameConfig.isScreemCanTouch){
+            if(GameConfig.isScreemCanTouch){
                 if ( GameDataManager.isStartLengthen) {
                     _this.gameTouchEndProcessing();
                 }
             }
         });
+        //游戏开始获取id
+        if(GameConfig.IS_WX){
+            var modelChoose = parseInt(GameDataManager.toolChoose)+1
+            //游戏开始获取gameId
+            wx.request({
+                url:GameConfig.INTER_URL+"game/start",
+                data:{
+                    'model':modelChoose
+                },
+                header: {
+                    'content-type': 'application/x-www-form-urlencoded',
+                    'Cookie':"SESSION="+wx.getStorageSync('sessionId')
+                },
+                method: "POST",
+                success:function (res) {
+                    console.log('游戏开始获取gameId返回值：',res.data)
+                    if(res.data.status == 1){
+                        GameDataManager.gameId = res.data.data;
+                    }
+                    else{
+                        Util.gameLog(res.data.info)
+                    }
+                },
+                error:function () {
+                    Util.gameLog("game/start接口调用失败")
+                }
+            });
+
+        }
     },
     configInit: function () {
         this.canShowGameOver = true
@@ -86,7 +115,7 @@ cc.Class({
         Util.gameContinueDataInit();
         this.configInit();
         this.scoreDisplay.string = GameDataManager.totalScore;
-        if(gameConfig.canResurrectTime == 0){
+        if(GameConfig.canResurrectTime == 0){
             this.gameOver.advBtn.active = false;
         }
         if(GameDataManager.toolChoose == 2){
@@ -97,32 +126,6 @@ cc.Class({
     //重开游戏
     reStartGame: function () {
         GameUITools.loadingScene("game");
-        if(gameConfig.IS_WX){
-            //游戏开始获取gameId
-            wx.request({
-                url:gameConfig.INTER_URL+"game/start",
-                header: {
-                    'Cookie':"SESSION="+wx.getStorageSync('sessionId')
-                },
-                method: "POST",
-                success:function (res) {
-                    console.log(res.data)
-                    if(res.data.status == 1){
-                        GameDataManager.gameId = res.data.data
-                    }
-                    else{
-                        switch(res.data.code){
-                            case 1006:
-                                console.log("游戏开始操作失败")
-                                break;
-                        }
-                    }
-                },
-                error:function () {
-                    console.log("连接错误")
-                }
-            });
-        }
     },
     /**
      * 游戏触摸开始数据处理
@@ -288,7 +291,7 @@ cc.Class({
      * 控制所有节点的移动
      */
     allMove: function (callbacks){
-        GameDataManager.move += gameConfig.gameMoveSpeed;
+        GameDataManager.move += GameConfig.gameMoveSpeed;
         if (GameDataManager.move > (GameDataManager.moveDistance)) {
             callbacks && callbacks();  //移动完执行
         }
@@ -338,7 +341,9 @@ cc.Class({
         if (this.canShowGameOver) {
             GameDataManager.isGameOver = true;
             this.gameOver.showScore();
-            cc.audioEngine.playEffect(_this.gameOverSound,false,1);
+            if(GameDataManager.canSoundPlay){
+                cc.audioEngine.playEffect(_this.gameOverSound,false,1);
+            }
             this.scheduleOnce(function() {
                 switch(GameDataManager.toolChoose){
                     case 0:
@@ -356,7 +361,7 @@ cc.Class({
                 this.stage.hideStage();
             }, 1.5);
             this.fog.hideFog();
-            if(gameConfig.canResurrectTime == 0){
+            if(GameConfig.canResurrectTime == 0){
                 this.gameOver.advBtn.active = false;
                 this.gameOver.navigateBtn.active = true;
                 //this.gameOver.btnGroup.y = -270;

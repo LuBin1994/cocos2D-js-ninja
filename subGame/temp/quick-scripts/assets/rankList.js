@@ -4,16 +4,10 @@ cc._RF.push(module, '4d1937N7rZHfZJa8/er9y+A', 'rankList', __filename);
 
 "use strict";
 
-var _gameConfig = require("./gameConfig");
-
-var _gameConfig2 = _interopRequireDefault(_gameConfig);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 cc.Class({
     extends: cc.Component,
     properties: {
-        display: cc.Node,
+        display: cc.ScrollView,
         content: cc.Node,
         rankItem: cc.Prefab,
         loadingLabel: cc.Node,
@@ -22,6 +16,8 @@ cc.Class({
     },
     start: function start() {
         var _self = this;
+        //默认排行榜置顶
+        this.display.scrollToTop(0);
         wx.onMessage(function (data) {
             var messageType = data.messageType;
             switch (messageType) {
@@ -147,10 +143,9 @@ cc.Class({
                             var grade1 = data[userRank].KVDataList.length != 0 ? data[userRank].KVDataList[0].value : 0;
                             var grade2 = data[topperUserRank].KVDataList.length != 0 ? data[topperUserRank].KVDataList[0].value : 0;
                             var score = grade2 - grade1; //距排名前一位好友分差
-                            console.log(data[lowerUserRank], data[topperUserRank]);
-                            _self.scoreTextLabel.string = "你已超过" + data[lowerUserRank].nickname + ",\n距离下一位好友" + data[topperUserRank].nickname + "还差" + score + "分";
-                            _gameConfig2.default.passNickName = data[lowerUserRank].nickname;
-                            _gameConfig2.default.shareKind = 1;
+                            var upperName = _self._cutstr(data[topperUserRank].nickname, 4);
+                            var lowerName = _self._cutstr(data[lowerUserRank].nickname, 10);
+                            _self.scoreTextLabel.string = "你已超过" + lowerName + ",\n距离下一位好友" + upperName + "还差" + score + "分";
                         }
                     },
                     fail: function fail(res) {
@@ -243,15 +238,16 @@ cc.Class({
         score.string = grade.toString();
 
         var userIcon = node.getChildByName('userIcon').getComponent(cc.Sprite);
-
-        cc.loader.load({
-            url: playerInfo.avatarUrl,
-            type: 'png'
-        }, function (err, texture) {
-            if (err) console.error(err);
-            console.log(texture);
-            userIcon.spriteFrame = new cc.SpriteFrame(texture);
-        });
+        if (playerInfo.avatarUrl != '') {
+            cc.loader.load({
+                url: playerInfo.avatarUrl,
+                type: 'png'
+            }, function (err, texture) {
+                if (err) console.error(err);
+                console.log(texture);
+                userIcon.spriteFrame = new cc.SpriteFrame(texture);
+            });
+        }
     },
 
     //隐藏玩家数据
@@ -275,14 +271,17 @@ cc.Class({
         var userIcon = node.getChildByName('mask').children[0].getComponent(cc.Sprite);
         userName.string = nickNameStr;
         console.log(nickName + '\'s info has been getten');
-        cc.loader.load({
-            url: avatarUrl,
-            type: 'png'
-        }, function (err, texture) {
-            if (err) console.error(err);
-            console.log(texture);
-            userIcon.spriteFrame = new cc.SpriteFrame(texture);
-        });
+        //用户头像不为空的情况下
+        if (avatarUrl != '') {
+            cc.loader.load({
+                url: avatarUrl,
+                type: 'png'
+            }, function (err, texture) {
+                if (err) console.error(err);
+                console.log(texture);
+                userIcon.spriteFrame = new cc.SpriteFrame(texture);
+            });
+        }
     },
 
     //隐藏子域

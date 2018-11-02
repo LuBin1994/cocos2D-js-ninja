@@ -28,14 +28,26 @@ cc.Class({
 
     //忍者与鲨鱼碰撞后执行事件
     onCollisionEnter: function onCollisionEnter(other) {
-        _GameDataManager2.default.isSuccess = false;
-        _GameDataManager2.default.isMove = false;
-        _GameDataManager2.default.isGameOver = true;
-        this.game.showGameOver();
-        this.node.stopAllActions();
-        this.game.stick.node.stopAllActions();
-        this.game.bridge.node.stopAllActions();
-        this.fall();
+        var currentWidth = this.game.stage.currentPlat.width;
+        var currentX = this.game.stage.currentPlat.x;
+        var nextWidth = this.game.stage.nextPlat.width;
+        var nextX = this.game.stage.nextPlat.x;
+        console.log(this.node.x);
+        console.log(currentWidth / 2, currentX, nextWidth, nextX);
+        if (currentX - currentWidth / 2 < this.node.x && this.node.x < currentX + currentWidth / 2) {
+            console.log('位于当前站桩范围内');
+        } else if (nextX - nextWidth / 2 < this.node.x && this.node.x < nextX + nextWidth / 2) {
+            console.log('位于下一站桩范围内');
+        } else {
+            _GameDataManager2.default.isSuccess = false;
+            _GameDataManager2.default.isMove = false;
+            _GameDataManager2.default.isGameOver = true;
+            this.game.showGameOver();
+            this.node.stopAllActions();
+            this.game.stick.node.stopAllActions();
+            this.game.bridge.node.stopAllActions();
+            this.fall();
+        }
     },
 
     configInit: function configInit() {
