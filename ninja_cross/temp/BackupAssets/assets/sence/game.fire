@@ -41,8 +41,8 @@
     },
     "_scale": {
       "__type__": "cc.Vec3",
-      "x": 0.44028555140961856,
-      "y": 0.44028555140961856,
+      "x": 1,
+      "y": 1,
       "z": 1
     },
     "_quat": {
@@ -920,7 +920,26 @@
       "__id__": 18
     },
     "_enabled": true,
-    "stagePrefabs": [],
+    "stagePrefabs": [
+      {
+        "__uuid__": "9890fbca-3589-4997-a470-271e454a9d88"
+      },
+      {
+        "__uuid__": "0684e11b-dc63-40d6-af86-69972de067b8"
+      },
+      {
+        "__uuid__": "3f3deebc-4536-4742-9d2c-44be48c0e44d"
+      },
+      {
+        "__uuid__": "a0fdeb2e-ef51-45b2-8016-bb8262ca299b"
+      },
+      {
+        "__uuid__": "79621b32-2f35-48d8-bbf2-4900976ff178"
+      },
+      {
+        "__uuid__": "93a523ee-19c2-4d7b-b9ef-c28b61c0f498"
+      }
+    ],
     "doneStage": 0,
     "canRecycle": false,
     "currentPlat": null,
@@ -1332,8 +1351,12 @@
       "__id__": 27
     },
     "_enabled": true,
+    "bridgePrefab": {
+      "__uuid__": "dda3017a-b4fa-41ef-be43-0425254f8fd2"
+    },
     "bridgeY": 90,
     "timer": 0,
+    "bridgePool": null,
     "_id": "45gMpz11dFS47FIWanV0XL"
   },
   {

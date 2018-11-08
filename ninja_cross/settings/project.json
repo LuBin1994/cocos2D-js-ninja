@@ -34,7 +34,6 @@
     "EditBox",
     "VideoPlayer",
     "WebView",
-    "NodePool",
     "Native NetWork"
   ],
   "fit-height": true,
@@ -48,6 +47,5 @@
     "width": 960
   },
   "use-customize-simulator": false,
-  "use-project-simulator-setting": false,
-  "start-scene": "current"
+  "use-project-simulator-setting": false
 }
