@@ -57,7 +57,6 @@ cc.Class({
         var _this = this;
         this.timer = 0;
         this.bridgeY = 0;
-        console.log(this.node.children.length);
         if (this.node.children.length > 0) {
             for (var i = 0; i < this.node.children.length; i++) {
                 this.bridgePool.put(this.node.children[i--]);

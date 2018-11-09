@@ -36,10 +36,12 @@ cc.Class({
     },
     onLoad: function onLoad() {
         this.init();
-        wx.showShareMenu(); //显示转发按钮
-        this.getShareConfig();
-        this.getUserSystemInfo();
-        this.getOtherShareCode();
+        if (_gameConfig2.default.IS_WX) {
+            wx.showShareMenu(); //显示转发按钮
+            this.getShareConfig();
+            this.getUserSystemInfo();
+            this.getOtherShareCode();
+        }
     },
     start: function start() {
         cc.director.preloadScene("game", function () {

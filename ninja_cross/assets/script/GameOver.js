@@ -20,12 +20,6 @@ cc.Class({
     onLoad () {
         var _this = this;
         //btn绑定事件
-        cc.loader.loadRes("panel/subCanvas", (err, prefab) => {
-            if(!err){
-                let node = cc.instantiate(prefab);
-                _this.node.addChild(node);
-            }
-        });
         Util.btnEvent(this.playAgainBtn,this.btnSound,function () {
             _this.game.reStartGame();
             _this.node.active = false
@@ -41,57 +35,58 @@ cc.Class({
             _this.game.continueGame();
             _this.node.active = false;
         });
-        Util.btnEvent(this.navigateBtn,this.btnSound,function (){
-            if(GameConfig.IS_WX){
-                wx.navigateToMiniProgram({
-                    appId:'wx60dc6bacf553bdfc',
-                    success(res) {
-                        wx.request({
-                            url:GameConfig.INTER_URL+"game/navigate",
-                            data:{
-                                'appId': 'wx60dc6bacf553bdfc',
-                                'name': '忍者对对碰',
-                                'path':'',
-                                'extraData':'',
-                                'env':GameConfig.env,
-                            },
-                            header:{
-                                'content-type': 'application/x-www-form-urlencoded',
-                                'Cookie':"SESSION="+wx.getStorageSync('sessionId')
-                            },
-                            method: "POST",
-                            success:function (res){
-                                console.log("跳转到其他小程序返回值",res.data)
-                                if(res.data.status == 1){
-                                    console.log("提交跳转信息成功")
-                                }
-                                else{
-                                    switch(res.data.code){
-                                        case 1005:
-                                            console.log("提交跳转信息参数错误")
-                                            break;
+        if(GameConfig.IS_WX){
+            Util.btnEvent(this.navigateBtn,this.btnSound,function (){
+                if(GameConfig.IS_WX){
+                    wx.navigateToMiniProgram({
+                        appId:'wx60dc6bacf553bdfc',
+                        success(res) {
+                            wx.request({
+                                url:GameConfig.INTER_URL+"game/navigate",
+                                data:{
+                                    'appId': 'wx60dc6bacf553bdfc',
+                                    'name': '忍者对对碰',
+                                    'path':'',
+                                    'extraData':'',
+                                    'env':GameConfig.env,
+                                },
+                                header:{
+                                    'content-type': 'application/x-www-form-urlencoded',
+                                    'Cookie':"SESSION="+wx.getStorageSync('sessionId')
+                                },
+                                method: "POST",
+                                success:function (res){
+                                    console.log("跳转到其他小程序返回值",res.data)
+                                    if(res.data.status == 1){
+                                        console.log("提交跳转信息成功")
                                     }
+                                    else{
+                                        switch(res.data.code){
+                                            case 1005:
+                                                console.log("提交跳转信息参数错误")
+                                                break;
+                                        }
+                                    }
+                                },
+                                error:function () {
+                                    console.log("连接错误")
                                 }
-                            },
-                            error:function () {
-                                console.log("连接错误")
-                            }
-                        })
-                    }
-                })
-            }
-        });
-        Util.btnEvent(this.showOffbtn,this.btnSound,function (){
-            var shareCode = "shareCode="+wx.getStorageSync('shareCode')
-            console.log(shareCode)
-            if(GameDataManager.isBreakRecord){
-                console.log("破纪录的分享")
-                wx.shareAppMessage({
+                            })
+                        }
+                    })
+                }
+            });
+            Util.btnEvent(this.showOffbtn,this.btnSound,function (){
+                var shareCode = "shareCode="+wx.getStorageSync('shareCode')
+                console.log(shareCode)
+                if(GameDataManager.isBreakRecord){
+                    console.log("破纪录的分享")
+                    wx.shareAppMessage({
                         title:GameConfig.config.recordShareTitle,
                         imageUrl:GameConfig.config.recordShareImg,
                         query:shareCode
                     });
-                wx.request({
+                    wx.request({
                         url:GameConfig.INTER_URL+"game/share",
                         data:{
                             'title': GameConfig.config.recordShareTitle,
@@ -121,15 +116,15 @@ cc.Class({
                         }
 
                     })
-            }
-            else{
-                console.log("未破纪录的分享")
-                wx.shareAppMessage({
+                }
+                else{
+                    console.log("未破纪录的分享")
+                    wx.shareAppMessage({
                         title:GameConfig.config.passShareTitle,
                         imageUrl:GameConfig.config.passShareImg,
                         query:shareCode
                     });
-                wx.request({
+                    wx.request({
                         url:GameConfig.INTER_URL+"game/share",
                         data:{
                             'title': GameConfig.config.passShareTitle,
@@ -158,14 +153,22 @@ cc.Class({
                         }
 
                     });
-            }
-        });
+                }
+            });
+            cc.loader.loadRes("panel/subCanvas", (err, prefab) => {
+                if(!err){
+                    let node = cc.instantiate(prefab);
+                    _this.node.addChild(node);
+                }
+            });
+        }
     },
     init:function(game){
        this.game = game;
     },
     showScore:function(){
-        try{if(GameConfig.IS_WX){
+        try{
+            if(GameConfig.IS_WX){
             //分数记录
             if (wx.getStorageSync('gameScore')) {
                 var score = wx.getStorageSync('gameScore');

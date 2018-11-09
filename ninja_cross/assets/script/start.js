@@ -16,10 +16,12 @@ cc.Class({
     },
     onLoad () {
         this.init();
-        wx.showShareMenu();//显示转发按钮
-        this.getShareConfig();
-        this.getUserSystemInfo();
-        this.getOtherShareCode();
+        if(GameConfig.IS_WX){
+            wx.showShareMenu();//显示转发按钮
+            this.getShareConfig();
+            this.getUserSystemInfo();
+            this.getOtherShareCode();
+        }
     },
     start (){
         cc.director.preloadScene("game", () => {

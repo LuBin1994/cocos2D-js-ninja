@@ -1,6 +1,6 @@
 //游戏运行数据
 var GameDataManager = {
-    canSoundPlay: true,        //音乐能否播放
+    canSoundPlay: false,        //音效能否播放
     totalScore:0,           //总分数
     nextScore:0,            //站台分值
     addScoreGrade:1,        //加分等级

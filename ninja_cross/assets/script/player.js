@@ -17,8 +17,6 @@ cc.Class({
         var currentX = this.game.stage.currentPlat.x;
         var nextWidth = this.game.stage.nextPlat.width;
         var nextX= this.game.stage.nextPlat.x;
-        console.log(this.node.x)
-        console.log(currentWidth/2,currentX,nextWidth,nextX)
         if(currentX-currentWidth/2 < this.node.x && this.node.x < currentX+currentWidth/2){
             console.log('位于当前站桩范围内')
         }
@@ -62,7 +60,8 @@ cc.Class({
     //坠落
     drop:function(distance){
         var _this = this;
-        var runOver = cc.moveTo(0.5,cc.v2(-210+distance,-295));
+        var time = (distance/200).toFixed(1);
+        var runOver = cc.moveTo(time,cc.v2(-210+distance,-295));
         var finishRun = cc.callFunc(function () {
             var animState = _this.anim.play('playerFall');
             animState.repeatCount = 1;
@@ -106,9 +105,7 @@ cc.Class({
         var ani = cc.sequence(jump, fninsh1, fall);
         this.node.runAction(ani)
     },
-    readyToJump(){
-        this.anim.play('playerReadyJump');
-    },
+    readyToJump(){ this.anim.play('playerReadyJump');},
     update (dt) {
         if(GameDataManager.toolChoose == 2){
             if (GameDataManager.isSuccess) {

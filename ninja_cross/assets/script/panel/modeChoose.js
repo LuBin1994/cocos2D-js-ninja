@@ -13,7 +13,7 @@ cc.Class({
             type: cc.AudioClip
         }
     },
-    onLoad () {
+    onLoad (){
         this.init();
         this.showChoose();
     },

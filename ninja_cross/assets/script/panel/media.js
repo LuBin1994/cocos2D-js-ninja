@@ -1,4 +1,4 @@
-import gameConfig from '../gameConfig';
+import GameConfig from '../gameConfig';
 import GameDataManager from '../gameDataManager';
 cc.Class({
     extends: cc.Component,
@@ -17,12 +17,11 @@ cc.Class({
         });
     },
     start() {},
-    //音乐播放按钮切换
     musicBtnDispaly: function () {
         this.musicOff.active = !this.musicOff.active;
         this.musicOn.active = !this.musicOn.active;
     },
-    musicInit: function () {
+    musicInit: function (){
         var _this = this;
         if (GameDataManager.canSoundPlay) {
             this.musicOff.active = false;
@@ -35,18 +34,18 @@ cc.Class({
             _this.musicBtnDispaly();
             GameDataManager.canSoundPlay = !GameDataManager.canSoundPlay
             cc.audioEngine.pauseMusic(_this.bgm, true, 1);
-            gameConfig.isScreemCanTouch = false;
-            setTimeout(function () {
-                gameConfig.isScreemCanTouch = true;
+            GameConfig.isScreemCanTouch = false;
+            setTimeout(function (){
+                GameConfig.isScreemCanTouch = true;
             },300)
         });
         this.musicOff.on('touchstart', function () {
             _this.musicBtnDispaly();
             GameDataManager.canSoundPlay = !GameDataManager.canSoundPlay
             cc.audioEngine.resumeMusic(_this.bgm, true, 1);
-            gameConfig.isScreemCanTouch = false;
+            GameConfig.isScreemCanTouch = false;
             setTimeout(function () {
-                gameConfig.isScreemCanTouch = true;
+                GameConfig.isScreemCanTouch = true;
             },300)
         });
     }

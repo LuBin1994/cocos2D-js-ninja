@@ -32,7 +32,6 @@ cc.Class({
     },
     start: function start() {},
 
-    //音乐播放按钮切换
     musicBtnDispaly: function musicBtnDispaly() {
         this.musicOff.active = !this.musicOff.active;
         this.musicOn.active = !this.musicOn.active;

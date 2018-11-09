@@ -37,11 +37,11 @@ cc.Class({
         this.energy.init(this);
         this.shark.init(this);
         this.player.init(this);
-        Util.gameStartDataInit();
         this.init();
         this.configInit();
         this.node.opacity = 0;
         this.node.runAction(cc.fadeIn(0.5));
+        Util.gameStartDataInit();
     },
     init: function () {
         var _this = this;
@@ -56,7 +56,7 @@ cc.Class({
         });
         this.node.on('touchend', function () {
             if(GameConfig.isScreemCanTouch){
-                if ( GameDataManager.isStartLengthen) {
+                if ( GameDataManager.isStartLengthen){
                     _this.gameTouchEndProcessing();
                 }
             }
@@ -88,7 +88,6 @@ cc.Class({
                     Util.gameLog("game/start接口调用失败")
                 }
             });
-
         }
     },
     configInit: function () {
@@ -173,11 +172,11 @@ cc.Class({
         var lengthObj = this.stage.getLength();
         //判断搭桥是否成功
         if (lengthObj.min <= length && length <= lengthObj.max){
-            this.culculateScore(length,lengthObj.min);
-            GameDataManager.isSuccess = true
+            Util.culculateScore(this.stage.nextPlat,length,lengthObj.min);
+            GameDataManager.isSuccess = true;
         }
         else {
-            GameDataManager.isSuccess = false
+            GameDataManager.isSuccess = false;
         }
 
         //道具执行动画
@@ -200,88 +199,6 @@ cc.Class({
                     }
                     else{
                         this.player.failJump(GameDataManager.moveDistance,_this.player.jumpHeight);
-                    }
-                    break;
-            }
-        }
-    },
-    /**
-     * 得分计算
-     * @param toolLength 道具长度
-     * @param distance 站桩距离
-     */
-    culculateScore:function(toolLength,distance){
-        var scoreInterval; //得分区间
-        var num = parseInt(this.stage.nextPlat.name.replace(/[^0-9]/ig, ""));
-        var centerDistance = Math.floor(Math.abs(toolLength-( distance + this.stage.nextPlat.width/2))); //道具顶点与下个站桩中心的距离
-        if(num <= 3){
-            scoreInterval = Math.floor(this.stage.nextPlat.width/9);
-            if(0 <= centerDistance && centerDistance <= 0.5*scoreInterval){
-                GameDataManager.nextScore = 5;
-                GameDataManager.addScoreGrade = 3;
-            }
-            else if(0.5*scoreInterval < centerDistance && centerDistance <= 1.5*scoreInterval){
-                GameDataManager.nextScore = 4;
-                GameDataManager.addScoreGrade = 2;
-            }
-            else if(1.5*scoreInterval < centerDistance && centerDistance <= 2.5*scoreInterval){
-                GameDataManager.nextScore = 3;
-                GameDataManager.addScoreGrade = 2;
-            }
-            else if(2.5*scoreInterval < centerDistance && centerDistance <= 3.5*scoreInterval){
-                GameDataManager.nextScore = 2;
-                GameDataManager.addScoreGrade = 1;
-            }
-            else if(3.5*scoreInterval < centerDistance && centerDistance <= 4.5*scoreInterval){
-                GameDataManager.nextScore = 1;
-                GameDataManager.addScoreGrade = 1;
-            }
-        }
-        else{
-            switch(num){
-                case 4:
-                    scoreInterval = Math.floor(this.stage.nextPlat.width/7);
-                    if(0 < centerDistance && centerDistance <= 0.5*scoreInterval){
-                        GameDataManager.nextScore = 6;
-                        GameDataManager.addScoreGrade = 3;
-                    }
-                    else if(0.5*scoreInterval <centerDistance && centerDistance <= 1.5*scoreInterval){
-                        GameDataManager.nextScore = 5;
-                        GameDataManager.addScoreGrade = 2;
-                    }
-                    else if(1.5*scoreInterval <centerDistance && centerDistance <= 2.5*scoreInterval){
-                        GameDataManager.nextScore = 3;
-                        GameDataManager.addScoreGrade = 2;
-                    }
-                    else if(2.5*scoreInterval <centerDistance && centerDistance <= 3.5*scoreInterval){
-                        GameDataManager.nextScore = 1;
-                        GameDataManager.addScoreGrade = 1;
-                    }
-                    break;
-                case 5:
-                    scoreInterval = Math.floor(this.stage.nextPlat.width/5);
-                    if(0 < centerDistance && centerDistance <= 0.5*scoreInterval){
-                        GameDataManager.nextScore = 7;
-                        GameDataManager.addScoreGrade = 3;
-                    }
-                    else if(0.5*scoreInterval <centerDistance && centerDistance <= 1.5*scoreInterval){
-                        GameDataManager.nextScore = 4;
-                        GameDataManager.addScoreGrade = 2;
-                    }
-                    else if(1.5*scoreInterval <centerDistance && centerDistance <= 2.5*scoreInterval){
-                        GameDataManager.nextScore = 2;
-                        GameDataManager.addScoreGrade = 1;
-                    }
-                    break;
-                case 6:
-                    scoreInterval = Math.floor(this.stage.nextPlat.width/3);
-                    if(0 < centerDistance && centerDistance <= 0.5*scoreInterval){
-                        GameDataManager.nextScore = 8;
-                        GameDataManager.addScoreGrade = 3;
-                    }
-                    else if(0.5*scoreInterval <centerDistance && centerDistance <= 1.5*scoreInterval){
-                        GameDataManager.nextScore = 4;
-                        GameDataManager.addScoreGrade = 2;
                     }
                     break;
             }

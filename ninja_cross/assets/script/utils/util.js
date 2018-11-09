@@ -120,6 +120,88 @@ var Util = {
               }
             }
         })
-    }
+    },
+    /**
+     * 得分计算
+     * @param toolLength 道具长度
+     * @param distance 站桩距离
+     */
+    culculateScore:function(node,toolLength,distance){
+        var scoreInterval; //得分区间
+        var num = parseInt(node.name.replace(/[^0-9]/ig, ""));
+        var centerDistance = Math.floor(Math.abs(toolLength-( distance + node.width/2))); //道具顶点与下个站桩中心的距离
+        if(num <= 3){
+            scoreInterval = Math.floor(node.width/9);
+            if(0 <= centerDistance && centerDistance <= 0.5*scoreInterval){
+                GameDataManager.nextScore = 5;
+                GameDataManager.addScoreGrade = 3;
+            }
+            else if(0.5*scoreInterval < centerDistance && centerDistance <= 1.5*scoreInterval){
+                GameDataManager.nextScore = 4;
+                GameDataManager.addScoreGrade = 2;
+            }
+            else if(1.5*scoreInterval < centerDistance && centerDistance <= 2.5*scoreInterval){
+                GameDataManager.nextScore = 3;
+                GameDataManager.addScoreGrade = 2;
+            }
+            else if(2.5*scoreInterval < centerDistance && centerDistance <= 3.5*scoreInterval){
+                GameDataManager.nextScore = 2;
+                GameDataManager.addScoreGrade = 1;
+            }
+            else if(3.5*scoreInterval < centerDistance && centerDistance <= 4.5*scoreInterval){
+                GameDataManager.nextScore = 1;
+                GameDataManager.addScoreGrade = 1;
+            }
+        }
+        else{
+            switch(num){
+                case 4:
+                    scoreInterval = Math.floor(node.width/7);
+                    if(0 < centerDistance && centerDistance <= 0.5*scoreInterval){
+                        GameDataManager.nextScore = 6;
+                        GameDataManager.addScoreGrade = 3;
+                    }
+                    else if(0.5*scoreInterval <centerDistance && centerDistance <= 1.5*scoreInterval){
+                        GameDataManager.nextScore = 5;
+                        GameDataManager.addScoreGrade = 2;
+                    }
+                    else if(1.5*scoreInterval <centerDistance && centerDistance <= 2.5*scoreInterval){
+                        GameDataManager.nextScore = 3;
+                        GameDataManager.addScoreGrade = 2;
+                    }
+                    else if(2.5*scoreInterval <centerDistance && centerDistance <= 3.5*scoreInterval){
+                        GameDataManager.nextScore = 1;
+                        GameDataManager.addScoreGrade = 1;
+                    }
+                    break;
+                case 5:
+                    scoreInterval = Math.floor(node.width/5);
+                    if(0 < centerDistance && centerDistance <= 0.5*scoreInterval){
+                        GameDataManager.nextScore = 7;
+                        GameDataManager.addScoreGrade = 3;
+                    }
+                    else if(0.5*scoreInterval <centerDistance && centerDistance <= 1.5*scoreInterval){
+                        GameDataManager.nextScore = 4;
+                        GameDataManager.addScoreGrade = 2;
+                    }
+                    else if(1.5*scoreInterval <centerDistance && centerDistance <= 2.5*scoreInterval){
+                        GameDataManager.nextScore = 2;
+                        GameDataManager.addScoreGrade = 1;
+                    }
+                    break;
+                case 6:
+                    scoreInterval = Math.floor(node.width/3);
+                    if(0 < centerDistance && centerDistance <= 0.5*scoreInterval){
+                        GameDataManager.nextScore = 8;
+                        GameDataManager.addScoreGrade = 3;
+                    }
+                    else if(0.5*scoreInterval <centerDistance && centerDistance <= 1.5*scoreInterval){
+                        GameDataManager.nextScore = 4;
+                        GameDataManager.addScoreGrade = 2;
+                    }
+                    break;
+            }
+        }
+    },
 }
 export default Util

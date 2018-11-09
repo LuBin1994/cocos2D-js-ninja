@@ -40,12 +40,6 @@ cc.Class({
     onLoad: function onLoad() {
         var _this = this;
         //btn绑定事件
-        cc.loader.loadRes("panel/subCanvas", function (err, prefab) {
-            if (!err) {
-                var node = cc.instantiate(prefab);
-                _this.node.addChild(node);
-            }
-        });
         _util2.default.btnEvent(this.playAgainBtn, this.btnSound, function () {
             _this.game.reStartGame();
             _this.node.active = false;
@@ -61,120 +55,128 @@ cc.Class({
             _this.game.continueGame();
             _this.node.active = false;
         });
-        _util2.default.btnEvent(this.navigateBtn, this.btnSound, function () {
-            if (_gameConfig2.default.IS_WX) {
-                wx.navigateToMiniProgram({
-                    appId: 'wx60dc6bacf553bdfc',
-                    success: function success(res) {
-                        wx.request({
-                            url: _gameConfig2.default.INTER_URL + "game/navigate",
-                            data: {
-                                'appId': 'wx60dc6bacf553bdfc',
-                                'name': '忍者对对碰',
-                                'path': '',
-                                'extraData': '',
-                                'env': _gameConfig2.default.env
-                            },
-                            header: {
-                                'content-type': 'application/x-www-form-urlencoded',
-                                'Cookie': "SESSION=" + wx.getStorageSync('sessionId')
-                            },
-                            method: "POST",
-                            success: function success(res) {
-                                console.log("跳转到其他小程序返回值", res.data);
-                                if (res.data.status == 1) {
-                                    console.log("提交跳转信息成功");
-                                } else {
-                                    switch (res.data.code) {
-                                        case 1005:
-                                            console.log("提交跳转信息参数错误");
-                                            break;
+        if (_gameConfig2.default.IS_WX) {
+            _util2.default.btnEvent(this.navigateBtn, this.btnSound, function () {
+                if (_gameConfig2.default.IS_WX) {
+                    wx.navigateToMiniProgram({
+                        appId: 'wx60dc6bacf553bdfc',
+                        success: function success(res) {
+                            wx.request({
+                                url: _gameConfig2.default.INTER_URL + "game/navigate",
+                                data: {
+                                    'appId': 'wx60dc6bacf553bdfc',
+                                    'name': '忍者对对碰',
+                                    'path': '',
+                                    'extraData': '',
+                                    'env': _gameConfig2.default.env
+                                },
+                                header: {
+                                    'content-type': 'application/x-www-form-urlencoded',
+                                    'Cookie': "SESSION=" + wx.getStorageSync('sessionId')
+                                },
+                                method: "POST",
+                                success: function success(res) {
+                                    console.log("跳转到其他小程序返回值", res.data);
+                                    if (res.data.status == 1) {
+                                        console.log("提交跳转信息成功");
+                                    } else {
+                                        switch (res.data.code) {
+                                            case 1005:
+                                                console.log("提交跳转信息参数错误");
+                                                break;
+                                        }
                                     }
+                                },
+                                error: function error() {
+                                    console.log("连接错误");
                                 }
-                            },
-                            error: function error() {
-                                console.log("连接错误");
-                            }
-                        });
-                    }
-                });
-            }
-        });
-        _util2.default.btnEvent(this.showOffbtn, this.btnSound, function () {
-            var shareCode = "shareCode=" + wx.getStorageSync('shareCode');
-            console.log(shareCode);
-            if (_GameDataManager2.default.isBreakRecord) {
-                console.log("破纪录的分享");
-                wx.shareAppMessage({
-                    title: _gameConfig2.default.config.recordShareTitle,
-                    imageUrl: _gameConfig2.default.config.recordShareImg,
-                    query: shareCode
-                });
-                wx.request({
-                    url: _gameConfig2.default.INTER_URL + "game/share",
-                    data: {
-                        'title': _gameConfig2.default.config.recordShareTitle,
-                        'image': _gameConfig2.default.config.recordShareImg,
-                        'query': wx.getStorageSync('shareCode')
-                    },
-                    header: {
-                        'content-type': 'application/x-www-form-urlencoded',
-                        'Cookie': "SESSION=" + wx.getStorageSync('sessionId')
-                    },
-                    method: "POST",
-                    success: function success(res) {
-                        console.log(res.data);
-                        if (res.data.status == 1) {
-                            console.log("游戏分享保存成功");
-                        } else {
-                            switch (res.data.code) {
-                                case 1005:
-                                    console.log("游戏分享保存参数错误");
-                                    break;
-                            }
+                            });
                         }
-                    },
-                    error: function error() {
-                        console.log("连接错误");
-                    }
-
-                });
-            } else {
-                console.log("未破纪录的分享");
-                wx.shareAppMessage({
-                    title: _gameConfig2.default.config.passShareTitle,
-                    imageUrl: _gameConfig2.default.config.passShareImg,
-                    query: shareCode
-                });
-                wx.request({
-                    url: _gameConfig2.default.INTER_URL + "game/share",
-                    data: {
-                        'title': _gameConfig2.default.config.passShareTitle,
-                        'image': _gameConfig2.default.config.passShareImg,
-                        'query': wx.getStorageSync('shareCode')
-                    },
-                    header: {
-                        'content-type': 'application/x-www-form-urlencoded',
-                        'Cookie': "SESSION=" + wx.getStorageSync('sessionId')
-                    },
-                    method: "POST",
-                    success: function success(res) {
-                        console.log(res.data);
-                        if (res.data.status == 1) {} else {
-                            switch (res.data.code) {
-                                case 1005:
-                                    _util2.default.gameLog("游戏分享保存参数错误");
-                                    break;
+                    });
+                }
+            });
+            _util2.default.btnEvent(this.showOffbtn, this.btnSound, function () {
+                var shareCode = "shareCode=" + wx.getStorageSync('shareCode');
+                console.log(shareCode);
+                if (_GameDataManager2.default.isBreakRecord) {
+                    console.log("破纪录的分享");
+                    wx.shareAppMessage({
+                        title: _gameConfig2.default.config.recordShareTitle,
+                        imageUrl: _gameConfig2.default.config.recordShareImg,
+                        query: shareCode
+                    });
+                    wx.request({
+                        url: _gameConfig2.default.INTER_URL + "game/share",
+                        data: {
+                            'title': _gameConfig2.default.config.recordShareTitle,
+                            'image': _gameConfig2.default.config.recordShareImg,
+                            'query': wx.getStorageSync('shareCode')
+                        },
+                        header: {
+                            'content-type': 'application/x-www-form-urlencoded',
+                            'Cookie': "SESSION=" + wx.getStorageSync('sessionId')
+                        },
+                        method: "POST",
+                        success: function success(res) {
+                            console.log(res.data);
+                            if (res.data.status == 1) {
+                                console.log("游戏分享保存成功");
+                            } else {
+                                switch (res.data.code) {
+                                    case 1005:
+                                        console.log("游戏分享保存参数错误");
+                                        break;
+                                }
                             }
+                        },
+                        error: function error() {
+                            console.log("连接错误");
                         }
-                    },
-                    error: function error() {
-                        console.log("连接错误");
-                    }
 
-                });
-            }
-        });
+                    });
+                } else {
+                    console.log("未破纪录的分享");
+                    wx.shareAppMessage({
+                        title: _gameConfig2.default.config.passShareTitle,
+                        imageUrl: _gameConfig2.default.config.passShareImg,
+                        query: shareCode
+                    });
+                    wx.request({
+                        url: _gameConfig2.default.INTER_URL + "game/share",
+                        data: {
+                            'title': _gameConfig2.default.config.passShareTitle,
+                            'image': _gameConfig2.default.config.passShareImg,
+                            'query': wx.getStorageSync('shareCode')
+                        },
+                        header: {
+                            'content-type': 'application/x-www-form-urlencoded',
+                            'Cookie': "SESSION=" + wx.getStorageSync('sessionId')
+                        },
+                        method: "POST",
+                        success: function success(res) {
+                            console.log(res.data);
+                            if (res.data.status == 1) {} else {
+                                switch (res.data.code) {
+                                    case 1005:
+                                        _util2.default.gameLog("游戏分享保存参数错误");
+                                        break;
+                                }
+                            }
+                        },
+                        error: function error() {
+                            console.log("连接错误");
+                        }
+
+                    });
+                }
+            });
+            cc.loader.loadRes("panel/subCanvas", function (err, prefab) {
+                if (!err) {
+                    var node = cc.instantiate(prefab);
+                    _this.node.addChild(node);
+                }
+            });
+        }
     },
 
     init: function init(game) {
