@@ -1,0 +1,47 @@
+{
+  "__type__": "cc.SpriteAtlas",
+  "_name": "btn.plist",
+  "_objFlags": 0,
+  "_native": "",
+  "_spriteFrames": {
+    "advBtn": {
+      "__uuid__": "4a97457f-dafe-44a8-8458-349e9dce26c1"
+    },
+    "choose": {
+      "__uuid__": "a13a5694-1b07-4039-aac5-429c2da516df"
+    },
+    "closeBtn": {
+      "__uuid__": "dedfb96d-2e07-4d40-a617-6d8c307ace7d"
+    },
+    "goBackHomeBtn": {
+      "__uuid__": "d5453d0a-3007-41b1-bf9d-8a5509032590"
+    },
+    "musicOff": {
+      "__uuid__": "2b16e616-93ad-4682-b015-da5e29d34a95"
+    },
+    "musicOn": {
+      "__uuid__": "a746cbcb-bdd7-41f1-b14c-c72fde7b20db"
+    },
+    "navigate": {
+      "__uuid__": "4d34285d-3fbe-4569-8157-50925c10aa84"
+    },
+    "palyAgainBtn": {
+      "__uuid__": "8216cb25-0da0-4250-b72e-97869803c687"
+    },
+    "rankBtn": {
+      "__uuid__": "6827b1e3-0f27-4c21-a597-0a9954cbef2b"
+    },
+    "rankBtn2": {
+      "__uuid__": "4ee80bb6-b190-4873-ad08-20e731380e78"
+    },
+    "ruleBtn": {
+      "__uuid__": "3ce8f059-b384-4f5e-b92c-2f9bdcb63373"
+    },
+    "showoffBtn": {
+      "__uuid__": "7547cae4-9204-43cc-83c9-25b4a5d4413e"
+    },
+    "startBtn": {
+      "__uuid__": "95265b15-a2fb-4918-8293-ada7d4482e28"
+    }
+  }
+}

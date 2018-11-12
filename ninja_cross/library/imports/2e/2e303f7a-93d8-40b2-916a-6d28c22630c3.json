@@ -1,0 +1,47 @@
+{
+  "__type__": "cc.SpriteAtlas",
+  "_name": "static.plist",
+  "_objFlags": 0,
+  "_native": "",
+  "_spriteFrames": {
+    "Good": {
+      "__uuid__": "9aac1799-9328-4c53-846d-e4462973b39c"
+    },
+    "Great": {
+      "__uuid__": "be202066-18dc-4b58-a323-d5a3fdf573a2"
+    },
+    "Perfect": {
+      "__uuid__": "cee2e1c0-1c40-4d1e-98b3-b53c6470ee41"
+    },
+    "avaterCircle": {
+      "__uuid__": "4f845d24-bf04-4c8a-afff-45f8da7c8d71"
+    },
+    "calibration": {
+      "__uuid__": "4267e007-ac5a-42a7-91cc-74d185235f51"
+    },
+    "energy": {
+      "__uuid__": "e11f45fc-45cd-4a52-aa6a-017fdbb60a40"
+    },
+    "energyBox": {
+      "__uuid__": "36bd561a-e334-4e3b-a0a6-4f007a5b884d"
+    },
+    "fog": {
+      "__uuid__": "792bd069-17ca-4301-9323-cf3b52bac131"
+    },
+    "gameoverText": {
+      "__uuid__": "4755177c-4036-49d9-8945-eddc1c911f61"
+    },
+    "rainbow": {
+      "__uuid__": "88fcb5fa-8c4f-468a-8028-dbbed60c5350"
+    },
+    "scorePic": {
+      "__uuid__": "faf7d5bd-f117-4c4b-9516-140b01418e64"
+    },
+    "showOffText": {
+      "__uuid__": "47aac6f4-163c-45a9-80f8-fbffa68b315b"
+    },
+    "title": {
+      "__uuid__": "4fa51a35-9b8f-4372-88d6-bfb44f1a13c3"
+    }
+  }
+}

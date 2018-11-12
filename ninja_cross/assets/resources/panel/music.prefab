@@ -107,7 +107,7 @@
     "_contentSize": {
       "__type__": "cc.Size",
       "width": 72,
-      "height": 70
+      "height": 71
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -152,7 +152,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "21034bb5-b879-4e25-aebe-2bd9b3d6ae1c"
+      "__uuid__": "a746cbcb-bdd7-41f1-b14c-c72fde7b20db"
     },
     "_type": 0,
     "_sizeMode": 1,
@@ -166,8 +166,10 @@
     "_fillRange": 0,
     "_isTrimmedMode": true,
     "_state": 0,
-    "_atlas": null,
-    "_id": "8eiae07NFP3bDtTKSm5je2"
+    "_atlas": {
+      "__uuid__": "98bcc938-e9f6-4218-a84f-dd02b940f1aa"
+    },
+    "_id": "fbZA6pJIhD6bwIwf1T/4Qa"
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -177,7 +179,7 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "15hslVteBOGKKcFty4q+IW",
+    "fileId": "63OZKmaV1Ip7r27H7RkT5l",
     "sync": false
   },
   {
@@ -254,7 +256,7 @@
     "_srcBlendFactor": 770,
     "_dstBlendFactor": 771,
     "_spriteFrame": {
-      "__uuid__": "5e5f0ac7-7b03-4367-b1b6-5ee030221a31"
+      "__uuid__": "2b16e616-93ad-4682-b015-da5e29d34a95"
     },
     "_type": 0,
     "_sizeMode": 1,
@@ -268,8 +270,10 @@
     "_fillRange": 0,
     "_isTrimmedMode": true,
     "_state": 0,
-    "_atlas": null,
-    "_id": "b97w07PdhG5Kln2XWzITNY"
+    "_atlas": {
+      "__uuid__": "98bcc938-e9f6-4218-a84f-dd02b940f1aa"
+    },
+    "_id": "41zvb0IDJDX6pqKFU/MEEM"
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -279,7 +283,7 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "baGH3v9aBL74SUjZZwxjFn",
+    "fileId": "79fcbwXvBK7q1k4N6r0l7b",
     "sync": false
   },
   {
@@ -297,7 +301,7 @@
       "__id__": 5
     },
     "isMusicOn": true,
-    "_id": "a08PKahfFHupjE1QeM5Pkm"
+    "_id": "73iL6v/EZJHLxCH1M6eFAL"
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -307,7 +311,7 @@
     "asset": {
       "__id__": 0
     },
-    "fileId": "afWdTq3Q9D4LToUDt3cgMq",
+    "fileId": "e5EreoqF5GPLtMMONmWyUl",
     "sync": false
   }
 ]

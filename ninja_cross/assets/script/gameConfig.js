@@ -12,7 +12,7 @@ var GameConfig = {
     canResurrectTime: 0,           //能复活次数
     sharkJumpDurTime: 30,          //鲨鱼跳跃间隔时间(秒)
     MAIN_MENU_NUM: "ninja_crossing",           // 主选择菜单
-    IS_WX:false,                    //当前是否是微信环境(游戏发布时改为true)
+    IS_WX:true,                    //当前是否是微信环境(游戏发布时改为true)
     difficulty:1,                  //游戏难度  {1-10}
     /**
      * 数据存储

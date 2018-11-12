@@ -1,0 +1,22 @@
+{
+  "__type__": "cc.SpriteFrame",
+  "content": {
+    "name": "playerRun5",
+    "texture": "236c854c-a51e-43a5-bb77-c3bc5d13e63f",
+    "atlas": "9d229cdb-0895-4bb4-b669-10119ee36182",
+    "rect": [
+      196,
+      0,
+      98,
+      103
+    ],
+    "offset": [
+      0,
+      0
+    ],
+    "originalSize": [
+      98,
+      103
+    ]
+  }
+}

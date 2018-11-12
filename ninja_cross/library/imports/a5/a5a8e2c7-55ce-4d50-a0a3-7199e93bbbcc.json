@@ -1,0 +1,26 @@
+{
+  "__type__": "cc.SpriteAtlas",
+  "_name": "stage.plist",
+  "_objFlags": 0,
+  "_native": "",
+  "_spriteFrames": {
+    "stage1": {
+      "__uuid__": "5a2efe0d-b329-4fae-a315-b1c6cd542f37"
+    },
+    "stage2": {
+      "__uuid__": "4b356d4f-ec46-4f9f-b78a-f6186fdc5dfd"
+    },
+    "stage3": {
+      "__uuid__": "6102973a-3ccc-49ae-8191-55c8ec4a0822"
+    },
+    "stage4": {
+      "__uuid__": "f1f38dda-e108-4110-8444-76377bb3bd1c"
+    },
+    "stage5": {
+      "__uuid__": "8fdd169d-15c0-4a70-8e11-0661584ca78d"
+    },
+    "stage6": {
+      "__uuid__": "04d9a4aa-872b-4e5a-98e1-3a03c333fb93"
+    }
+  }
+}

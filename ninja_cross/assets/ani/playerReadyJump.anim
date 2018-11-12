@@ -3,7 +3,7 @@
   "_name": "playerReadyJump",
   "_objFlags": 0,
   "_native": "",
-  "_duration": 0.18333333333333332,
+  "_duration": 0.26666666666666666,
   "sample": 60,
   "speed": 1,
   "wrapMode": 1,
@@ -14,13 +14,13 @@
           {
             "frame": 0,
             "value": {
-              "__uuid__": "ef202f5c-6b73-49bc-95d1-6473a8871fb7"
+              "__uuid__": "4f31563b-3ad8-440a-971f-f25e1a2b9412"
             }
           },
           {
-            "frame": 0.16666666666666666,
+            "frame": 0.25,
             "value": {
-              "__uuid__": "1b48564f-ab19-459c-905e-5d6e59d6041a"
+              "__uuid__": "38b5ac68-e3e1-4177-9375-ad6a25bf3b51"
             }
           }
         ]
