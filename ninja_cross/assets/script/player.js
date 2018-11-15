@@ -62,7 +62,7 @@ cc.Class({
         var _this = this;
         var time = (distance/200).toFixed(1);
         var runOver = cc.moveTo(time,cc.v2(-210+distance,-295));
-        var finishRun = cc.callFunc(function () {
+        var finishRun = cc.callFunc(function (){
             var animState = _this.anim.play('playerFall');
             animState.repeatCount = 1;
         })

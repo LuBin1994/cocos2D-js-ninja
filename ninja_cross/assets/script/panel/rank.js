@@ -5,7 +5,7 @@ import GameDataManager from '../gameDataManager';
 cc.Class({
     extends: cc.Component,
     properties: {
-        subCanvas:cc.Node,
+        inviteBtn:cc.Node,
         closeBtn:cc.Node,
         btnSound:{
             default: null,
@@ -14,13 +14,14 @@ cc.Class({
     },
     onLoad(){
         this.init();
+        this.inviteBtn.zIndex = 10
     },
     init(){
         var _this = this;
         cc.loader.loadRes("panel/subCanvas", (err, prefab) => {
             if (!err) {
                 let node = cc.instantiate(prefab);
-                _this.node.addChild(node);
+                _this.node.addChild(node,5);
             }
         });
         if(GameConfig.IS_WX){
@@ -37,17 +38,56 @@ cc.Class({
         this.node.on('touchstart',function(e){
             e.stopPropagation();
         });
-        Util.btnEvent(this.closeBtn,this.btnSound,function(){
-            if(GameConfig.IS_WX){
-                wx.postMessage({messageType: 3, MAIN_MENU_NUM: GameConfig.MAIN_MENU_NUM,});
-                console.log(GameDataManager.isHideSub)
-                if(GameDataManager.isHideSub){
-                    console.log('关闭排行榜隐藏子域')
-                    wx.postMessage({messageType: 5});
+        if(GameConfig.IS_WX){
+            Util.btnEvent(this.closeBtn,this.btnSound,function () {
+                if(GameConfig.IS_WX){
+                    wx.postMessage({messageType: 3, MAIN_MENU_NUM: GameConfig.MAIN_MENU_NUM,});
+                    console.log(GameDataManager.isHideSub)
+                    if(GameDataManager.isHideSub){
+                        console.log('关闭排行榜隐藏子域')
+                        wx.postMessage({messageType: 5});
+                    }
                 }
-            }
-            GameUITools.unLoadingLayer(_this.node);
-        })
+                GameUITools.unLoadingLayer(_this.node);
+            })
+            Util.btnEvent(this.inviteBtn,this.btnSound,function () {
+                wx.shareAppMessage({
+                    title:GameConfig.config.shareTitle,
+                    imageUrl:GameConfig.config.shareImg,
+                    query:"shareCode="+wx.getStorageSync('shareCode')
+                });
+                wx.request({
+                    url:GameConfig.INTER_URL+"game/share",
+                    data:{
+                        'title': GameConfig.config.shareTitle,
+                        'image': GameConfig.config.shareImg,
+                        'query': wx.getStorageSync('shareCode')
+                    },
+                    header:{
+                        'content-type': 'application/x-www-form-urlencoded',
+                        'Cookie':"SESSION="+wx.getStorageSync('sessionId')
+                    },
+                    method: "POST",
+                    success:function (res){
+                        console.log(res.data)
+                        if(res.data.status == 1){
+                            console.log("游戏分享保存成功")
+                        }
+                        else{
+                            switch(res.data.code){
+                                case 1005:
+                                    console.log("游戏分享保存参数错误")
+                                    break;
+                            }
+                        }
+                    },
+                    error:function (){
+                        console.log("连接错误")
+                    }
+
+                })
+            })
+        }
     },
     start () {
         this.tex = new cc.Texture2D();

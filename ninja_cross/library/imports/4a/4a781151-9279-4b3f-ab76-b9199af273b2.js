@@ -48,6 +48,7 @@ cc.Class({
             console.log("游戏场景已加载");
         });
         this.tex = new cc.Texture2D();
+        this.modeBounce(this.startBtn);
     },
 
     init: function init() {
@@ -56,6 +57,7 @@ cc.Class({
             _GameUITools2.default.loadingLayer("panel/userInfo");
         }
         _GameUITools2.default.loadingLayer("panel/music");
+        _GameUITools2.default.loadingLayer("panel/moreGame");
         //开始游戏
         _util2.default.btnEvent(this.startBtn, this.btnSound, function () {
             _GameUITools2.default.loadingScene("game");
@@ -72,6 +74,9 @@ cc.Class({
         _util2.default.btnEvent(this.modeChooseBtn, this.btnSound, function () {
             _GameUITools2.default.loadingLayer("panel/modeChoose");
         });
+        if (!localStorage.getItem('modeGuide')) {
+            _GameUITools2.default.loadingLayer("panel/modeChoose");
+        }
     },
     //获取分享信息
     getShareConfig: function getShareConfig() {
@@ -132,6 +137,13 @@ cc.Class({
             _gameConfig2.default.enterShareConfig.enterShareCode = res.query.shareCode;
             _gameConfig2.default.enterShareConfig.path = res.path;
         }
+    },
+    modeBounce: function modeBounce(node) {
+        var scale1 = cc.scaleTo(0.5, 0.9);
+        var scale2 = cc.scaleTo(0.5, 1);
+        var ani = cc.sequence(scale1, scale2);
+        var ani1 = cc.repeatForever(ani);
+        node.runAction(ani1);
     }
 });
 

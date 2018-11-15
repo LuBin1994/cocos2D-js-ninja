@@ -1,0 +1,23 @@
+{
+  "__type__": "cc.SpriteAtlas",
+  "_name": "guide.plist",
+  "_objFlags": 0,
+  "_native": "",
+  "_spriteFrames": {
+    "bridgeGuide": {
+      "__uuid__": "15c174d7-6dd3-4093-b130-c8ce3c16f918"
+    },
+    "circle": {
+      "__uuid__": "821bf7b6-ae83-44af-aaed-7612ff255909"
+    },
+    "finger": {
+      "__uuid__": "57bf5271-8fb3-4f7e-ba1c-a58bd75e7265"
+    },
+    "jumpGuide": {
+      "__uuid__": "761b100c-6b0c-400c-ac95-30bed588e8c9"
+    },
+    "stickGuide": {
+      "__uuid__": "5aea8d40-074b-411e-91e3-99614617fe92"
+    }
+  }
+}

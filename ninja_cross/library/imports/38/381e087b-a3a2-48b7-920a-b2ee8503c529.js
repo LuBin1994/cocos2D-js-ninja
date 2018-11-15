@@ -36,22 +36,14 @@ cc.Class({
     },
     init: function init() {
         var _this = this;
-        _util2.default.modeBtnEvent(this.stickMode, this.btnSound, function () {
+        this.modeEvent(this.stickMode, this.btnSound, function () {
             _gameDataManager2.default.toolChoose = 0;
-            _GameUITools2.default.unLoadingLayer(_this.node);
-            _this.showChoose();
         });
-
-        _util2.default.modeBtnEvent(this.bridgeMode, this.btnSound, function () {
+        this.modeEvent(this.bridgeMode, this.btnSound, function () {
             _gameDataManager2.default.toolChoose = 1;
-            _GameUITools2.default.unLoadingLayer(_this.node);
-            _this.showChoose();
         });
-
-        _util2.default.modeBtnEvent(this.jumpMode, this.btnSound, function () {
+        this.modeEvent(this.jumpMode, this.btnSound, function () {
             _gameDataManager2.default.toolChoose = 2;
-            _GameUITools2.default.unLoadingLayer(_this.node);
-            _this.showChoose();
         });
     },
     showChoose: function showChoose() {
@@ -60,8 +52,19 @@ cc.Class({
         }
         this.modeChooseShow[_gameDataManager2.default.toolChoose].active = true;
     },
-    start: function start() {},
-    update: function update(dt) {}
+    modeEvent: function modeEvent(node, btnSound, callbacks) {
+        var _this = this;
+        _util2.default.modeBtnEvent(node, btnSound, function () {
+            _this.showChoose();
+            if (localStorage.getItem('modeGuide')) {
+                _GameUITools2.default.loadingScene("game");
+            } else {
+                _GameUITools2.default.unLoadingLayer(_this.node);
+                localStorage.setItem('modeGuide', true);
+            }
+            callbacks && callbacks();
+        });
+    }
 });
 
 cc._RF.pop();

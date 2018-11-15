@@ -29,6 +29,7 @@ cc.Class({
         scoreGroup:cc.Node,
         gameOverSound:cc.AudioClip,
         shark:Shark,
+
     },
     onLoad() {
         this.gameBg.init(this);
@@ -46,6 +47,26 @@ cc.Class({
     init: function () {
         var _this = this;
         GameUITools.loadingLayer("panel/music");
+        switch(GameDataManager.toolChoose){
+            case 0:
+                if(!localStorage.getItem("stickGuide")){
+                    console.log('棍子新手引导')
+                    GameUITools.loadingLayer('panel/guide')
+                }
+                break;
+            case 1:
+                if(!localStorage.getItem("bridgeGuide")){
+                    console.log('桥梁新手引导')
+                    GameUITools.loadingLayer('panel/guide')
+                }
+                break;
+            case 2:
+                if(!localStorage.getItem("jumpGuide")){
+                    console.log('跳跃新手引导')
+                    GameUITools.loadingLayer('panel/guide')
+                }
+                break;
+        }
         if(GameConfig.IS_WX){
             GameUITools.loadingLayer("panel/userInfo");
         }
@@ -141,6 +162,12 @@ cc.Class({
                     this.player.readyToJump();
                     break;
             }
+            //删掉新手指引
+            if(cc.director.getScene().children[0].getChildByName("guide")){
+                var guide =  cc.director.getScene().children[0].getChildByName("guide");
+                cc.director.getScene().children[0].removeChild(guide)
+                cc.director.getScene().children[0].removeChild(guide)
+            }
         }
     },
     /**
@@ -148,6 +175,23 @@ cc.Class({
      */
     gameTouchEndProcessing(){
         GameDataManager.isLengthen = false;
+        switch(GameDataManager.toolChoose){
+            case 0:
+                if(!localStorage.getItem("stickGuide")){
+                   localStorage.setItem('stickGuide',true)
+                }
+                break;
+            case 1:
+                if(!localStorage.getItem("bridgeGuide")){
+                    localStorage.setItem('bridgeGuide',true)
+                }
+                break;
+            case 2:
+                if(!localStorage.getItem("jumpGuide")){
+                    localStorage.setItem('jumpGuide',true)
+                }
+                break;
+        }
         if(!GameDataManager.isAnimate){
             var length = this.getToolLength();
             if(GameDataManager.toolChoose <= 1){
@@ -280,12 +324,10 @@ cc.Class({
             this.fog.hideFog();
             if(GameConfig.canResurrectTime == 0){
                 this.gameOver.advBtn.active = false;
-                this.gameOver.navigateBtn.active = true;
                 //this.gameOver.btnGroup.y = -270;
             }
             else{
                 this.gameOver.advBtn.active = true;
-                this.gameOver.navigateBtn.active = false
                 //this.gameOver.btnGroup.y = -390;
             }
         }

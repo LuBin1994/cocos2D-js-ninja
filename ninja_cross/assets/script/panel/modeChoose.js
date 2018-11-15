@@ -19,23 +19,15 @@ cc.Class({
     },
     init(){
         var _this = this;
-        Util.modeBtnEvent(this.stickMode,this.btnSound,function(){
+        this.modeEvent(this.stickMode,this.btnSound,function () {
             GameDataManager.toolChoose = 0;
-            GameUITools.unLoadingLayer(_this.node);
-            _this.showChoose();
-        });
-
-        Util.modeBtnEvent(this.bridgeMode,this.btnSound,function(){
+        })
+        this.modeEvent(this.bridgeMode,this.btnSound,function () {
             GameDataManager.toolChoose = 1;
-            GameUITools.unLoadingLayer(_this.node);
-            _this.showChoose();
-        });
-
-        Util.modeBtnEvent(this.jumpMode,this.btnSound,function(){
+        })
+        this.modeEvent(this.jumpMode,this.btnSound,function () {
             GameDataManager.toolChoose = 2;
-            GameUITools.unLoadingLayer(_this.node);
-            _this.showChoose();
-        });
+        })
     },
     showChoose(){
         for(var i=0;i<3;i++){
@@ -43,6 +35,18 @@ cc.Class({
         }
         this.modeChooseShow[GameDataManager.toolChoose].active = true
     },
-    start (){},
-    update (dt) {},
+    modeEvent(node,btnSound,callbacks){
+        var _this = this;
+        Util.modeBtnEvent(node,btnSound,function(){
+            _this.showChoose();
+            if(localStorage.getItem('modeGuide')){
+                GameUITools.loadingScene("game");
+            }
+            else{
+                GameUITools.unLoadingLayer(_this.node);
+                localStorage.setItem('modeGuide',true)
+            }
+            callbacks && callbacks()
+        });
+    }
 });

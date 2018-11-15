@@ -63,6 +63,7 @@ var GameConfig = {
         sex: null, //用户性别
         code: null //用户登录凭证
     }
+    //
 };
 exports.default = GameConfig;
 module.exports = exports["default"];

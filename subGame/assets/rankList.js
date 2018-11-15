@@ -1,12 +1,15 @@
 cc.Class({
     extends: cc.Component,
     properties: {
+        displayNode:cc.Node,
         display:cc.ScrollView,
         content: cc.Node,
         rankItem: cc.Prefab,
         loadingLabel: cc.Node,
         scoreText: cc.Node,
         scoreTextLabel:cc.Label,
+        userInfo:cc.Node,
+        index:1,
     },
     start () {
         let _self = this;
@@ -147,19 +150,18 @@ cc.Class({
     // 获取排行榜数据
     _fetchFriendData(MAIN_MENU_NUM) {
         this._removeChild();
+        this.index = 1;
         this.showRankList();
         let _self = this;
         wx.getUserInfo({
             openIdList: ['selfOpenId'],
             success: (userRes) => {
                 this.loadingLabel.active = false;
-                console.log('success', userRes.data);
                 let userData = userRes.data[0]; // 如果需要自己的
                 // 取出所有好友数据
                 wx.getFriendCloudStorage({
                     keyList: ["x2" + MAIN_MENU_NUM],
                     success: res => {
-                        console.log("wx.getFriendCloudStorage success", res);
                         let data = res.data;
                         data.sort((a, b) => {
                             if (a.KVDataList.length == 0 && b.KVDataList.length == 0) {
@@ -174,13 +176,44 @@ cc.Class({
                             return b.KVDataList[0].value - a.KVDataList[0].value;
                         });
                         for(let i = 0; i < data.length; i++) {
-                            let isSelf = false;
                             if (data[i].avatarUrl == userData.avatarUrl) {
-                                isSelf = true;
+                                _self._showUserData(i,data[i])
                             }
-                            _self._showPlayerData(i, data[i], isSelf);
-
                         }
+                        for(let i = 0; i < 10; i++) {
+                            if (data[i].avatarUrl == userData.avatarUrl) {
+                                _self._showPlayerData(i, data[i],true);
+                            }
+                            else{
+                                _self._showPlayerData(i,data[i],false)
+                            }
+                        }
+                        this.displayNode.on("bounce-bottom",function () {
+                            var index = _self.index;
+                            var length = data.length-10*index
+                            if(length > 10){
+                                for(let i = 10*index; i < 10*index+10; i++){
+                                    if (data[i].avatarUrl == userData.avatarUrl) {
+                                        _self._showPlayerData(i, data[i],true);
+                                    }
+                                    else{
+                                        _self._showPlayerData(i,data[i],false)
+                                    }
+                                }
+                                _self.index++;
+                            }
+                            else if(length<= 10 && length > 0){
+                                for(let i = 10*_self.index; i < data.length; i++){
+                                    if (data[i].avatarUrl == userData.avatarUrl) {
+                                        _self._showPlayerData(i, data[i],true);
+                                    }
+                                    else{
+                                        _self._showPlayerData(i,data[i],false)
+                                    }
+                                }
+                                _self.index++;
+                            }
+                        })
                     },
                     fail: res=>{
                         _self._showMessage("获取数据失败，请检查网络连接");
@@ -202,16 +235,19 @@ cc.Class({
      * 显示排行榜，绘制好友信息
      * TODO: 对当前玩家的记录做特殊标识
      */
-    _showPlayerData(rank, playerInfo, isSelf) {
+    _showPlayerData(rank, playerInfo,isUser) {
         let node = cc.instantiate(this.rankItem);
         node.parent = this.content;
+        if(isUser){
+            var bg = node.getChildByName("itemBg");
+            bg.active = true;
+        }
         // 排名
         let num = node.getChildByName('num').getComponent(cc.Label);
         num.string = (rank + 1).toString();
         // 昵称
         let userName = node.getChildByName('nickName').getComponent(cc.Label);
         let nickNameStr = this._cutstr(playerInfo.nickname,6)
-        console.log(nickNameStr)
         userName.string = nickNameStr;
         // 得分
         let score = node.getChildByName('score').getComponent(cc.Label);
@@ -225,7 +261,6 @@ cc.Class({
                 type: 'png'
             }, (err, texture) => {
                 if (err) console.error(err);
-                console.log(texture);
                 userIcon.spriteFrame = new cc.SpriteFrame(texture);
             });
         }
@@ -234,29 +269,42 @@ cc.Class({
     hideRankList(){
         this.display.active = false;
         this.loadingLabel.active = false;
+        this.userInfo.active = false
         this.scoreText.active = true;
     },
     //显示玩家数据
     showRankList(){
         this.display.active = true;
+        this.userInfo.active = true;
         this.scoreText.active = false;
     },
     //显示用户数据
-    _showUserData(nickName, avatarUrl) {
+    _showUserData(rank,playerInfo){
+        this.userInfo.removeAllChildren();
         let node = cc.instantiate(this.rankItem);
-        node.parent = this.content;
+        node.parent = this.userInfo;
+
+        var bg = node.getChildByName("itemBg");
+        bg.active = true;
+        // 排名
+        let num = node.getChildByName('num').getComponent(cc.Label);
+        num.string = (rank + 1).toString();
+        // 昵称
         let userName = node.getChildByName('nickName').getComponent(cc.Label);
-        let userIcon = node.getChildByName('mask').children[0].getComponent(cc.Sprite);
+        let nickNameStr = this._cutstr(playerInfo.nickname,6)
         userName.string = nickNameStr;
-        console.log(nickName + '\'s info has been getten');
-        //用户头像不为空的情况下
-        if(avatarUrl!=''){
+        // 得分
+        let score = node.getChildByName('score').getComponent(cc.Label);
+        let grade = playerInfo.KVDataList.length != 0 ? playerInfo.KVDataList[0].value : 0;
+        score.string = grade.toString();
+
+        let userIcon = node.getChildByName('userIcon').getComponent(cc.Sprite);
+        if(playerInfo.avatarUrl!=''){
             cc.loader.load({
-                url: avatarUrl,
+                url: playerInfo.avatarUrl,
                 type: 'png'
             }, (err, texture) => {
                 if (err) console.error(err);
-                console.log(texture);
                 userIcon.spriteFrame = new cc.SpriteFrame(texture);
             });
         }

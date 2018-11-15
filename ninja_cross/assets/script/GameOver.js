@@ -7,7 +7,6 @@ cc.Class({
     properties: {
         playAgainBtn:cc.Node,
         advBtn:cc.Node,
-        navigateBtn:cc.Node,
         goBackHomeBtn:cc.Node,
         rankBtn:cc.Node,
         btnSound:cc.AudioClip,
@@ -19,6 +18,12 @@ cc.Class({
     },
     onLoad () {
         var _this = this;
+        cc.loader.loadRes("panel/moreGame", (err, prefab) => {
+            if (!err) {
+                let node = cc.instantiate(prefab);
+                this.node.addChild(node);
+            }
+        });
         //btn绑定事件
         Util.btnEvent(this.playAgainBtn,this.btnSound,function () {
             _this.game.reStartGame();
@@ -36,46 +41,6 @@ cc.Class({
             _this.node.active = false;
         });
         if(GameConfig.IS_WX){
-            Util.btnEvent(this.navigateBtn,this.btnSound,function (){
-                if(GameConfig.IS_WX){
-                    wx.navigateToMiniProgram({
-                        appId:'wx60dc6bacf553bdfc',
-                        success(res) {
-                            wx.request({
-                                url:GameConfig.INTER_URL+"game/navigate",
-                                data:{
-                                    'appId': 'wx60dc6bacf553bdfc',
-                                    'name': '忍者对对碰',
-                                    'path':'',
-                                    'extraData':'',
-                                    'env':GameConfig.env,
-                                },
-                                header:{
-                                    'content-type': 'application/x-www-form-urlencoded',
-                                    'Cookie':"SESSION="+wx.getStorageSync('sessionId')
-                                },
-                                method: "POST",
-                                success:function (res){
-                                    console.log("跳转到其他小程序返回值",res.data)
-                                    if(res.data.status == 1){
-                                        console.log("提交跳转信息成功")
-                                    }
-                                    else{
-                                        switch(res.data.code){
-                                            case 1005:
-                                                console.log("提交跳转信息参数错误")
-                                                break;
-                                        }
-                                    }
-                                },
-                                error:function () {
-                                    console.log("连接错误")
-                                }
-                            })
-                        }
-                    })
-                }
-            });
             Util.btnEvent(this.showOffbtn,this.btnSound,function (){
                 var shareCode = "shareCode="+wx.getStorageSync('shareCode')
                 console.log(shareCode)
@@ -170,7 +135,7 @@ cc.Class({
         try{
             if(GameConfig.IS_WX){
             //分数记录
-            if (wx.getStorageSync('gameScore')) {
+            if (wx.getStorageSync('gameScore')){
                 var score = wx.getStorageSync('gameScore');
                 this.nowScore.string = "本次分值: " + GameDataManager.totalScore;
                 if (GameDataManager.totalScore > score) {

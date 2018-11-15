@@ -27,7 +27,6 @@ cc.Class({
     properties: {
         playAgainBtn: cc.Node,
         advBtn: cc.Node,
-        navigateBtn: cc.Node,
         goBackHomeBtn: cc.Node,
         rankBtn: cc.Node,
         btnSound: cc.AudioClip,
@@ -38,7 +37,15 @@ cc.Class({
         showOffText: cc.Node
     },
     onLoad: function onLoad() {
+        var _this2 = this;
+
         var _this = this;
+        cc.loader.loadRes("panel/moreGame", function (err, prefab) {
+            if (!err) {
+                var node = cc.instantiate(prefab);
+                _this2.node.addChild(node);
+            }
+        });
         //btn绑定事件
         _util2.default.btnEvent(this.playAgainBtn, this.btnSound, function () {
             _this.game.reStartGame();
@@ -56,45 +63,6 @@ cc.Class({
             _this.node.active = false;
         });
         if (_gameConfig2.default.IS_WX) {
-            _util2.default.btnEvent(this.navigateBtn, this.btnSound, function () {
-                if (_gameConfig2.default.IS_WX) {
-                    wx.navigateToMiniProgram({
-                        appId: 'wx60dc6bacf553bdfc',
-                        success: function success(res) {
-                            wx.request({
-                                url: _gameConfig2.default.INTER_URL + "game/navigate",
-                                data: {
-                                    'appId': 'wx60dc6bacf553bdfc',
-                                    'name': '忍者对对碰',
-                                    'path': '',
-                                    'extraData': '',
-                                    'env': _gameConfig2.default.env
-                                },
-                                header: {
-                                    'content-type': 'application/x-www-form-urlencoded',
-                                    'Cookie': "SESSION=" + wx.getStorageSync('sessionId')
-                                },
-                                method: "POST",
-                                success: function success(res) {
-                                    console.log("跳转到其他小程序返回值", res.data);
-                                    if (res.data.status == 1) {
-                                        console.log("提交跳转信息成功");
-                                    } else {
-                                        switch (res.data.code) {
-                                            case 1005:
-                                                console.log("提交跳转信息参数错误");
-                                                break;
-                                        }
-                                    }
-                                },
-                                error: function error() {
-                                    console.log("连接错误");
-                                }
-                            });
-                        }
-                    });
-                }
-            });
             _util2.default.btnEvent(this.showOffbtn, this.btnSound, function () {
                 var shareCode = "shareCode=" + wx.getStorageSync('shareCode');
                 console.log(shareCode);
