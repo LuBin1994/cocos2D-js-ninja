@@ -1083,6 +1083,17 @@
     "modeChooseBtn": {
       "__id__": 21
     },
+    "prefab": [
+      {
+        "__uuid__": "452f3140-5ff3-4ee9-ae60-0acf996d3acb"
+      },
+      {
+        "__uuid__": "b38b0745-18b0-4ecd-afc4-188e3dcd492a"
+      },
+      {
+        "__uuid__": "e2d38077-a2bd-4cb0-b8e2-3fb8ed7c88db"
+      }
+    ],
     "btnSound": {
       "__uuid__": "abe01fa9-5a9f-4ee6-adf7-32cf5caf286b"
     },

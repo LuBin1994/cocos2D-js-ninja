@@ -4,7 +4,6 @@ import GameUITools from './utils/GameUITools';
 import GameConfig from './GameConfig' ;
 import GameDataManager from './gameDataManager';
 var Player = require('player');
-var Stage = require('stage');
 var GameBg = require('gameBg');
 var Stick = require('stick');
 var GameOver = require('GameOver');
@@ -13,11 +12,11 @@ var Bridge = require('bridge');
 var Fog = require('fog');
 var Energy = require('energy');
 var Shark = require('shark');
+var Stage = require('stage');
 cc.Class({
     extends: cc.Component,
     properties: {
         player: Player,
-        stage: Stage,
         gameBg: GameBg,
         stick: Stick,
         bridge:Bridge,
@@ -29,24 +28,27 @@ cc.Class({
         scoreGroup:cc.Node,
         gameOverSound:cc.AudioClip,
         shark:Shark,
-
+        stage: Stage,
+        prefabs:[cc.Prefab]
     },
     onLoad() {
         this.gameBg.init(this);
-        this.stage.init(this);
         this.gameOver.init(this);
         this.energy.init(this);
+        this.bridge.init();
+        this.stick.init();
         this.shark.init(this);
         this.player.init(this);
         this.init();
         this.configInit();
         this.node.opacity = 0;
+        this.stage.init(this);
         this.node.runAction(cc.fadeIn(0.5));
         Util.gameStartDataInit();
     },
     init: function () {
         var _this = this;
-        GameUITools.loadingLayer("panel/music");
+        GameUITools.initPrefab(this.prefabs[1]);
         switch(GameDataManager.toolChoose){
             case 0:
                 if(!localStorage.getItem("stickGuide")){
@@ -68,7 +70,7 @@ cc.Class({
                 break;
         }
         if(GameConfig.IS_WX){
-            GameUITools.loadingLayer("panel/userInfo");
+            GameUITools.initPrefab(this.prefabs[0]);
         }
         this.node.on('touchstart', function () {
             if(GameConfig.isScreemCanTouch && !GameDataManager.isAnimate){

@@ -13,11 +13,10 @@ cc.Class({
         for(var i=0;i<5;i++){
             var bridgeUnit = cc.instantiate(this.bridgePrefab);
             this.bridgePool.put(bridgeUnit)
-        }
-        this.node.active = false;
+        }  
     },
-    start () {
-
+    init(){
+        this.node.active = false;
     },
     configInit:function(){
         this.node.rotation = 0;

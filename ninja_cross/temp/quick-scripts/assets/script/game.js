@@ -27,7 +27,6 @@ var _gameDataManager2 = _interopRequireDefault(_gameDataManager);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Player = require('player');
-var Stage = require('stage');
 var GameBg = require('gameBg');
 var Stick = require('stick');
 var GameOver = require('GameOver');
@@ -36,11 +35,11 @@ var Bridge = require('bridge');
 var Fog = require('fog');
 var Energy = require('energy');
 var Shark = require('shark');
+var Stage = require('stage');
 cc.Class({
     extends: cc.Component,
     properties: {
         player: Player,
-        stage: Stage,
         gameBg: GameBg,
         stick: Stick,
         bridge: Bridge,
@@ -51,25 +50,29 @@ cc.Class({
         scoreDisplay: cc.Label,
         scoreGroup: cc.Node,
         gameOverSound: cc.AudioClip,
-        shark: Shark
+        shark: Shark,
+        stage: Stage,
+        prefabs: [cc.Prefab]
     },
     onLoad: function onLoad() {
         this.gameBg.init(this);
-        this.stage.init(this);
         this.gameOver.init(this);
         this.energy.init(this);
+        this.bridge.init();
+        this.stick.init();
         this.shark.init(this);
         this.player.init(this);
         this.init();
         this.configInit();
         this.node.opacity = 0;
+        this.stage.init(this);
         this.node.runAction(cc.fadeIn(0.5));
         _util2.default.gameStartDataInit();
     },
 
     init: function init() {
         var _this = this;
-        _GameUITools2.default.loadingLayer("panel/music");
+        _GameUITools2.default.initPrefab(this.prefabs[1]);
         switch (_gameDataManager2.default.toolChoose) {
             case 0:
                 if (!localStorage.getItem("stickGuide")) {
@@ -91,7 +94,7 @@ cc.Class({
                 break;
         }
         if (_GameConfig2.default.IS_WX) {
-            _GameUITools2.default.loadingLayer("panel/userInfo");
+            _GameUITools2.default.initPrefab(this.prefabs[0]);
         }
         this.node.on('touchstart', function () {
             if (_GameConfig2.default.isScreemCanTouch && !_gameDataManager2.default.isAnimate) {

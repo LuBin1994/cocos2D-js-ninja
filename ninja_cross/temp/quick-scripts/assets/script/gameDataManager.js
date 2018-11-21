@@ -23,7 +23,7 @@ var GameDataManager = {
     isGameOver: false, //游戏是否结束
     isLengthen: false, //道具是否变长
     isStartLengthen: false, //道具是否开始变长
-    toolChoose: 0, //道具选择，0 ：木棍 ，1 ： 桥梁 ，2 ：跳跃
+    toolChoose: 2, //道具选择，0 ：木棍 ，1 ： 桥梁 ，2 ：跳跃
     gameId: 0, //当局游戏ID
     isBreakRecord: false, //当局成绩是否破纪录
     isHideSub: false //是否隐藏子域内容

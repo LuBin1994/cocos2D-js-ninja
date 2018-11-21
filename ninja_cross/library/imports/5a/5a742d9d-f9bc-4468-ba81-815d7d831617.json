@@ -17,7 +17,7 @@
     "_parent": null,
     "_children": [],
     "_active": true,
-    "_level": 2,
+    "_level": 1,
     "_components": [
       {
         "__id__": 2
@@ -99,7 +99,7 @@
     "_atlas": {
       "__uuid__": "a5a8e2c7-55ce-4d50-a0a3-7199e93bbbcc"
     },
-    "_id": "d3jcHivr1M/7UahlU7KRFt"
+    "_id": "14G+LF6ANIkp/soBP+petQ"
   },
   {
     "__type__": "cc.PrefabInfo",
@@ -107,7 +107,7 @@
       "__id__": 1
     },
     "asset": {
-      "__id__": 0
+      "__uuid__": "5a742d9d-f9bc-4468-ba81-815d7d831617"
     },
     "fileId": "ddo0kgpMhL3JnTLglalTvB",
     "sync": false

@@ -9,6 +9,7 @@ cc.Class({
         ruleBtn:cc.Node,
         rankBtn:cc.Node,
         modeChooseBtn:cc.Node,
+        prefab:[cc.Prefab],
         btnSound:{
             default: null,
             type: cc.AudioClip
@@ -32,11 +33,14 @@ cc.Class({
     },
     init:function(){
         var _this = this;
+        //头像预制
         if(GameConfig.IS_WX){
-            GameUITools.loadingLayer("panel/userInfo");
+            GameUITools.initPrefab(this.prefab[1]);
         }
-        GameUITools.loadingLayer("panel/music");
-        GameUITools.loadingLayer("panel/moreGame");
+        //音乐
+        GameUITools.initPrefab(this.prefab[0]);
+        //更多游戏
+        GameUITools.initPrefab(this.prefab[2]);
         //开始游戏
         Util.btnEvent(this.startBtn,this.btnSound,function(){
             GameUITools.loadingScene("game");
@@ -53,9 +57,6 @@ cc.Class({
         Util.btnEvent(this.modeChooseBtn,this.btnSound,function(){
             GameUITools.loadingLayer("panel/modeChoose")
         });
-        if(!localStorage.getItem('modeGuide')){
-            GameUITools.loadingLayer("panel/modeChoose")
-        }
     },
     //获取分享信息
     getShareConfig() {
@@ -63,7 +64,7 @@ cc.Class({
         wx.request({
             url: GameConfig.INTER_URL + "game/getConfig",
             method: "GET",
-            success: function (res) {
+            success: function (res){
                 console.log("获取分享信息返回值：",res.data)
                 if (res.data.status == 1){
                     GameConfig.config = res.data.data;

@@ -264,20 +264,12 @@ cc.Class({
                     wx.setStorageSync('sessionId', res.data.data.sessionId);
                     wx.setStorageSync('shareCode', res.data.data.shareCode);
                 } else {
-                    switch (res.data.code) {
-                        case 1006:
-                            _util2.default.gameLog("登录操作失败");
-                            break;
-                        case 1005:
-                            _util2.default.gameLog("登录参数错误");
-                            break;
-                    }
+                    _util2.default.gameLog(res.data.info);
                 }
             },
             error: function error() {
                 _util2.default.gameLog("/login接口调用失败");
             }
-
         });
     },
 
@@ -313,12 +305,7 @@ cc.Class({
                 success: function success(res) {
                     console.log("用户信息传至开发者服务器返回值", res.data);
                     if (res.data.status == 1) {} else {
-                        switch (res.data.code) {
-                            case 1006:
-                                _util2.default.gameLog("用户信息传送操作失败");
-                            case 1005:
-                                _util2.default.gameLog("用户信息传送参数错误");
-                        }
+                        _util2.default.gameLog(res.data.info);
                     }
                 },
                 error: function error() {

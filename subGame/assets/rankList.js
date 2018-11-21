@@ -1,23 +1,23 @@
 cc.Class({
     extends: cc.Component,
     properties: {
-        displayNode:cc.Node,
-        display:cc.ScrollView,
+        displayNode: cc.Node,
+        display: cc.ScrollView,
         content: cc.Node,
         rankItem: cc.Prefab,
         loadingLabel: cc.Node,
         scoreText: cc.Node,
-        scoreTextLabel:cc.Label,
-        userInfo:cc.Node,
-        index:1,
+        scoreTextLabel: cc.Label,
+        userInfo: cc.Node,
+        index: 1,
     },
-    start () {
+    start() {
         let _self = this;
         //默认排行榜置顶
         this.display.scrollToTop(0)
         wx.onMessage(data => {
             let messageType = data.messageType;
-            switch(messageType) {
+            switch (messageType) {
                 case 1: // 提交分数
                     _self._submitScore(data.MAIN_MENU_NUM, data.score);
                     break;
@@ -42,18 +42,22 @@ cc.Class({
         wx.getUserCloudStorage({
             // 以key/value形式存储
             keyList: ["x2" + MAIN_MENU_NUM],
-            success: function(getres) {
-                if (getres.KVDataList.length > 0){
+            success: function (getres) {
+                if (getres.KVDataList.length > 0) {
                     if (MAIN_MENU_NUM == 1) { // TODO
+                        console.log('已小游戏中心数据格式要求上传分数')
                         wx.setUserCloudStorage({
                             KVDataList: [{
-                                key: "Classic",
+                                key: "x2ninja_crossing",
                                 value: "{\"wxgame\":{\"score\":" + (getres.KVDataList[0].value > score ? getres.KVDataList[0].value : score) + ",\"update_time\": " + new Date().getTime() + "}}"
                             }],
+                            success: function (res) {
+                                console.log("{\"wxgame\":{\"score\":" + (getres.KVDataList[0].value > score ? getres.KVDataList[0].value : score) + ",\"update_time\": " + new Date().getTime() + "}}")
+                            }
                         });
                     }
                     if (getres.KVDataList[0].value > score) {
-                        return ;
+                        return;
                     }
                 }
                 // 对用户托管数据进行写数据操作
@@ -62,31 +66,31 @@ cc.Class({
                         key: "x2" + MAIN_MENU_NUM,
                         value: "" + score,
                     }],
-                    success: function(res) {
+                    success: function (res) {
                         console.log('setUserCloudStorage', 'success', res);
                     },
-                    fail: function(res) {
+                    fail: function (res) {
                         console.log('setUserCloudStorage', 'fail', res);
                     },
-                    complete: function(res) {
+                    complete: function (res) {
                         console.log('setUserCloudStorage', 'ok', res);
                     }
                 });
             },
-            fail: function(res) {
+            fail: function (res) {
                 console.log("getUserCloudStorage", "fail");
             },
-            complete: function(res) {
+            complete: function (res) {
                 console.log("getUserCloudStorage", "ok");
             },
         });
     },
     //结束文字
-    _getScoreText(MAIN_MENU_NUM){
+    _getScoreText(MAIN_MENU_NUM) {
         this._removeChild();
         this.hideRankList();
         let _self = this;
-        let userRank,topperUserRank,lowerUserRank;
+        let userRank, topperUserRank, lowerUserRank;
         wx.getUserInfo({
             openIdList: ['selfOpenId'],
             success: (userRes) => {
@@ -111,32 +115,32 @@ cc.Class({
                             }
                             return b.KVDataList[0].value - a.KVDataList[0].value;
                         });
-                        for(let i = 0; i < data.length; i++) {
+                        for (let i = 0; i < data.length; i++) {
                             var index = i;
                             let isSelf = false;
                             if (data[i].avatarUrl == userData.avatarUrl) {
                                 isSelf = true;
                                 userRank = index;
-                                topperUserRank = index-1;
-                                lowerUserRank = index+1;
+                                topperUserRank = index - 1;
+                                lowerUserRank = index + 1;
                             }
                         }
-                        if(userRank == 0){
+                        if (userRank == 0) {
                             _self.scoreTextLabel.string = "你在好友中占据第一!";
                         }
-                        else if(userRank == data.length-1){
+                        else if (userRank == data.length - 1) {
                             _self.scoreTextLabel.string = "你在好友中垫底了，快快奋起直追吧!";
                         }
-                        else{
+                        else {
                             let grade1 = data[userRank].KVDataList.length != 0 ? data[userRank].KVDataList[0].value : 0;
                             let grade2 = data[topperUserRank].KVDataList.length != 0 ? data[topperUserRank].KVDataList[0].value : 0;
                             let score = grade2 - grade1//距排名前一位好友分差
-                            let upperName = _self._cutstr(data[topperUserRank].nickname,4);
-                            let lowerName = _self._cutstr(data[lowerUserRank].nickname,10);
-                            _self.scoreTextLabel.string = "你已超过"+lowerName+",\n距离下一位好友"+upperName+"还差"+score+"分";
+                            let upperName = _self._cutstr(data[topperUserRank].nickname, 4);
+                            let lowerName = _self._cutstr(data[lowerUserRank].nickname, 10);
+                            _self.scoreTextLabel.string = "你已超过" + lowerName + ",\n距离下一位好友" + upperName + "还差" + score + "分";
                         }
                     },
-                    fail: res=>{
+                    fail: res => {
                         _self._showMessage("获取数据失败，请检查网络连接");
                         console.log("获取排行榜失败", res);
                     },
@@ -175,47 +179,47 @@ cc.Class({
                             }
                             return b.KVDataList[0].value - a.KVDataList[0].value;
                         });
-                        for(let i = 0; i < data.length; i++) {
+                        for (let i = 0; i < data.length; i++) {
                             if (data[i].avatarUrl == userData.avatarUrl) {
-                                _self._showUserData(i,data[i])
+                                _self._showUserData(i, data[i])
                             }
                         }
-                        for(let i = 0; i < 10; i++) {
+                        for (let i = 0; i < 10; i++) {
                             if (data[i].avatarUrl == userData.avatarUrl) {
-                                _self._showPlayerData(i, data[i],true);
+                                _self._showPlayerData(i, data[i], true);
                             }
-                            else{
-                                _self._showPlayerData(i,data[i],false)
+                            else {
+                                _self._showPlayerData(i, data[i], false)
                             }
                         }
-                        this.displayNode.on("bounce-bottom",function () {
+                        this.displayNode.on("bounce-bottom", function () {
                             var index = _self.index;
-                            var length = data.length-10*index
-                            if(length > 10){
-                                for(let i = 10*index; i < 10*index+10; i++){
+                            var length = data.length - 10 * index
+                            if (length > 10) {
+                                for (let i = 10 * index; i < 10 * index + 10; i++) {
                                     if (data[i].avatarUrl == userData.avatarUrl) {
-                                        _self._showPlayerData(i, data[i],true);
+                                        _self._showPlayerData(i, data[i], false);
                                     }
-                                    else{
-                                        _self._showPlayerData(i,data[i],false)
+                                    else {
+                                        _self._showPlayerData(i, data[i], false)
                                     }
                                 }
                                 _self.index++;
                             }
-                            else if(length<= 10 && length > 0){
-                                for(let i = 10*_self.index; i < data.length; i++){
+                            else if (length <= 10 && length > 0) {
+                                for (let i = 10 * _self.index; i < data.length; i++) {
                                     if (data[i].avatarUrl == userData.avatarUrl) {
-                                        _self._showPlayerData(i, data[i],true);
+                                        _self._showPlayerData(i, data[i], true);
                                     }
-                                    else{
-                                        _self._showPlayerData(i,data[i],false)
+                                    else {
+                                        _self._showPlayerData(i, data[i], false)
                                     }
                                 }
                                 _self.index++;
                             }
                         })
                     },
-                    fail: res=>{
+                    fail: res => {
                         _self._showMessage("获取数据失败，请检查网络连接");
                         console.log("获取排行榜失败", res);
                     },
@@ -235,10 +239,10 @@ cc.Class({
      * 显示排行榜，绘制好友信息
      * TODO: 对当前玩家的记录做特殊标识
      */
-    _showPlayerData(rank, playerInfo,isUser) {
+    _showPlayerData(rank, playerInfo, isUser) {
         let node = cc.instantiate(this.rankItem);
         node.parent = this.content;
-        if(isUser){
+        if (isUser) {
             var bg = node.getChildByName("itemBg");
             bg.active = true;
         }
@@ -247,7 +251,7 @@ cc.Class({
         num.string = (rank + 1).toString();
         // 昵称
         let userName = node.getChildByName('nickName').getComponent(cc.Label);
-        let nickNameStr = this._cutstr(playerInfo.nickname,6)
+        let nickNameStr = this._cutstr(playerInfo.nickname, 6)
         userName.string = nickNameStr;
         // 得分
         let score = node.getChildByName('score').getComponent(cc.Label);
@@ -255,7 +259,7 @@ cc.Class({
         score.string = grade.toString();
 
         let userIcon = node.getChildByName('userIcon').getComponent(cc.Sprite);
-        if(playerInfo.avatarUrl!=''){
+        if (playerInfo.avatarUrl != '') {
             cc.loader.load({
                 url: playerInfo.avatarUrl,
                 type: 'png'
@@ -266,20 +270,20 @@ cc.Class({
         }
     },
     //隐藏玩家数据
-    hideRankList(){
+    hideRankList() {
         this.display.active = false;
         this.loadingLabel.active = false;
         this.userInfo.active = false
         this.scoreText.active = true;
     },
     //显示玩家数据
-    showRankList(){
+    showRankList() {
         this.display.active = true;
         this.userInfo.active = true;
         this.scoreText.active = false;
     },
     //显示用户数据
-    _showUserData(rank,playerInfo){
+    _showUserData(rank, playerInfo) {
         this.userInfo.removeAllChildren();
         let node = cc.instantiate(this.rankItem);
         node.parent = this.userInfo;
@@ -291,7 +295,7 @@ cc.Class({
         num.string = (rank + 1).toString();
         // 昵称
         let userName = node.getChildByName('nickName').getComponent(cc.Label);
-        let nickNameStr = this._cutstr(playerInfo.nickname,6)
+        let nickNameStr = this._cutstr(playerInfo.nickname, 6)
         userName.string = nickNameStr;
         // 得分
         let score = node.getChildByName('score').getComponent(cc.Label);
@@ -299,7 +303,7 @@ cc.Class({
         score.string = grade.toString();
 
         let userIcon = node.getChildByName('userIcon').getComponent(cc.Sprite);
-        if(playerInfo.avatarUrl!=''){
+        if (playerInfo.avatarUrl != '') {
             cc.loader.load({
                 url: playerInfo.avatarUrl,
                 type: 'png'
@@ -310,27 +314,26 @@ cc.Class({
         }
     },
     //隐藏子域
-    _hideSub(){
+    _hideSub() {
         this.display.active = false;
         this.loadingLabel.active = false;
         this.scoreText.active = false;
     },
     //截取玩家名字
-    _cutstr(str,len){
+    _cutstr(str, len) {
         //如果给定字符串小于指定长度，则返回源字符串；
-        if(str.length <= len){
+        if (str.length <= len) {
             return str
         }
         var str_length = 0;
         var str_len = 0;
         var str_cut = new String();
         var str_len = str.length;
-        for(var i = 0;i<str_len;i++)
-        {
+        for (var i = 0; i < str_len; i++) {
             var a = str.charAt(i);
             str_length++;
             str_cut = str_cut.concat(a);
-            if(str_length >= len){
+            if (str_length >= len) {
                 str_cut = str_cut.concat("...");
                 return str_cut;
             }

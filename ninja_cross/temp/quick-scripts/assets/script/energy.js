@@ -18,11 +18,10 @@ cc.Class({
         caliDown: cc.Node,
         energySpeed: 5
     },
-    onLoad: function onLoad() {
-        this.hideCali();
-    },
+    onLoad: function onLoad() {},
     init: function init(game) {
         this.game = game;
+        this.hideCali();
     },
     configInit: function configInit() {
         this.energy.height = 0;

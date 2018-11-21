@@ -29,6 +29,7 @@ cc.Class({
         ruleBtn: cc.Node,
         rankBtn: cc.Node,
         modeChooseBtn: cc.Node,
+        prefab: [cc.Prefab],
         btnSound: {
             default: null,
             type: cc.AudioClip
@@ -53,11 +54,14 @@ cc.Class({
 
     init: function init() {
         var _this = this;
+        //头像预制
         if (_gameConfig2.default.IS_WX) {
-            _GameUITools2.default.loadingLayer("panel/userInfo");
+            _GameUITools2.default.initPrefab(this.prefab[1]);
         }
-        _GameUITools2.default.loadingLayer("panel/music");
-        _GameUITools2.default.loadingLayer("panel/moreGame");
+        //音乐
+        _GameUITools2.default.initPrefab(this.prefab[0]);
+        //更多游戏
+        _GameUITools2.default.initPrefab(this.prefab[2]);
         //开始游戏
         _util2.default.btnEvent(this.startBtn, this.btnSound, function () {
             _GameUITools2.default.loadingScene("game");
@@ -74,9 +78,6 @@ cc.Class({
         _util2.default.btnEvent(this.modeChooseBtn, this.btnSound, function () {
             _GameUITools2.default.loadingLayer("panel/modeChoose");
         });
-        if (!localStorage.getItem('modeGuide')) {
-            _GameUITools2.default.loadingLayer("panel/modeChoose");
-        }
     },
     //获取分享信息
     getShareConfig: function getShareConfig() {

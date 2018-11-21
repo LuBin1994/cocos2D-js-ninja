@@ -9,6 +9,8 @@ cc.Class({
     },
     onLoad(){
         this.configInit();
+    },
+    init(){
         this.node.active = false;
     },
     //初始化

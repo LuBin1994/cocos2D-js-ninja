@@ -21,7 +21,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 cc.Class({
     extends: cc.Component,
     properties: {
-        stagePrefabs: [],
+        stagePrefabs: [cc.Prefab],
+        stagePools: [],
         doneStage: 0, //已通过的站台数
         canRecycle: false,
         currentPlat: {
@@ -43,7 +44,7 @@ cc.Class({
     onLoad: function onLoad() {
         var _this = this;
         this.configInit();
-        this.stagePrefabInit(function () {
+        this.stagePoolInit(function () {
             _this.stageInit();
         });
     },
@@ -62,42 +63,25 @@ cc.Class({
         this.stageInit();
     },
     //对象池，预制初始化
-    stagePrefabInit: function stagePrefabInit(callbacks) {
-        var _this = this;
-        try {
-            cc.loader.loadRes("stage/stage" + 1, function (err, prefab) {
-                _this.stagePrefabs.push(prefab);
-                cc.loader.loadRes("stage/stage" + 2, function (err, prefab) {
-                    _this.stagePrefabs.push(prefab);
-                    cc.loader.loadRes("stage/stage" + 3, function (err, prefab) {
-                        _this.stagePrefabs.push(prefab);
-                        cc.loader.loadRes("stage/stage" + 4, function (err, prefab) {
-                            _this.stagePrefabs.push(prefab);
-                            cc.loader.loadRes("stage/stage" + 5, function (err, prefab) {
-                                _this.stagePrefabs.push(prefab);
-                                cc.loader.loadRes("stage/stage" + 6, function (err, prefab) {
-                                    _this.stagePrefabs.push(prefab);
-                                    callbacks && callbacks();
-                                });
-                            });
-                        });
-                    });
-                });
-            });
-        } catch (e) {
-            _util2.default.gameLog("站桩预制加载出错");
+    stagePoolInit: function stagePoolInit(callbacks) {
+        for (var i = 0; i < this.stagePrefabs.length; i++) {
+            var newNodePool = new cc.NodePool();
+            this.stagePools.push(newNodePool);
+            if (i == 5) {
+                callbacks && callbacks();
+            }
         }
     },
     //站桩初始化
     stageInit: function stageInit() {
         var nextX, distance, centerDistance;
         //第一个站桩
-        this.currentPlat = cc.instantiate(this.stagePrefabs[_util2.default.randomNum(3)]);
+        this.currentPlat = this.getStage(_util2.default.randomNum(3));
         this.currentPlat.setPosition(cc.v2(-230, -295));
         this.currentPlat.parent = this.node;
         this.currentPosX = -230;
         //第二个站桩
-        this.nextPlat = cc.instantiate(this.stagePrefabs[_util2.default.randomNum(3)]);
+        this.nextPlat = this.getStage(_util2.default.randomNum(3));
         distance = _util2.default.randomNum(250) + 100; //随机距离
         centerDistance = distance + (this.currentPlat.width / 2 + this.nextPlat.width / 2);
         centerDistance = centerDistance - centerDistance % _gameConfig2.default.gameMoveSpeed; //两站装中心距离设置为移动速度的整数倍，防止移动过程中出现的偏差
@@ -105,9 +89,8 @@ cc.Class({
         this.nextPlat.setPosition(cc.v2(nextX, -295));
         this.nextPlat.parent = this.node;
         this.nextPosX = nextX;
-
         //第三个站桩
-        this.nextTwoPlat = cc.instantiate(this.stagePrefabs[_util2.default.randomNum(3)]);
+        this.nextTwoPlat = this.getStage(_util2.default.randomNum(3));
         distance = _util2.default.randomNum(250) + 100; //随机距离
         centerDistance = distance + (this.nextPlat.width / 2 + this.nextTwoPlat.width / 2);
         centerDistance = centerDistance - centerDistance % _gameConfig2.default.gameMoveSpeed; //两站装中心距离设置为移动速度的整数倍，防止移动过程中出现的偏差
@@ -115,12 +98,12 @@ cc.Class({
         this.nextTwoPlat.setPosition(cc.v2(nextX, -295));
         this.nextTwoPlat.parent = this.node;
         this.nextTwoPosX = nextX;
-
         //初始化设置道具
         switch (_gameDataManager2.default.toolChoose) {
             case 0:
-                this.game.stick.node.active = true;
+                this.game.stick.node.active = 1;
                 this.game.stick.setStick(this.currentPlat.x + this.currentPlat.width / 2);
+                console.log(this.game.stick.node);
                 break;
             case 1:
                 this.game.bridge.node.active = true;
@@ -157,7 +140,7 @@ cc.Class({
         var stage, nextX, distance, centerDistance;
         this.currentPlat = this.nextPlat;
         this.nextPlat = this.nextTwoPlat;
-        stage = cc.instantiate(this.stagePrefabs[num]);
+        stage = this.getStage(num);
         this.nextTwoPlat = stage;
         this.nextTwoPlat.parent = this.node;
         this.nextTwoPlat.opacity = 0;
@@ -191,7 +174,9 @@ cc.Class({
     },
     //游戏一回合结束删除经过的站桩
     recycleStage: function recycleStage() {
-        this.node.removeChild(this.node.children[0]);
+        var stage = this.node.children[0];
+        var num = parseInt(stage.name.replace(/[^0-9]/ig, ""));
+        this.stagePools[num - 1].put(stage);
     },
     //删除所有站桩
     destroyAll: function destroyAll() {
@@ -220,6 +205,15 @@ cc.Class({
         this.currentPlat.setPosition(cc.v2(this.currentPosX, -295));
         this.nextPlat.setPosition(cc.v2(this.nextPosX, -295));
         this.nextTwoPlat.setPosition(cc.v2(this.nextTwoPosX, -295));
+    },
+    getStage: function getStage(num) {
+        var stage = null;
+        if (this.stagePools[num].size() > 0) {
+            stage = this.stagePools[num].get();
+        } else {
+            stage = cc.instantiate(this.stagePrefabs[num]);
+        }
+        return stage;
     },
     update: function update(dt) {
         if (_gameDataManager2.default.isMove) {

@@ -26,7 +26,7 @@ var GameUITools = {
     },
 
     /**
-     * 场景加载图层
+     * 场景动态加载图层
      * @param {*} panelName ：图层路径
      */
     loadingLayer: function loadingLayer(panelName) {
@@ -36,6 +36,15 @@ var GameUITools = {
                 cc.director.getScene().children[0].addChild(node);
             }
         });
+    },
+
+    /**
+     * 初始化预制
+     * @param {*} prefab ：预制件
+     */
+    initPrefab: function initPrefab(prefab) {
+        var node = cc.instantiate(prefab);
+        cc.director.getScene().children[0].addChild(node);
     },
 
     /**

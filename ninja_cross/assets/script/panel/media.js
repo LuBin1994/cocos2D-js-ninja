@@ -11,7 +11,7 @@ cc.Class({
     // 生命周期
     onLoad() {
         var _this = this;
-        cc.loader.load('https://cdn.feilaib.top/img/sounds/bg.mp3', function(err, clip) {
+        cc.loader.load('https://cdn.feilaib.top/img/sounds/bg.mp3',function(err, clip){
             _this.bgm = clip;
             _this.musicInit();
         });

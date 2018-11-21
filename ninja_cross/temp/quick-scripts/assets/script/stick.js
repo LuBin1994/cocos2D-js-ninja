@@ -23,6 +23,8 @@ cc.Class({
     },
     onLoad: function onLoad() {
         this.configInit();
+    },
+    init: function init() {
         this.node.active = false;
     },
 

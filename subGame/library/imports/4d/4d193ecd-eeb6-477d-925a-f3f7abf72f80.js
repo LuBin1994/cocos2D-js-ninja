@@ -57,11 +57,15 @@ cc.Class({
                 if (getres.KVDataList.length > 0) {
                     if (MAIN_MENU_NUM == 1) {
                         // TODO
+                        console.log('已小游戏中心数据格式要求上传分数');
                         wx.setUserCloudStorage({
                             KVDataList: [{
-                                key: "Classic",
+                                key: "x2ninja_crossing",
                                 value: "{\"wxgame\":{\"score\":" + (getres.KVDataList[0].value > score ? getres.KVDataList[0].value : score) + ",\"update_time\": " + new Date().getTime() + "}}"
-                            }]
+                            }],
+                            success: function success(res) {
+                                console.log("{\"wxgame\":{\"score\":" + (getres.KVDataList[0].value > score ? getres.KVDataList[0].value : score) + ",\"update_time\": " + new Date().getTime() + "}}");
+                            }
                         });
                     }
                     if (getres.KVDataList[0].value > score) {
@@ -211,7 +215,7 @@ cc.Class({
                             if (length > 10) {
                                 for (var _i2 = 10 * index; _i2 < 10 * index + 10; _i2++) {
                                     if (data[_i2].avatarUrl == userData.avatarUrl) {
-                                        _self._showPlayerData(_i2, data[_i2], true);
+                                        _self._showPlayerData(_i2, data[_i2], false);
                                     } else {
                                         _self._showPlayerData(_i2, data[_i2], false);
                                     }

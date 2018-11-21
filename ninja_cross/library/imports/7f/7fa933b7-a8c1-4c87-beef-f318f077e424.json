@@ -42,8 +42,8 @@
     },
     "_scale": {
       "__type__": "cc.Vec3",
-      "x": 0.44028555140961856,
-      "y": 0.44028555140961856,
+      "x": 0.2562421875,
+      "y": 0.2562421875,
       "z": 1
     },
     "_quat": {
@@ -925,7 +925,27 @@
       "__id__": 18
     },
     "_enabled": true,
-    "stagePrefabs": [],
+    "stagePrefabs": [
+      {
+        "__uuid__": "0b4e0002-5d93-4d8e-9bbf-f9b6febc7ac1"
+      },
+      {
+        "__uuid__": "9c42f39e-a2e0-4007-a73c-7df267427ce8"
+      },
+      {
+        "__uuid__": "5a742d9d-f9bc-4468-ba81-815d7d831617"
+      },
+      {
+        "__uuid__": "9646ab06-d3ac-4f1c-bb4d-295a7c2a5353"
+      },
+      {
+        "__uuid__": "d683017a-aa61-464a-8892-6643d082fa69"
+      },
+      {
+        "__uuid__": "84241033-b0c7-4f08-8e64-1fb580338196"
+      }
+    ],
+    "stagePools": [],
     "doneStage": 0,
     "canRecycle": false,
     "currentPlat": null,
@@ -4255,9 +4275,6 @@
     "player": {
       "__id__": 24
     },
-    "stage": {
-      "__id__": 20
-    },
     "gameBg": {
       "__id__": 10
     },
@@ -4291,6 +4308,17 @@
     "shark": {
       "__id__": 40
     },
+    "stage": {
+      "__id__": 20
+    },
+    "prefabs": [
+      {
+        "__uuid__": "b38b0745-18b0-4ecd-afc4-188e3dcd492a"
+      },
+      {
+        "__uuid__": "452f3140-5ff3-4ee9-ae60-0acf996d3acb"
+      }
+    ],
     "_id": "507ow7u5tPa6P/j241Bkkn"
   }
 ]

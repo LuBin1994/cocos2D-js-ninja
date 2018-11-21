@@ -28,9 +28,10 @@ cc.Class({
             var bridgeUnit = cc.instantiate(this.bridgePrefab);
             this.bridgePool.put(bridgeUnit);
         }
+    },
+    init: function init() {
         this.node.active = false;
     },
-    start: function start() {},
 
     configInit: function configInit() {
         this.node.rotation = 0;
