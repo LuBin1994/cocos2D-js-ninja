@@ -154,27 +154,19 @@ cc.Class({
         try {
             if (_gameConfig2.default.IS_WX) {
                 //分数记录
-                if (wx.getStorageSync('gameScore')) {
-                    var score = wx.getStorageSync('gameScore');
-                    this.nowScore.string = "本次分值: " + _GameDataManager2.default.totalScore;
-                    if (_GameDataManager2.default.totalScore > score) {
-                        this.bestScore.string = "历史最佳: " + score;
-                        wx.setStorageSync('gameScore', _GameDataManager2.default.totalScore);
-                        this.showOffText.active = true;
-                        _GameDataManager2.default.isHideSub = true;
-                        _GameDataManager2.default.isBreakRecord = true;
-                    } else {
-                        this.showOffText.active = false;
-                        _GameDataManager2.default.isBreakRecord = false;
-                        this.bestScore.string = "历史最佳: " + score;
-                        _GameDataManager2.default.isHideSub = false;
-                    }
-                } else {
-                    this.nowScore.string = "本次分值: " + _GameDataManager2.default.totalScore;
-                    this.bestScore.string = "历史最佳: " + _GameDataManager2.default.totalScore;
+                var score = wx.getStorageSync('gameScore');
+                this.nowScore.string = "本次分值: " + _GameDataManager2.default.totalScore;
+                if (_GameDataManager2.default.totalScore > score) {
+                    this.bestScore.string = "历史最佳: " + score;
                     wx.setStorageSync('gameScore', _GameDataManager2.default.totalScore);
+                    this.showOffText.active = true;
                     _GameDataManager2.default.isHideSub = true;
                     _GameDataManager2.default.isBreakRecord = true;
+                } else {
+                    this.showOffText.active = false;
+                    _GameDataManager2.default.isBreakRecord = false;
+                    this.bestScore.string = "历史最佳: " + score;
+                    _GameDataManager2.default.isHideSub = false;
                 }
                 //微信存储分数
                 var gameScore = _GameDataManager2.default.totalScore;
@@ -199,14 +191,7 @@ cc.Class({
                     success: function success(res) {
                         console.log('游戏数据记录接口返回值：', res.data);
                         if (res.data.status == 1) {} else {
-                            switch (res.data.code) {
-                                case 1004:
-                                    _util2.default.gameLog("游戏不存在");
-                                    break;
-                                case 1005:
-                                    _util2.default.gameLog("游戏数据记录参数错误");
-                                    break;
-                            }
+                            console.log(res.data.info);
                         }
                     },
                     error: function error() {

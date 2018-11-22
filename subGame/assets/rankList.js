@@ -44,11 +44,11 @@ cc.Class({
             keyList: ["x2" + MAIN_MENU_NUM],
             success: function (getres) {
                 if (getres.KVDataList.length > 0) {
-                    if (MAIN_MENU_NUM == 1) { // TODO
+                    if (MAIN_MENU_NUM == 'ninja_crossing') { // TODO
                         console.log('已小游戏中心数据格式要求上传分数')
                         wx.setUserCloudStorage({
                             KVDataList: [{
-                                key: "x2ninja_crossing",
+                                key: "ninja",
                                 value: "{\"wxgame\":{\"score\":" + (getres.KVDataList[0].value > score ? getres.KVDataList[0].value : score) + ",\"update_time\": " + new Date().getTime() + "}}"
                             }],
                             success: function (res) {
@@ -67,7 +67,7 @@ cc.Class({
                         value: "" + score,
                     }],
                     success: function (res) {
-                        console.log('setUserCloudStorage', 'success', res);
+                        console.log('排行榜分数上传成功');
                     },
                     fail: function (res) {
                         console.log('setUserCloudStorage', 'fail', res);

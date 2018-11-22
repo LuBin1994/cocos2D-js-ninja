@@ -23,11 +23,7 @@ cc.Class({
     onLoad: function onLoad() {
         var _this = this;
         this.node.active = false;
-        try {
-            _this.login();
-        } catch (e) {
-            _util2.default.gameLog("用户授权模块错误");
-        }
+        this.login();
     },
 
     //未登陆处理
@@ -75,24 +71,19 @@ cc.Class({
                                                 height: 60
                                             }
                                         });
-                                        _gameConfig2.default.auths_Btn.onTap(function (res1) {
-                                            wx.getSetting({
-                                                success: function success(auths) {
-                                                    if (auths.authSetting["scope.userInfo"]) {
-                                                        console.log("==已经授权===");
-                                                        _gameConfig2.default.IS_AUTHORIZE = true;
-                                                        _gameConfig2.default.auths_Btn.hide();
-                                                        var userInfo = cc.director.getScene().children[0].getChildByName("userInfo");
-                                                        userInfo.active = true;
-                                                        //将用户信息传至开发者服务器
-                                                        _this.sendUserInfo();
-                                                    } else {
-                                                        console.log("==拒绝授权===");
-                                                    }
-                                                }
-                                            });
+                                        _gameConfig2.default.auths_Btn.onTap(function (res) {
+                                            if (res.errMsg == "getUserInfo:ok") {
+                                                console.log("==已经授权===");
+                                                _gameConfig2.default.IS_AUTHORIZE = true;
+                                                _gameConfig2.default.auths_Btn.hide();
+                                                var userInfo = cc.director.getScene().children[0].getChildByName("userInfo");
+                                                userInfo.active = true;
+                                                //将用户信息传至开发者服务器
+                                                _this.sendUserInfo();
+                                            } else {
+                                                console.log("==拒绝授权===");
+                                            }
                                         });
-                                        _gameConfig2.default.auths_Btn.show();
                                     }
                                 }
                             });
@@ -159,32 +150,26 @@ cc.Class({
                                                 height: 60
                                             }
                                         });
-                                        _gameConfig2.default.auths_Btn.onTap(function (res1) {
-                                            wx.getSetting({
-                                                success: function success(auths) {
-                                                    if (auths.authSetting["scope.userInfo"]) {
-                                                        console.log("==已经授权===");
-                                                        _gameConfig2.default.IS_AUTHORIZE = true;
-                                                        _gameConfig2.default.auths_Btn.hide();
-                                                        var userInfo = cc.director.getScene().children[0].getChildByName("userInfo");
-                                                        userInfo.active = true;
-                                                        //将用户信息传至开发者服务器
-                                                        _this.sendUserInfo();
-                                                    } else {
-                                                        console.log("==拒绝授权===");
-                                                    }
-                                                }
-                                            });
+                                        _gameConfig2.default.auths_Btn.onTap(function (res) {
+                                            console.log('授权按钮点击返回值', res);
+                                            if (res.errMsg == "getUserInfo:ok") {
+                                                console.log("==已经授权===");
+                                                _gameConfig2.default.IS_AUTHORIZE = true;
+                                                _gameConfig2.default.auths_Btn.hide();
+                                                var userInfo = cc.director.getScene().children[0].getChildByName("userInfo");
+                                                userInfo.active = true;
+                                                //将用户信息传至开发者服务器
+                                                _this.sendUserInfo();
+                                            } else {
+                                                console.log("==拒绝授权===");
+                                            }
                                         });
-                                        _gameConfig2.default.auths_Btn.show();
                                     }
                                 }
                             });
                         }
                 },
-                fail: function fail() {
-                    _util2.default.gameLog("wx.getSetting调用失败");
-                }
+                fail: function fail() {}
             });
         } else {
             console.log("当前已手动授权");
@@ -222,19 +207,20 @@ cc.Class({
                     'content-type': 'application/x-www-form-urlencoded'
                 },
                 success: function success(res) {
-                    console.log('登陆完成后返回值：', res.data);
+                    console.log('微信已授权登陆完成后返回值：', res.data);
                     if (res.data.status == 1) {
                         wx.setStorageSync('sessionId', res.data.data.sessionId);
                         wx.setStorageSync('shareCode', res.data.data.shareCode);
-                    } else {
-                        switch (res.data.code) {
-                            case 1006:
-                                _util2.default.gameLog("登录操作失败");
-                                break;
-                            case 1005:
-                                _util2.default.gameLog("登录参数错误");
-                                break;
+                        //更新本地分数
+                        if (wx.getStorageSync('gameScore')) {
+                            if (res.data.data.bestScore > wx.getStorageSync('gameScore')) {
+                                wx.setStorageSync('gameScore', res.data.data.bestScore);
+                            }
+                        } else {
+                            wx.setStorageSync('gameScore', res.data.data.bestScore);
                         }
+                    } else {
+                        console.log(res.data.info);
                     }
                 },
                 error: function error() {
@@ -263,6 +249,14 @@ cc.Class({
                 if (res.data.status == 1) {
                     wx.setStorageSync('sessionId', res.data.data.sessionId);
                     wx.setStorageSync('shareCode', res.data.data.shareCode);
+                    //更新本地分数
+                    if (wx.getStorageSync('gameScore')) {
+                        if (res.data.data.bestScore > wx.getStorageSync('gameScore')) {
+                            wx.setStorageSync('gameScore', res.data.data.bestScore);
+                        }
+                    } else {
+                        wx.setStorageSync('gameScore', res.data.data.bestScore);
+                    }
                 } else {
                     _util2.default.gameLog(res.data.info);
                 }
@@ -331,28 +325,7 @@ cc.Class({
                 if (res.userInfo.gender = '') {
                     _gameConfig2.default.userInfo.sex = -1;
                 }
-                console.log(_gameConfig2.default);
                 callback && callback();
-            }
-        });
-    },
-    checkLogin: function checkLogin(callbacks) {
-        wx.request({
-            url: _gameConfig2.default.INTER_URL + "checkLogin",
-            method: "POST",
-            header: {
-                'content-type': 'application/x-www-form-urlencoded'
-            },
-            success: function success(res) {
-                console.log('检查登陆返回值：', res.data.data);
-                if (res.data.data == 1) {
-                    console.log("您已登陆，无须再登陆");
-                } else if (res.data.data == 0) {
-                    callbacks && callbacks();
-                }
-            },
-            fail: function fail() {
-                _util2.default.gameLog("checkLogin接口调用失败");
             }
         });
     },

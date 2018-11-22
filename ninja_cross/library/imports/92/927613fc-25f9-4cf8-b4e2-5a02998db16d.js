@@ -42,8 +42,15 @@ cc.Class({
             _GameDataManager2.default.isGameOver = true;
             this.game.showGameOver();
             this.node.stopAllActions();
-            this.game.stick.node.stopAllActions();
-            this.game.bridge.node.stopAllActions();
+            switch (_GameDataManager2.default.toolChoose) {
+                case 0:
+                    this.game.stick.node.stopAllActions();
+                    break;
+                case 1:
+                    this.game.bridge.node.stopAllActions();
+                    break;
+            }
+
             this.fall();
         }
     },
