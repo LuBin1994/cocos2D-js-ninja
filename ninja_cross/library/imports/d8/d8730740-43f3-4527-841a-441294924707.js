@@ -39,7 +39,8 @@ cc.Class({
         },
         currentPosX: 0,
         nextPosX: 0,
-        nextTwoPosX: 0
+        nextTwoPosX: 0,
+        stagePosX: [100, -295, -400]
     },
     onLoad: function onLoad() {
         var _this = this;

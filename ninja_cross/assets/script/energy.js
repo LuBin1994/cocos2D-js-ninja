@@ -28,8 +28,8 @@ cc.Class({
         var lengthObj = this.game.stage.getLength();
         var downY = Math.floor(lengthObj.min/600*300);
         var upY = Math.floor(lengthObj.max/600*300);
-        this.caliUp.y = -147+upY;
-        this.caliDown.y = -147+downY;
+        this.caliUp.y = -150+upY;
+        this.caliDown.y = -150+downY;
     },
     showCali(){
         this.node.active = true;

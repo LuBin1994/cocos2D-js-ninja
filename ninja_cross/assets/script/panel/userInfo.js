@@ -14,18 +14,18 @@ cc.Class({
     //未登陆处理
     unLoginedSetting(){
         var _this = this
-        if (GameConfig.IS_AUTHORIZE == false) {
+        if (GameConfig.IS_AUTHORIZE == false){
             wx.getSetting({
-                success: function (res) {
+                success: function (res){
                     //已经授权
-                    if (res.authSetting['scope.userInfo']) {
+                    if (res.authSetting['scope.userInfo']){
                         console.log('==已获得登录权限==')
                         _this.node.active = true;
                         GameConfig.IS_AUTHORIZE = true;
                         _this.loginWithWxAuthorize();
                         //获取用户信息,显示头像
                         wx.getUserInfo({
-                            success: function (res) {
+                            success: function (res){
                                 GameConfig.userInfo.nickName = res.userInfo.nickName;
                                 GameConfig.userInfo.avatarUrl = res.userInfo.avatarUrl + '?aaa=aa.jpg';
                                 _this.nickName.string = res.userInfo.nickName;
@@ -100,7 +100,7 @@ cc.Class({
             wx.getSetting({
                 success: function (res) {
                     //已经授权
-                    if (res.authSetting['scope.userInfo']) {
+                    if (res.authSetting['scope.userInfo']){
                         console.log('==已获得登录权限==')
                         _this.node.active = true;
                         GameConfig.IS_AUTHORIZE = true;
@@ -156,7 +156,7 @@ cc.Class({
                         })
                     }
                 },
-                fail: function () { }
+                fail: function () {}
             })
         }
         else {
@@ -176,7 +176,7 @@ cc.Class({
     loginWithWxAuthorize(){
         console.log("已授权登陆开始");
         var _this = this;
-        this.getUserInfo(function () {
+        this.getUserInfo(function (){
             wx.request({
                 url: GameConfig.INTER_URL + "login",
                 data: {
@@ -288,9 +288,7 @@ cc.Class({
                     },
                     success: function (res) {
                         console.log("用户信息传至开发者服务器返回值", res.data)
-                        if (res.data.status == 1){
-
-                        }
+                        if (res.data.status == 1){}
                         else {
                             Util.gameLog(res.data.info)
                         }
@@ -326,7 +324,7 @@ cc.Class({
         if (!GameConfig.haveCheckLogin) {
             wx.checkSession({
                 //session_key 未过期
-                success() {
+                success(){
                     console.log("session_key未过期")
                     wx.request({
                         url: GameConfig.INTER_URL + "checkLogin",
@@ -335,7 +333,6 @@ cc.Class({
                             'content-type': 'application/x-www-form-urlencoded'
                         },
                         success: function (res) {
-                            console.log(res.data)
                             GameConfig.haveCheckLogin = true;
                             //已登录
                             if (res.data.status == 1 && res.data.data == 1) {
@@ -345,12 +342,7 @@ cc.Class({
                             //未登录
                             else if (res.data.status == 1 && res.data.data == 0) {
                                 console.log("未登陆")
-                                wx.login({
-                                    success(res) {
-                                        GameConfig.userInfo.code = res.code;
-                                        _this.unLoginedSetting();
-                                    }
-                                })
+                                _this.doLogin();
                             }
                         },
                         fail: function () {
@@ -359,20 +351,24 @@ cc.Class({
                     })
                 },
                 //session_key 已过期
-                fail() {
+                fail(){
                     console.log("session_key已过期")
-                    wx.login({
-                        success(res) {
-                            GameConfig.userInfo.code = res.code;
-                            GameConfig.haveCheckLogin = true;
-                            _this.unLoginedSetting();
-                        }
-                    })
+                    GameConfig.haveCheckLogin = true;
+                    _this.doLogin();
                 }
             })
         }
         else {
             this.loginedSetting();
         }
+    },
+    doLogin(){
+        var _this = this;
+        wx.login({
+            success(res){
+                GameConfig.userInfo.code = res.code;
+                _this.unLoginedSetting();
+            }
+        })
     }
 });

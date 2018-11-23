@@ -23,6 +23,7 @@ cc.Class({
         currentPosX: 0,
         nextPosX: 0,
         nextTwoPosX: 0,
+        stagePosX:[100,-295,-400]
     },
     onLoad() {
         var _this = this;
@@ -66,7 +67,7 @@ cc.Class({
         centerDistance = distance + (this.currentPlat.width / 2 + this.nextPlat.width / 2)
         centerDistance = centerDistance - centerDistance % gameConfig.gameMoveSpeed;//两站装中心距离设置为移动速度的整数倍，防止移动过程中出现的偏差
         nextX = this.currentPlat.x + centerDistance;
-        this.nextPlat.setPosition(cc.v2(nextX, -295));
+        this.nextPlat.setPosition(cc.v2(nextX,-295));
         this.nextPlat.parent = this.node;
         this.nextPosX = nextX;
         //第三个站桩
@@ -75,7 +76,7 @@ cc.Class({
         centerDistance = distance + (this.nextPlat.width / 2 + this.nextTwoPlat.width / 2);
         centerDistance = centerDistance - centerDistance % gameConfig.gameMoveSpeed;//两站装中心距离设置为移动速度的整数倍，防止移动过程中出现的偏差
         nextX = this.nextPlat.x + centerDistance;
-        this.nextTwoPlat.setPosition(cc.v2(nextX, -295));
+        this.nextTwoPlat.setPosition(cc.v2(nextX,-295));
         this.nextTwoPlat.parent = this.node;
         this.nextTwoPosX = nextX;
         //初始化设置道具

@@ -33,7 +33,10 @@ cc.Class({
         btnSound: {
             default: null,
             type: cc.AudioClip
-        }
+        },
+        completeCount: 0,
+        totalCount: 2,
+        loadingMask: cc.Node
     },
     onLoad: function onLoad() {
         this.init();
@@ -54,9 +57,14 @@ cc.Class({
 
     init: function init() {
         var _this = this;
-        //头像预制
         if (_gameConfig2.default.IS_WX) {
+            //头像预制
             _GameUITools2.default.initPrefab(this.prefab[1]);
+            if (_gameConfig2.default.haveLoadData) {
+                this.loadingMask.active = false;
+            } else {
+                this.loadingMask.active = true;
+            }
         }
         //音乐
         _GameUITools2.default.initPrefab(this.prefab[0]);
@@ -78,6 +86,9 @@ cc.Class({
         _util2.default.btnEvent(this.modeChooseBtn, this.btnSound, function () {
             _GameUITools2.default.loadingLayer("panel/modeChoose");
         });
+        if (!localStorage.getItem('modeGuide')) {
+            _GameUITools2.default.loadingLayer("panel/modeChoose");
+        }
     },
     //获取分享信息
     getShareConfig: function getShareConfig() {
@@ -96,6 +107,8 @@ cc.Class({
                     var gameDifficultyNum = parseInt(_gameConfig2.default.config.difficulty);
                     //设置游戏难度
                     _util2.default.setGameDifficulty(gameDifficultyNum);
+                    _this.completeCount += 1;
+                    console.log('完成进度', _this.completeCount);
                     //用户点击了右上角“转发”按钮
                     wx.onShareAppMessage(function (res) {
                         return {
@@ -113,6 +126,7 @@ cc.Class({
 
     //获取用户系统信息
     getUserSystemInfo: function getUserSystemInfo() {
+        var _this = this;
         wx.getSystemInfo({
             success: function success(res) {
                 _gameConfig2.default.systemInfo.system = res.system;
@@ -126,6 +140,8 @@ cc.Class({
                 _gameConfig2.default.systemInfo.SDKVersion = res.SDKVersion;
                 _gameConfig2.default.systemInfo.screenWidth = res.screenWidth;
                 _gameConfig2.default.systemInfo.benchmarkLevel = res.benchmarkLevel;
+                _this.completeCount += 1;
+                console.log('完成进度', _this.completeCount);
             }
         });
     },
@@ -145,6 +161,15 @@ cc.Class({
         var ani = cc.sequence(scale1, scale2);
         var ani1 = cc.repeatForever(ani);
         node.runAction(ani1);
+    },
+    update: function update(dt) {
+        if (!_gameConfig2.default.haveLoadData) {
+            if (this.completeCount == this.totalCount) {
+                console.log('已完成加载');
+                _gameConfig2.default.haveLoadData = true;
+                this.loadingMask.active = false;
+            }
+        }
     }
 });
 

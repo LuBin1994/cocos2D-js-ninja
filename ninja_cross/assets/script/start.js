@@ -13,7 +13,10 @@ cc.Class({
         btnSound:{
             default: null,
             type: cc.AudioClip
-        }
+        },
+        completeCount:0,
+        totalCount:2,
+        loadingMask:cc.Node
     },
     onLoad () {
         this.init();
@@ -25,7 +28,7 @@ cc.Class({
         }
     },
     start (){
-        cc.director.preloadScene("game", () => {
+        cc.director.preloadScene("game", () =>{
            console.log("游戏场景已加载");
         });
         this.tex = new cc.Texture2D();
@@ -33,9 +36,15 @@ cc.Class({
     },
     init:function(){
         var _this = this;
-        //头像预制
         if(GameConfig.IS_WX){
+            //头像预制
             GameUITools.initPrefab(this.prefab[1]);
+            if(GameConfig.haveLoadData){
+                this.loadingMask.active = false;
+            }
+            else{
+                this.loadingMask.active = true;
+            }
         }
         //音乐
         GameUITools.initPrefab(this.prefab[0]);
@@ -57,6 +66,9 @@ cc.Class({
         Util.btnEvent(this.modeChooseBtn,this.btnSound,function(){
             GameUITools.loadingLayer("panel/modeChoose")
         });
+        if(!localStorage.getItem('modeGuide')){
+            GameUITools.loadingLayer("panel/modeChoose");
+        }
     },
     //获取分享信息
     getShareConfig() {
@@ -72,9 +84,11 @@ cc.Class({
                         GameDataManager.toolChoose = parseInt(res.data.data.defaultModel)-1;
                         GameConfig.haveSetMode = true
                     }
-                    var gameDifficultyNum = parseInt(GameConfig.config.difficulty)
+                    var gameDifficultyNum = parseInt(GameConfig.config.difficulty);
                     //设置游戏难度
-                    Util.setGameDifficulty(gameDifficultyNum)
+                    Util.setGameDifficulty(gameDifficultyNum);
+                    _this.completeCount+=1;
+                    console.log('完成进度',_this.completeCount)
                     //用户点击了右上角“转发”按钮
                     wx.onShareAppMessage(function (res){
                         return {
@@ -92,6 +106,7 @@ cc.Class({
     },
     //获取用户系统信息
     getUserSystemInfo(){
+        var _this = this;
         wx.getSystemInfo({
             success (res){
                 GameConfig.systemInfo.system = res.system;
@@ -105,6 +120,8 @@ cc.Class({
                 GameConfig.systemInfo.SDKVersion = res.SDKVersion;
                 GameConfig.systemInfo.screenWidth = res.screenWidth;
                 GameConfig.systemInfo.benchmarkLevel = res.benchmarkLevel;
+                _this.completeCount+=1;
+                console.log('完成进度',_this.completeCount)
             }
         })
     },
@@ -113,8 +130,8 @@ cc.Class({
         var res = wx.getLaunchOptionsSync()
         console.log("返回小程序启动参数",res)
         if(res.query.shareCode){
-            GameConfig.enterShareConfig.enterShareCode = res.query.shareCode
-            GameConfig.enterShareConfig.path = res.path
+            GameConfig.enterShareConfig.enterShareCode = res.query.shareCode;
+            GameConfig.enterShareConfig.path = res.path;
         }
     },
     modeBounce(node){
@@ -123,5 +140,14 @@ cc.Class({
         var ani = cc.sequence(scale1,scale2);
         var ani1 = cc.repeatForever(ani);
         node.runAction(ani1);
-    }
+    },
+    update(dt){
+        if(!GameConfig.haveLoadData){
+            if(this.completeCount == this.totalCount){
+                console.log('已完成加载')
+                GameConfig.haveLoadData = true;
+                this.loadingMask.active = false; 
+            }
+        }
+    },
 });

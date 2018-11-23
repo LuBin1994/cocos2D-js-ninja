@@ -1,6 +1,6 @@
 //游戏运行数据
 var GameDataManager = {
-    canSoundPlay: true,        //音效能否播放
+    canSoundPlay: false,        //音效能否播放
     totalScore:0,           //总分数
     nextScore:0,            //站台分值
     addScoreGrade:1,        //加分等级
@@ -17,6 +17,6 @@ var GameDataManager = {
     toolChoose: 2,          //道具选择，0 ：木棍 ，1 ： 桥梁 ，2 ：跳跃
     gameId:0,               //当局游戏ID
     isBreakRecord:false,    //当局成绩是否破纪录
-    isHideSub:false         //是否隐藏子域内容
+    isHideSub:false,         //是否隐藏子域内容
 }
 export default GameDataManager

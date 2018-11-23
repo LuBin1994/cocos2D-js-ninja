@@ -343,7 +343,6 @@ cc.Class({
                             'content-type': 'application/x-www-form-urlencoded'
                         },
                         success: function success(res) {
-                            console.log(res.data);
                             _gameConfig2.default.haveCheckLogin = true;
                             //已登录
                             if (res.data.status == 1 && res.data.data == 1) {
@@ -353,12 +352,7 @@ cc.Class({
                             //未登录
                             else if (res.data.status == 1 && res.data.data == 0) {
                                     console.log("未登陆");
-                                    wx.login({
-                                        success: function success(res) {
-                                            _gameConfig2.default.userInfo.code = res.code;
-                                            _this.unLoginedSetting();
-                                        }
-                                    });
+                                    _this.doLogin();
                                 }
                         },
                         fail: function fail() {
@@ -370,18 +364,22 @@ cc.Class({
                 //session_key 已过期
                 fail: function fail() {
                     console.log("session_key已过期");
-                    wx.login({
-                        success: function success(res) {
-                            _gameConfig2.default.userInfo.code = res.code;
-                            _gameConfig2.default.haveCheckLogin = true;
-                            _this.unLoginedSetting();
-                        }
-                    });
+                    _gameConfig2.default.haveCheckLogin = true;
+                    _this.doLogin();
                 }
             });
         } else {
             this.loginedSetting();
         }
+    },
+    doLogin: function doLogin() {
+        var _this = this;
+        wx.login({
+            success: function success(res) {
+                _gameConfig2.default.userInfo.code = res.code;
+                _this.unLoginedSetting();
+            }
+        });
     }
 });
 
