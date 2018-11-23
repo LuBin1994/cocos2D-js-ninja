@@ -12,17 +12,17 @@ var GameConfig = {
     canResurrectTime: 0,           //能复活次数
     sharkJumpDurTime: 30,          //鲨鱼跳跃间隔时间(秒)
     MAIN_MENU_NUM: "ninja_crossing",           // 主选择菜单
-    IS_WX:false,                   //当前是否是微信环境(游戏发布时改为true)
+    IS_WX:true,                   //当前是否是微信环境(游戏发布时改为true)
     difficulty:1,                  //游戏难度  {1-10}
     /**
      * 数据存储
      */
     IS_AUTHORIZE:false,            //是否授权
     auths_Btn:null,                //授权按钮
-    INTER_URL:"http://192.168.1.156:32001/risk/",   //本地接口
-    //INTER_URL:"https://wg.iwckj.com/risk/",   //线上接口
+    //INTER_URL:"http://192.168.1.156:32001/risk/",   //本地接口
+    INTER_URL:"https://wg.iwckj.com/risk/",   //线上接口
     LOG_URL:"https://log-ninja.iwckj.com/",     //日志接口
-    env:"0",                       //环境  0:开发   1：测试   2：线上
+    env:"2",                       //环境  0:开发   1：测试   2：线上
     haveCheckLogin:false,          //是否检查登陆
     haveSetMode:false,             //是否设置模式
     //用户系统信息
