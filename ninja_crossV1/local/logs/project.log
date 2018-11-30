@@ -1,0 +1,199 @@
+2018-11-30T05:57:22.442Z - normal: Load ~/.CocosCreator/settings.json
+2018-11-30T05:57:22.446Z - normal: checking language setting...
+2018-11-30T05:57:22.446Z - normal: Language: zh
+2018-11-30T05:57:23.937Z - success: protocol editor-framework registered
+2018-11-30T05:57:23.937Z - success: protocol app registered
+2018-11-30T05:57:23.937Z - success: protocol theme registered
+2018-11-30T05:57:23.937Z - success: protocol packages registered
+2018-11-30T05:57:23.937Z - success: protocol unpack registerred
+2018-11-30T05:57:23.938Z - success: protocol disable-commonjs registerred
+2018-11-30T05:57:24.195Z - normal: connected!
+2018-11-30T05:57:24.201Z - normal: Check project D:\workspace\cocosGame\ninja_crossingV\ninja_crossingv1\ninja_crossV1
+2018-11-30T05:57:24.215Z - normal: Initializing project D:\workspace\cocosGame\ninja_crossingV\ninja_crossingv1\ninja_crossV1
+2018-11-30T05:57:24.229Z - normal: Initializing Cocos2d
+2018-11-30T05:57:24.858Z - normal: Initializing Asset Database
+2018-11-30T05:57:24.901Z - success: protocol uuid registerred
+2018-11-30T05:57:24.901Z - success: protocol db registerred
+2018-11-30T05:57:24.901Z - success: protocol thumbnail registerred
+2018-11-30T05:57:24.901Z - normal: Loading editor/builtin packages
+2018-11-30T05:57:25.035Z - success: assets loaded
+2018-11-30T05:57:25.037Z - success: builder loaded
+2018-11-30T05:57:25.039Z - success: cocos-analytics loaded
+2018-11-30T05:57:25.043Z - success: console loaded
+2018-11-30T05:57:25.074Z - success: fb-instant-games loaded
+2018-11-30T05:57:25.077Z - success: hierarchy loaded
+2018-11-30T05:57:25.080Z - success: inspector loaded
+2018-11-30T05:57:25.082Z - success: keystore loaded
+2018-11-30T05:57:25.086Z - success: node-library loaded
+2018-11-30T05:57:25.088Z - success: package-asset loaded
+2018-11-30T05:57:25.089Z - success: preferences loaded
+2018-11-30T05:57:25.091Z - success: project-exporter loaded
+2018-11-30T05:57:25.104Z - success: project-importer loaded
+2018-11-30T05:57:25.106Z - success: project-settings loaded
+2018-11-30T05:57:25.109Z - success: ui-kit loaded
+2018-11-30T05:57:25.112Z - success: scene loaded
+2018-11-30T05:57:25.114Z - success: sprite-editor loaded
+2018-11-30T05:57:25.116Z - success: store loaded
+2018-11-30T05:57:25.120Z - success: timeline loaded
+2018-11-30T05:57:25.120Z - normal: Loading builtin packages
+2018-11-30T05:57:25.122Z - success: asset-db-debugger loaded
+2018-11-30T05:57:25.125Z - success: code-editor loaded
+2018-11-30T05:57:25.125Z - success: color-picker loaded
+2018-11-30T05:57:25.125Z - success: jsb-adapter loaded
+2018-11-30T05:57:25.127Z - success: package-manager loaded
+2018-11-30T05:57:25.214Z - success: qqplay-adapter loaded
+2018-11-30T05:57:25.217Z - success: sdkbox loaded
+2018-11-30T05:57:25.220Z - success: tester loaded
+2018-11-30T05:57:25.222Z - success: ui-grid loaded
+2018-11-30T05:57:25.224Z - success: ui-kit-preview-extra loaded
+2018-11-30T05:57:25.225Z - success: ui-kit-preview loaded
+2018-11-30T05:57:25.227Z - success: ui-tree loaded
+2018-11-30T05:57:25.228Z - success: weapp-adapter loaded
+2018-11-30T05:57:26.168Z - normal: Loading packages
+2018-11-30T05:57:26.173Z - normal: Watching packages
+2018-11-30T05:57:26.451Z - normal: Run Application
+2018-11-30T05:57:27.363Z - success: preview server running at http://localhost:7456
+2018-11-30T05:57:33.199Z - warn: Please change the definition of property 'btnSound' in class 'GameOver'. Starting from v1.10,
+properties in CCClass can not be abbreviated if they are of type RawAsset.
+Please use the complete form.
+For example, if the type is Texture2D, the previous definition is:
+    btnSound: cc.Texture2D,
+Now it should be changed to:
+    btnSound: {
+      type: cc.Texture2D // use 'type:' to define Texture2D object directly
+      default: null,     // object's default value is null
+    },
+(This helps us to successfully refactor all RawAssets at v2.0, sorry for the inconvenience. 😰 )
+2018-11-30T05:57:33.215Z - warn: The 'type' attribute of 'stage.currentPlat' is undefined when loading script
+2018-11-30T05:57:33.215Z - warn: The 'type' attribute of 'stage.nextPlat' is undefined when loading script
+2018-11-30T05:57:33.215Z - warn: The 'type' attribute of 'stage.nextTwoPlat' is undefined when loading script
+2018-11-30T05:57:33.216Z - warn: Please change the definition of property 'gameOverSound' in class 'game'. Starting from v1.10,
+properties in CCClass can not be abbreviated if they are of type RawAsset.
+Please use the complete form.
+For example, if the type is Texture2D, the previous definition is:
+    gameOverSound: cc.Texture2D,
+Now it should be changed to:
+    gameOverSound: {
+      type: cc.Texture2D // use 'type:' to define Texture2D object directly
+      default: null,     // object's default value is null
+    },
+(This helps us to successfully refactor all RawAssets at v2.0, sorry for the inconvenience. 😰 )
+2018-11-30T05:57:33.219Z - warn: Please change the definition of property 'bgm' in class 'media'. Starting from v1.10,
+properties in CCClass can not be abbreviated if they are of type RawAsset.
+Please use the complete form.
+For example, if the type is Texture2D, the previous definition is:
+    bgm: cc.Texture2D,
+Now it should be changed to:
+    bgm: {
+      type: cc.Texture2D // use 'type:' to define Texture2D object directly
+      default: null,     // object's default value is null
+    },
+(This helps us to successfully refactor all RawAssets at v2.0, sorry for the inconvenience. 😰 )
+2018-11-30T06:01:42.247Z - warn: Please change the definition of property 'btnSound' in class 'GameOver'. Starting from v1.10,
+properties in CCClass can not be abbreviated if they are of type RawAsset.
+Please use the complete form.
+For example, if the type is Texture2D, the previous definition is:
+    btnSound: cc.Texture2D,
+Now it should be changed to:
+    btnSound: {
+      type: cc.Texture2D // use 'type:' to define Texture2D object directly
+      default: null,     // object's default value is null
+    },
+(This helps us to successfully refactor all RawAssets at v2.0, sorry for the inconvenience. 😰 )
+2018-11-30T06:01:42.263Z - warn: The 'type' attribute of 'stage.currentPlat' is undefined when loading script
+2018-11-30T06:01:42.263Z - warn: The 'type' attribute of 'stage.nextPlat' is undefined when loading script
+2018-11-30T06:01:42.263Z - warn: The 'type' attribute of 'stage.nextTwoPlat' is undefined when loading script
+2018-11-30T06:01:42.265Z - warn: Please change the definition of property 'gameOverSound' in class 'game'. Starting from v1.10,
+properties in CCClass can not be abbreviated if they are of type RawAsset.
+Please use the complete form.
+For example, if the type is Texture2D, the previous definition is:
+    gameOverSound: cc.Texture2D,
+Now it should be changed to:
+    gameOverSound: {
+      type: cc.Texture2D // use 'type:' to define Texture2D object directly
+      default: null,     // object's default value is null
+    },
+(This helps us to successfully refactor all RawAssets at v2.0, sorry for the inconvenience. 😰 )
+2018-11-30T06:01:42.268Z - warn: Please change the definition of property 'bgm' in class 'media'. Starting from v1.10,
+properties in CCClass can not be abbreviated if they are of type RawAsset.
+Please use the complete form.
+For example, if the type is Texture2D, the previous definition is:
+    bgm: cc.Texture2D,
+Now it should be changed to:
+    bgm: {
+      type: cc.Texture2D // use 'type:' to define Texture2D object directly
+      default: null,     // object's default value is null
+    },
+(This helps us to successfully refactor all RawAssets at v2.0, sorry for the inconvenience. 😰 )
+2018-11-30T06:02:31.618Z - warn: Please change the definition of property 'btnSound' in class 'GameOver'. Starting from v1.10,
+properties in CCClass can not be abbreviated if they are of type RawAsset.
+Please use the complete form.
+For example, if the type is Texture2D, the previous definition is:
+    btnSound: cc.Texture2D,
+Now it should be changed to:
+    btnSound: {
+      type: cc.Texture2D // use 'type:' to define Texture2D object directly
+      default: null,     // object's default value is null
+    },
+(This helps us to successfully refactor all RawAssets at v2.0, sorry for the inconvenience. 😰 )
+2018-11-30T06:02:31.628Z - warn: The 'type' attribute of 'stage.currentPlat' is undefined when loading script
+2018-11-30T06:02:31.628Z - warn: The 'type' attribute of 'stage.nextPlat' is undefined when loading script
+2018-11-30T06:02:31.628Z - warn: The 'type' attribute of 'stage.nextTwoPlat' is undefined when loading script
+2018-11-30T06:02:31.628Z - warn: Please change the definition of property 'gameOverSound' in class 'game'. Starting from v1.10,
+properties in CCClass can not be abbreviated if they are of type RawAsset.
+Please use the complete form.
+For example, if the type is Texture2D, the previous definition is:
+    gameOverSound: cc.Texture2D,
+Now it should be changed to:
+    gameOverSound: {
+      type: cc.Texture2D // use 'type:' to define Texture2D object directly
+      default: null,     // object's default value is null
+    },
+(This helps us to successfully refactor all RawAssets at v2.0, sorry for the inconvenience. 😰 )
+2018-11-30T06:02:31.630Z - warn: Please change the definition of property 'bgm' in class 'media'. Starting from v1.10,
+properties in CCClass can not be abbreviated if they are of type RawAsset.
+Please use the complete form.
+For example, if the type is Texture2D, the previous definition is:
+    bgm: cc.Texture2D,
+Now it should be changed to:
+    bgm: {
+      type: cc.Texture2D // use 'type:' to define Texture2D object directly
+      default: null,     // object's default value is null
+    },
+(This helps us to successfully refactor all RawAssets at v2.0, sorry for the inconvenience. 😰 )
+2018-11-30T06:05:44.613Z - warn: Please change the definition of property 'btnSound' in class 'GameOver'. Starting from v1.10,
+properties in CCClass can not be abbreviated if they are of type RawAsset.
+Please use the complete form.
+For example, if the type is Texture2D, the previous definition is:
+    btnSound: cc.Texture2D,
+Now it should be changed to:
+    btnSound: {
+      type: cc.Texture2D // use 'type:' to define Texture2D object directly
+      default: null,     // object's default value is null
+    },
+(This helps us to successfully refactor all RawAssets at v2.0, sorry for the inconvenience. 😰 )
+2018-11-30T06:05:44.620Z - warn: The 'type' attribute of 'stage.currentPlat' is undefined when loading script
+2018-11-30T06:05:44.621Z - warn: The 'type' attribute of 'stage.nextPlat' is undefined when loading script
+2018-11-30T06:05:44.622Z - warn: The 'type' attribute of 'stage.nextTwoPlat' is undefined when loading script
+2018-11-30T06:05:44.623Z - warn: Please change the definition of property 'gameOverSound' in class 'game'. Starting from v1.10,
+properties in CCClass can not be abbreviated if they are of type RawAsset.
+Please use the complete form.
+For example, if the type is Texture2D, the previous definition is:
+    gameOverSound: cc.Texture2D,
+Now it should be changed to:
+    gameOverSound: {
+      type: cc.Texture2D // use 'type:' to define Texture2D object directly
+      default: null,     // object's default value is null
+    },
+(This helps us to successfully refactor all RawAssets at v2.0, sorry for the inconvenience. 😰 )
+2018-11-30T06:05:44.625Z - warn: Please change the definition of property 'bgm' in class 'media'. Starting from v1.10,
+properties in CCClass can not be abbreviated if they are of type RawAsset.
+Please use the complete form.
+For example, if the type is Texture2D, the previous definition is:
+    bgm: cc.Texture2D,
+Now it should be changed to:
+    bgm: {
+      type: cc.Texture2D // use 'type:' to define Texture2D object directly
+      default: null,     // object's default value is null
+    },
+(This helps us to successfully refactor all RawAssets at v2.0, sorry for the inconvenience. 😰 )

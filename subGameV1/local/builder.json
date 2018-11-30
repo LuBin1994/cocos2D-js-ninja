@@ -1,0 +1,19 @@
+{
+  "actualPlatform": "wechatgame-subcontext",
+  "apiLevel": "",
+  "appABIs": [],
+  "buildPath": "D:\\workspace\\cocosGame\\ninja_crossingV\\ninja_crossingv1\\ninja_crossV1\\build\\wechatgame",
+  "debug": false,
+  "embedWebDebugger": false,
+  "keystoreAlias": "",
+  "keystoreAliasPassword": "",
+  "keystorePassword": "",
+  "keystorePath": "",
+  "platform": "wechatgame-subcontext",
+  "previewHeight": "720",
+  "previewWidth": "1280",
+  "sourceMaps": false,
+  "template": "link",
+  "useDebugKeystore": true,
+  "vsVersion": "auto"
+}
