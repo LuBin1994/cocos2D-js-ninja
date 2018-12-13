@@ -41,6 +41,18 @@ cc.Class({
         if(GameConfig.IS_WX){
             Util.btnEvent(this.closeBtn,this.btnSound,function () {
                 if(GameConfig.IS_WX){
+                    if(GameConfig.auths_Btn){
+                        if(!GameConfig.IS_AUTHORIZE){
+                            GameConfig.auths_Btn.show();
+                        } 
+                        var cur = cc.director.getRunningScene();
+                        if(typeof cur == "object" && cur.name == 'game')
+                        {
+                            if(GameConfig.gameOverBannerAdv){
+                                GameConfig.gameOverBannerAdv.show();
+                            }
+                        }
+                    }
                     wx.postMessage({messageType: 3, MAIN_MENU_NUM: GameConfig.MAIN_MENU_NUM,});
                     console.log(GameDataManager.isHideSub)
                     if(GameDataManager.isHideSub){

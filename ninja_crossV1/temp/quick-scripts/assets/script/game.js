@@ -158,13 +158,7 @@ cc.Class({
         this.setTool();
         _util2.default.gameContinueDataInit();
         this.configInit();
-        this.scoreDisplay.string = _gameDataManager2.default.totalScore;
-        if (_GameConfig2.default.canResurrectTime == 0) {
-            this.gameOver.advBtn.active = false;
-        }
-        if (_gameDataManager2.default.toolChoose == 2) {
-            this.energy.gameInit();
-        }
+        //this.scoreDisplay.string = GameDataManager.totalScore;
         this.scoreGroup.opacity = 255;
     },
     //重开游戏
@@ -349,11 +343,6 @@ cc.Class({
                 this.stage.hideStage();
             }, 1);
             this.fog.hideFog();
-            if (_GameConfig2.default.canResurrectTime == 0) {
-                this.gameOver.advBtn.active = false;
-            } else {
-                this.gameOver.advBtn.active = true;
-            }
         }
         this.canShowGameOver = false;
     },

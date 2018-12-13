@@ -96,9 +96,9 @@ cc.Class({
     //已登陆处理
     loginedSetting(){
         var _this = this
-        if (GameConfig.IS_AUTHORIZE == false) {
+        if (GameConfig.IS_AUTHORIZE == false){
             wx.getSetting({
-                success: function (res) {
+                success: function (res){
                     //已经授权
                     if (res.authSetting['scope.userInfo']){
                         console.log('==已获得登录权限==')
@@ -106,11 +106,11 @@ cc.Class({
                         GameConfig.IS_AUTHORIZE = true;
                         //获取用户信息,显示头像
                         wx.getUserInfo({
-                            success: function (res) {
+                            success: function (res){
                                 GameConfig.userInfo.nickName = res.userInfo.nickName;
                                 GameConfig.userInfo.avatarUrl = res.userInfo.avatarUrl + '?aaa=aa.jpg';
                                 _this.nickName.string = res.userInfo.nickName;
-                                cc.loader.load(GameConfig.userInfo.avatarUrl, function (err, texture) {
+                                cc.loader.load(GameConfig.userInfo.avatarUrl, function (err, texture){
                                     var sprite = new cc.SpriteFrame(texture);
                                     _this.avatar.spriteFrame = sprite;
                                 });

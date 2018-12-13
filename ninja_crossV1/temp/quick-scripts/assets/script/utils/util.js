@@ -73,6 +73,7 @@ var Util = {
         _gameDataManager2.default.isStartLengthen = false;
         _gameDataManager2.default.isGameOver = false;
         _gameDataManager2.default.isHideSub = false;
+        _gameConfig2.default.canResurrectTime = 1;
     },
 
     /**
@@ -216,21 +217,20 @@ var Util = {
             }
         }
     },
+
     /**
      * 激励式观看广告
+     * @param {*} adId 广告id
      * @param {*} target 
-     * @param {*} func  回调
+     * @param {*} func  光看广告完成回调
      */
-    videoFun: function videoFun(target, func) {
+    createVideoAdv: function createVideoAdv(adId, target, func) {
         var target = target;
         //打开视频
-        target = wx.createRewardedVideoAd({ adUnitId: 'adunit-c154ccc0341b0c44' });
-
+        target = wx.createRewardedVideoAd({ adUnitId: adId });
         target.onLoad(function () {
             console.log('激励视频 广告加载成功');
-        });
-
-        target.onError(function (err) {
+        }), target.onError(function (err) {
             console.log(err);
             func();
         });
@@ -238,23 +238,70 @@ var Util = {
         target.onClose(function (res) {
             // 小于 2.1.0 的基础库版本，res 是一个 undefined
             if (res && res.isEnded || res === undefined) {
-                // if (window.onErrorNub !== 5) {
-                //     this.node.game.onTipsBox();
-                // }
                 func();
-                // 正常播放结束，可以下发游戏奖励
-                ApiTool.video({ type: 1 });
+                console.log();
             } else {
-                // 播放中途退出，不下发游戏奖励
                 console.log('中途退出不会获得游戏奖励');
             }
         });
-
         target.show().catch(function (err) {
             target.load().then(function () {
                 return target.show();
             });
         });
+    },
+
+    /**
+     * 创建banner广告
+     * @param {*} func  广告调取失败回调
+     */
+    createBannerAdv: function createBannerAdv(func) {
+        if (_gameConfig2.default.gameOverBannerAdv) {
+            _gameConfig2.default.gameOverBannerAdv.destroy();
+            _gameConfig2.default.gameOverBannerAdv = wx.createBannerAd({
+                adUnitId: 'adunit-14283a654627a2a0',
+                style: {
+                    left: 0,
+                    top: _gameConfig2.default.systemInfo.screenHeight - 110,
+                    width: _gameConfig2.default.systemInfo.screenWidth,
+                    height: 110
+                }
+            });
+            _gameConfig2.default.gameOverBannerAdv.onLoad(function () {
+                console.log('banner 广告加载成功');
+                _gameConfig2.default.gameOverBannerAdv.show();
+            });
+            _gameConfig2.default.gameOverBannerAdv.onError(function (err) {
+                console.log(err);
+                func();
+            });
+        } else {
+            _gameConfig2.default.gameOverBannerAdv = wx.createBannerAd({
+                adUnitId: 'adunit-14283a654627a2a0',
+                style: {
+                    left: 0,
+                    top: _gameConfig2.default.systemInfo.screenHeight - 110,
+                    width: _gameConfig2.default.systemInfo.screenWidth,
+                    height: 110
+                }
+            });
+            _gameConfig2.default.gameOverBannerAdv.onLoad(function () {
+                console.log('banner 广告加载成功');
+                _gameConfig2.default.gameOverBannerAdv.show();
+            });
+            _gameConfig2.default.gameOverBannerAdv.onError(function (err) {
+                console.log(err);
+                func();
+            });
+        }
+    },
+
+    /**
+     * 获取当前日期
+     */
+    getDate: function getDate() {
+        var date = new Date();
+        return date.toLocaleDateString();
     }
 };
 exports.default = Util;

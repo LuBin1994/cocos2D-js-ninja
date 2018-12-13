@@ -38,12 +38,18 @@ cc.Class({
         var _this = this;
         this.modeEvent(this.stickMode, this.btnSound, function () {
             _gameDataManager2.default.toolChoose = 0;
+            _gameDataManager2.default.switchModelMax--;
+            localStorage.setItem('switchModelMax', _gameDataManager2.default.switchModelMax);
         });
         this.modeEvent(this.bridgeMode, this.btnSound, function () {
             _gameDataManager2.default.toolChoose = 1;
+            _gameDataManager2.default.switchModelMax--;
+            localStorage.setItem('switchModelMax', _gameDataManager2.default.switchModelMax);
         });
         this.modeEvent(this.jumpMode, this.btnSound, function () {
             _gameDataManager2.default.toolChoose = 2;
+            _gameDataManager2.default.switchModelMax--;
+            localStorage.setItem('switchModelMax', _gameDataManager2.default.switchModelMax);
         });
     },
     showChoose: function showChoose() {

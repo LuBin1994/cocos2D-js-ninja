@@ -18,5 +18,8 @@ var GameDataManager = {
     gameId:0,               //当局游戏ID
     isBreakRecord:false,    //当局成绩是否破纪录
     isHideSub:false,        //是否隐藏子域内容
+    rankMax:5,              //可看排行榜次数
+    everydayGameMax:5,      //可玩游戏次数
+    switchModelMax:3,       //可切换模式次数
 }
 export default GameDataManager

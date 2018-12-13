@@ -26,7 +26,10 @@ var GameDataManager = {
     toolChoose: 2, //道具选择，0 ：木棍 ，1 ： 桥梁 ，2 ：跳跃
     gameId: 0, //当局游戏ID
     isBreakRecord: false, //当局成绩是否破纪录
-    isHideSub: false //是否隐藏子域内容
+    isHideSub: false, //是否隐藏子域内容
+    rankMax: 5, //可看排行榜次数
+    everydayGameMax: 5, //可玩游戏次数
+    switchModelMax: 3 //可切换模式次数
 };
 exports.default = GameDataManager;
 module.exports = exports["default"];

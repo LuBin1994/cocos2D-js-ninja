@@ -26,21 +26,60 @@ cc.Class({
         });
         //btn绑定事件
         Util.btnEvent(this.playAgainBtn, this.btnSound, function () {
-            _this.game.reStartGame();
-            _this.node.active = false
+            if (GameDataManager.everydayGameMax != 0) {
+                GameDataManager.everydayGameMax--;
+                localStorage.setItem('everydayGameMax', GameDataManager.everydayGameMax);
+                _this.game.reStartGame();
+                _this.node.active = false
+                _this.hideBannerAdv();
+            }
+            else {
+                Util.createVideoAdv('adunit-2a1eec952b1c6e4c', GameConfig.videoAdv, function () {
+                    GameDataManager.everydayGameMax += GameConfig.gameIncrease;
+                    GameDataManager.everydayGameMax--;
+                    localStorage.setItem('everydayGameMax', GameDataManager.everydayGameMax);
+                    _this.game.reStartGame();
+                    _this.node.active = false
+                    _this.hideBannerAdv();
+                })
+            }
         });
         Util.btnEvent(this.goBackHomeBtn, this.btnSound, function () {
             GameUITools.loadingScene('start');
+            _this.hideBannerAdv();
         });
+        //查看排名
         Util.btnEvent(this.rankBtn, this.btnSound, function () {
-            GameUITools.loadingLayer("panel/rank")
+            if (GameDataManager.rankMax != 0) {
+                GameDataManager.rankMax--;
+                localStorage.setItem('rankMax', GameDataManager.rankMax);
+                GameUITools.loadingLayer("panel/rank");
+                if (GameConfig.auths_Btn) {
+                    GameConfig.auths_Btn.hide();
+                }
+                _this.hideBannerAdv();
+            }
+            else {
+                Util.createVideoAdv('adunit-9429ed2ecefa9198', GameConfig.videoAdv, function () {
+                    GameDataManager.rankMax += GameConfig.rankIncrease;
+                    GameDataManager.rankMax--;
+                    localStorage.setItem('rankMax', GameDataManager.rankMax)
+                    GameUITools.loadingLayer("panel/rank");
+                    if (GameConfig.auths_Btn) {
+                        GameConfig.auths_Btn.hide();
+                    }
+                    _this.hideBannerAdv();
+                })
+            }
         });
         Util.btnEvent(this.advBtn, this.btnSound, function () {
-            GameConfig.canResurrectTime -= 1;
-            _this.game.continueGame();
-            _this.node.active = false;
+            Util.createVideoAdv('adunit-a319cf0689893757', GameConfig.videoAdv, function () {
+                GameConfig.canResurrectTime -= 1;
+                _this.game.continueGame();
+                _this.hideGameOver();
+            })
         });
-        if (GameConfig.IS_WX) {
+        if (GameConfig.IS_WX){
             Util.btnEvent(this.showOffbtn, this.btnSound, function () {
                 var shareCode = "shareCode=" + wx.getStorageSync('shareCode')
                 console.log(shareCode)
@@ -183,10 +222,26 @@ cc.Class({
             })
         }
     },
-    showGameOver(){
+    showGameOver() {
         this.node.active = true;
+        if (GameConfig.IS_WX) {
+            //banner广告
+            Util.createBannerAdv(Util.createBannerAdv);
+        }
+        if(GameConfig.canResurrectTime == 0){
+            this.advBtn.active = false;
+        }
+        else{
+            this.advBtn.active = true;
+        }
     },
     hideGameOver(){
         this.node.active = false;
+        this.hideBannerAdv();
+    },
+    hideBannerAdv() {
+        if (GameConfig.IS_WX) {
+            GameConfig.gameOverBannerAdv.hide();
+        }
     }
 });

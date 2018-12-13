@@ -99,9 +99,7 @@
         "assets",
         "scene"
       ]
-    },
-    "window-1543562423116": {},
-    "worker": {}
+    }
   },
   "panels": {
     "project-settings": {
@@ -111,8 +109,8 @@
       "height": 564
     },
     "builder": {
-      "x": 725,
-      "y": 79,
+      "x": 1306,
+      "y": 39,
       "width": 345,
       "height": 712
     },

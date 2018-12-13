@@ -4,6 +4,8 @@ cc._RF.push(module, 'ea993OaclZFSYRp26rCz1XM', 'rank', __filename);
 
 'use strict';
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 var _util = require('../utils/util');
 
 var _util2 = _interopRequireDefault(_util);
@@ -61,6 +63,17 @@ cc.Class({
         if (_gameConfig2.default.IS_WX) {
             _util2.default.btnEvent(this.closeBtn, this.btnSound, function () {
                 if (_gameConfig2.default.IS_WX) {
+                    if (_gameConfig2.default.auths_Btn) {
+                        if (!_gameConfig2.default.IS_AUTHORIZE) {
+                            _gameConfig2.default.auths_Btn.show();
+                        }
+                        var cur = cc.director.getRunningScene();
+                        if ((typeof cur === 'undefined' ? 'undefined' : _typeof(cur)) == "object" && cur.name == 'game') {
+                            if (_gameConfig2.default.gameOverBannerAdv) {
+                                _gameConfig2.default.gameOverBannerAdv.show();
+                            }
+                        }
+                    }
                     wx.postMessage({ messageType: 3, MAIN_MENU_NUM: _gameConfig2.default.MAIN_MENU_NUM });
                     console.log(_gameDataManager2.default.isHideSub);
                     if (_gameDataManager2.default.isHideSub) {

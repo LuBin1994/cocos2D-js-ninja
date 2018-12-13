@@ -21,12 +21,18 @@ cc.Class({
         var _this = this;
         this.modeEvent(this.stickMode,this.btnSound,function () {
             GameDataManager.toolChoose = 0;
+            GameDataManager.switchModelMax --;
+            localStorage.setItem('switchModelMax',GameDataManager.switchModelMax); 
         })
         this.modeEvent(this.bridgeMode,this.btnSound,function () {
             GameDataManager.toolChoose = 1;
+            GameDataManager.switchModelMax --;
+            localStorage.setItem('switchModelMax',GameDataManager.switchModelMax); 
         })
         this.modeEvent(this.jumpMode,this.btnSound,function () {
             GameDataManager.toolChoose = 2;
+            GameDataManager.switchModelMax --;
+            localStorage.setItem('switchModelMax',GameDataManager.switchModelMax); 
         })
     },
     showChoose(){

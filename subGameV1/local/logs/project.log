@@ -1,55 +1,55 @@
-2018-11-30T05:58:26.640Z - normal: Load ~/.CocosCreator/settings.json
-2018-11-30T05:58:26.645Z - normal: checking language setting...
-2018-11-30T05:58:26.645Z - normal: Language: zh
-2018-11-30T05:58:28.172Z - success: protocol editor-framework registered
-2018-11-30T05:58:28.172Z - success: protocol app registered
-2018-11-30T05:58:28.172Z - success: protocol theme registered
-2018-11-30T05:58:28.172Z - success: protocol packages registered
-2018-11-30T05:58:28.172Z - success: protocol unpack registerred
-2018-11-30T05:58:28.172Z - success: protocol disable-commonjs registerred
-2018-11-30T05:58:28.330Z - normal: connected!
-2018-11-30T05:58:28.339Z - normal: Check project D:\workspace\cocosGame\ninja_crossingV\ninja_crossingv1\subGameV1
-2018-11-30T05:58:28.350Z - normal: Initializing project D:\workspace\cocosGame\ninja_crossingV\ninja_crossingv1\subGameV1
-2018-11-30T05:58:28.358Z - normal: Initializing Cocos2d
-2018-11-30T05:58:28.963Z - normal: Initializing Asset Database
-2018-11-30T05:58:29.002Z - success: protocol uuid registerred
-2018-11-30T05:58:29.003Z - success: protocol db registerred
-2018-11-30T05:58:29.003Z - success: protocol thumbnail registerred
-2018-11-30T05:58:29.003Z - normal: Loading editor/builtin packages
-2018-11-30T05:58:29.133Z - success: assets loaded
-2018-11-30T05:58:29.135Z - success: builder loaded
-2018-11-30T05:58:29.138Z - success: cocos-analytics loaded
-2018-11-30T05:58:29.141Z - success: console loaded
-2018-11-30T05:58:29.172Z - success: fb-instant-games loaded
-2018-11-30T05:58:29.177Z - success: hierarchy loaded
-2018-11-30T05:58:29.180Z - success: inspector loaded
-2018-11-30T05:58:29.181Z - success: keystore loaded
-2018-11-30T05:58:29.185Z - success: node-library loaded
-2018-11-30T05:58:29.187Z - success: package-asset loaded
-2018-11-30T05:58:29.188Z - success: preferences loaded
-2018-11-30T05:58:29.190Z - success: project-exporter loaded
-2018-11-30T05:58:29.204Z - success: project-importer loaded
-2018-11-30T05:58:29.206Z - success: project-settings loaded
-2018-11-30T05:58:29.208Z - success: ui-kit loaded
-2018-11-30T05:58:29.211Z - success: scene loaded
-2018-11-30T05:58:29.213Z - success: sprite-editor loaded
-2018-11-30T05:58:29.216Z - success: store loaded
-2018-11-30T05:58:29.219Z - success: timeline loaded
-2018-11-30T05:58:29.219Z - normal: Loading builtin packages
-2018-11-30T05:58:29.222Z - success: asset-db-debugger loaded
-2018-11-30T05:58:29.224Z - success: code-editor loaded
-2018-11-30T05:58:29.225Z - success: color-picker loaded
-2018-11-30T05:58:29.225Z - success: jsb-adapter loaded
-2018-11-30T05:58:29.227Z - success: package-manager loaded
-2018-11-30T05:58:29.313Z - success: qqplay-adapter loaded
-2018-11-30T05:58:29.317Z - success: sdkbox loaded
-2018-11-30T05:58:29.319Z - success: tester loaded
-2018-11-30T05:58:29.320Z - success: ui-grid loaded
-2018-11-30T05:58:29.322Z - success: ui-kit-preview-extra loaded
-2018-11-30T05:58:29.323Z - success: ui-kit-preview loaded
-2018-11-30T05:58:29.324Z - success: ui-tree loaded
-2018-11-30T05:58:29.325Z - success: weapp-adapter loaded
-2018-11-30T05:58:30.280Z - normal: Loading packages
-2018-11-30T05:58:30.286Z - normal: Watching packages
-2018-11-30T05:58:30.562Z - normal: Run Application
-2018-11-30T05:58:31.182Z - success: preview server running at http://localhost:7457
+2018-12-05T08:59:26.750Z - normal: Load ~/.CocosCreator/settings.json
+2018-12-05T08:59:26.755Z - normal: checking language setting...
+2018-12-05T08:59:26.756Z - normal: Language: zh
+2018-12-05T08:59:28.321Z - success: protocol editor-framework registered
+2018-12-05T08:59:28.321Z - success: protocol app registered
+2018-12-05T08:59:28.321Z - success: protocol theme registered
+2018-12-05T08:59:28.322Z - success: protocol packages registered
+2018-12-05T08:59:28.322Z - success: protocol unpack registerred
+2018-12-05T08:59:28.322Z - success: protocol disable-commonjs registerred
+2018-12-05T08:59:28.419Z - normal: connected!
+2018-12-05T08:59:28.425Z - normal: Check project D:\workspace\cocosGame\ninja_crossingV\ninja_crossingv1\subGameV1
+2018-12-05T08:59:28.433Z - normal: Initializing project D:\workspace\cocosGame\ninja_crossingV\ninja_crossingv1\subGameV1
+2018-12-05T08:59:28.442Z - normal: Initializing Cocos2d
+2018-12-05T08:59:29.080Z - normal: Initializing Asset Database
+2018-12-05T08:59:29.121Z - success: protocol uuid registerred
+2018-12-05T08:59:29.121Z - success: protocol db registerred
+2018-12-05T08:59:29.121Z - success: protocol thumbnail registerred
+2018-12-05T08:59:29.121Z - normal: Loading editor/builtin packages
+2018-12-05T08:59:29.260Z - success: assets loaded
+2018-12-05T08:59:29.262Z - success: builder loaded
+2018-12-05T08:59:29.264Z - success: cocos-analytics loaded
+2018-12-05T08:59:29.267Z - success: console loaded
+2018-12-05T08:59:29.299Z - success: fb-instant-games loaded
+2018-12-05T08:59:29.303Z - success: hierarchy loaded
+2018-12-05T08:59:29.307Z - success: inspector loaded
+2018-12-05T08:59:29.309Z - success: keystore loaded
+2018-12-05T08:59:29.313Z - success: node-library loaded
+2018-12-05T08:59:29.314Z - success: package-asset loaded
+2018-12-05T08:59:29.316Z - success: preferences loaded
+2018-12-05T08:59:29.317Z - success: project-exporter loaded
+2018-12-05T08:59:29.332Z - success: project-importer loaded
+2018-12-05T08:59:29.334Z - success: project-settings loaded
+2018-12-05T08:59:29.337Z - success: ui-kit loaded
+2018-12-05T08:59:29.340Z - success: scene loaded
+2018-12-05T08:59:29.341Z - success: sprite-editor loaded
+2018-12-05T08:59:29.345Z - success: store loaded
+2018-12-05T08:59:29.348Z - success: timeline loaded
+2018-12-05T08:59:29.348Z - normal: Loading builtin packages
+2018-12-05T08:59:29.351Z - success: asset-db-debugger loaded
+2018-12-05T08:59:29.352Z - success: code-editor loaded
+2018-12-05T08:59:29.353Z - success: color-picker loaded
+2018-12-05T08:59:29.354Z - success: jsb-adapter loaded
+2018-12-05T08:59:29.357Z - success: package-manager loaded
+2018-12-05T08:59:29.451Z - success: qqplay-adapter loaded
+2018-12-05T08:59:29.455Z - success: sdkbox loaded
+2018-12-05T08:59:29.457Z - success: tester loaded
+2018-12-05T08:59:29.459Z - success: ui-grid loaded
+2018-12-05T08:59:29.461Z - success: ui-kit-preview-extra loaded
+2018-12-05T08:59:29.463Z - success: ui-kit-preview loaded
+2018-12-05T08:59:29.465Z - success: ui-tree loaded
+2018-12-05T08:59:29.465Z - success: weapp-adapter loaded
+2018-12-05T08:59:30.451Z - normal: Loading packages
+2018-12-05T08:59:30.457Z - normal: Watching packages
+2018-12-05T08:59:30.751Z - normal: Run Application
+2018-12-05T08:59:31.391Z - success: preview server running at http://localhost:7457

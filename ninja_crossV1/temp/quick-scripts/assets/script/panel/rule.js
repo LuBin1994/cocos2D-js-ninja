@@ -12,6 +12,10 @@ var _GameUITools = require('../utils/GameUITools');
 
 var _GameUITools2 = _interopRequireDefault(_GameUITools);
 
+var _gameConfig = require('../gameConfig');
+
+var _gameConfig2 = _interopRequireDefault(_gameConfig);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 cc.Class({
@@ -30,6 +34,11 @@ cc.Class({
     init: function init() {
         var _this = this;
         _util2.default.btnEvent(this.ruleCloseBtn, this.btnSound, function () {
+            if (_gameConfig2.default.auths_Btn) {
+                if (!_gameConfig2.default.IS_AUTHORIZE) {
+                    _gameConfig2.default.auths_Btn.show();
+                }
+            }
             _GameUITools2.default.unLoadingLayer(_this.node);
         });
         this.node.on('touchstart', function (e) {
